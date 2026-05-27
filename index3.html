@@ -1,0 +1,2717 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Coca-Cola Trace Pro MVP</title>
+  <style>
+    :root{
+      --red:#d60000;
+      --dark:#111827;
+      --gray:#f3f4f6;
+      --card:#ffffff;
+      --green:#16a34a;
+      --yellow:#f59e0b;
+      --blue:#2563eb;
+      --purple:#7c3aed;
+    }
+    *{box-sizing:border-box}
+    body{margin:0;font-family:Arial, Helvetica, sans-serif;background:var(--gray);color:#111}
+    button,input,select,textarea{font:inherit}
+    .screen{min-height:100vh}
+    .login{
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg,#d60000,#6b0000);
+      padding:24px;
+    }
+    .login-card{
+      width:720px;
+      max-width:100%;
+      background:#fff;
+      border-radius:30px;
+      padding:42px;
+      box-shadow:0 30px 70px #0006;
+    }
+    .brand{
+      color:var(--red);
+      font-size:42px;
+      font-weight:900;
+      text-align:center;
+      margin-bottom:8px;
+    }
+    .subtitle{text-align:center;font-size:22px;font-weight:700;margin-bottom:28px}
+    .login-card input{
+      width:100%;
+      padding:20px;
+      margin:10px 0;
+      border:2px solid #ddd;
+      border-radius:16px;
+      font-size:24px;
+    }
+    .btn{
+      border:0;
+      border-radius:18px;
+      padding:18px 24px;
+      font-weight:900;
+      cursor:pointer;
+      font-size:22px;
+    }
+    .btn-red{background:var(--red);color:#fff}
+    .btn-green{background:var(--green);color:#fff}
+    .btn-gray{background:#fff;border:2px solid #ddd;color:#111}
+    .btn-blue{background:var(--blue);color:#fff}
+    .topbar{
+      background:var(--red);
+      color:white;
+      padding:18px 28px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      box-shadow:0 10px 22px #0002;
+    }
+    .topbar .title{font-size:32px;font-weight:900}
+    .topbar .user{text-align:right;font-weight:700;line-height:1.4}
+    .wrap{max-width:1250px;margin:0 auto;padding:24px}
+    .card{
+      background:var(--card);
+      border-radius:28px;
+      padding:28px;
+      box-shadow:0 12px 28px #0001;
+      border:1px solid #e5e7eb;
+      margin-bottom:22px;
+    }
+    .grid2{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+    .grid3{display:grid;grid-template-columns:repeat(3,1fr);gap:22px}
+    .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:18px}
+    .tile{
+      min-height:180px;
+      background:white;
+      border:2px solid #e5e7eb;
+      border-radius:30px;
+      padding:32px;
+      font-size:34px;
+      font-weight:900;
+      text-align:left;
+      cursor:pointer;
+      box-shadow:0 12px 28px #0001;
+    }
+    .tile:hover{outline:5px solid #ffd1d1}
+    .tile span{display:block;font-size:56px;margin-bottom:16px}
+    h1{font-size:38px;margin:0 0 20px}
+    h2{font-size:28px;margin:12px 0}
+    label{display:block;font-size:15px;text-transform:uppercase;font-weight:900;color:#555;margin-bottom:8px}
+    input,select,textarea{
+      width:100%;
+      padding:16px;
+      border:2px solid #ddd;
+      border-radius:16px;
+      background:#fff;
+      font-size:22px;
+      margin-bottom:16px;
+    }
+    textarea{min-height:90px}
+    .row{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+    .metric{
+      background:#fff;
+      border:1px solid #e5e7eb;
+      border-radius:24px;
+      padding:22px;
+    }
+    .metric .n{font-size:42px;font-weight:900;color:var(--red)}
+    .metric .t{font-weight:900;color:#555;text-transform:uppercase}
+    .alert{
+      border:2px solid #fbbf24;
+      background:#fff7ed;
+      border-radius:18px;
+      padding:18px;
+      margin:14px 0;
+      font-weight:700;
+    }
+    .ok{
+      border:2px solid #86efac;
+      background:#f0fdf4;
+      border-radius:18px;
+      padding:18px;
+      margin:14px 0;
+      font-weight:700;
+    }
+    .option{
+      border:3px solid #e5e7eb;
+      border-radius:22px;
+      padding:18px;
+      margin-bottom:12px;
+      cursor:pointer;
+      background:#fff;
+    }
+    .option.selected{border-color:var(--red);background:#fff1f1}
+    .option b{font-size:24px}
+    .small{font-size:14px;color:#666}
+    .rack-grid{display:grid;grid-template-columns:repeat(10,1fr);gap:10px}
+    .rack{
+      border:3px solid #ddd;
+      border-radius:16px;
+      padding:10px;
+      min-height:95px;
+      background:white;
+      font-size:13px;
+    }
+    .rack b{font-size:20px}
+    .rack.empty{background:#fff}
+    .rack.ok{background:#dcfce7;border-color:#16a34a}
+    .rack.mid{background:#fef3c7;border-color:#f59e0b}
+    .rack.full{background:#fee2e2;border-color:#dc2626}
+    .rack.reserved{background:#dbeafe;border-color:#2563eb}
+    .rack.blocked{background:#ede9fe;border-color:#7c3aed}
+    table{width:100%;border-collapse:collapse;background:#fff;border-radius:18px;overflow:hidden}
+    th,td{text-align:left;padding:14px;border-bottom:1px solid #eee}
+    th{background:#f9fafb}
+    .actions{display:flex;gap:12px;flex-wrap:wrap}
+    .hidden{display:none}
+
+    .map-canvas{
+      position:relative;
+      width:100%;
+      min-height:2050px;
+      background:#f8fafc;
+      border:3px solid #e5e7eb;
+      border-radius:24px;
+      overflow:auto;
+      padding:20px;
+      margin-top:18px;
+    }
+    .map-block{
+      position:absolute;
+      width:120px;
+      height:42px;
+      min-width:38px;
+      min-height:24px;
+      border:3px solid #ddd;
+      border-radius:14px;
+      padding:6px;
+      font-size:10px;
+      background:white;
+      writing-mode:horizontal-tb !important;
+      text-orientation:initial !important;
+      cursor:pointer;
+      box-shadow:0 6px 14px #0001;
+      overflow:hidden;
+      resize:none;
+      line-height:1.05;
+    }
+    .map-block b{font-size:15px}
+    .map-block.h{
+      width:120px;
+      height:42px;
+      writing-mode:horizontal-tb !important;
+      text-orientation:initial !important;
+    }
+    .map-label{
+      position:absolute;
+      font-size:15px;
+      font-weight:900;
+      color:#111;
+      background:#ffffffcc;
+      padding:6px 10px;
+      border-radius:10px;
+      border:1px solid #ddd;
+    }
+
+
+
+    .clean-map{
+      position:relative;
+      width:1680px;
+      height: 2050px;
+      background:#f8fafc;
+      border:2px solid #e5e7eb;
+      border-radius:22px;
+      overflow:hidden;
+    }
+    .clean-aisle{
+      position:absolute;
+      background:#eef2f7;
+      border:1px dashed #cbd5e1;
+      border-radius:14px;
+    }
+    .editor-on .map-block{cursor:move}.editor-toolbar{margin:10px 0;padding:10px;background:#eef}
+.clean-dock{
+      position:absolute;
+      width:90px;
+      height:58px;
+      background:#111827;
+      color:white;
+      border-radius:14px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:22px;
+      font-weight:900;
+      box-shadow:0 8px 18px #0002;
+    }
+
+    .fixed-map{
+      position:relative;
+      width:1580px;
+      height:1120px;
+      background:#f8fafc;
+      border-radius:22px;
+      border:2px solid #e5e7eb;
+      overflow:hidden;
+    }
+    .fixed-aisle{
+      position:absolute;
+      background:#eef2f7;
+      border:1px dashed #cbd5e1;
+      border-radius:14px;
+    }
+    .fixed-dock{
+      position:absolute;
+      width:82px;
+      height:54px;
+      background:#111827;
+      color:white;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      border-radius:12px;
+      font-weight:900;
+      font-size:21px;
+      box-shadow:0 8px 18px #0002;
+    }
+
+    .real-plan{
+      position:relative;
+      width:1460px;
+      height:1040px;
+      background:#f8fafc;
+      border-radius:20px;
+    }
+    .aisle{
+      position:absolute;
+      background:#e5e7eb;
+      border:1px dashed #cbd5e1;
+      border-radius:14px;
+      opacity:.9;
+    }
+    .dock-real{
+      position:absolute;
+      width:76px;
+      height:54px;
+      background:#111827;
+      color:white;
+      border-radius:12px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-size:20px;
+      font-weight:900;
+      box-shadow:0 8px 18px #0002;
+    }
+
+    .dock{
+      position:absolute;
+      width:70px;
+      height:44px;
+      background:#e5e7eb;
+      border:3px solid #111;
+      border-radius:10px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      font-weight:900;
+    }
+    .map-block.empty{background:#fff}
+    .map-block.ok{background:#dcfce7;border-color:#16a34a}
+    .map-block.mid{background:#fef3c7;border-color:#f59e0b}
+    .map-block.full{background:#fee2e2;border-color:#dc2626}
+    .map-block.reserved{background:#dbeafe;border-color:#2563eb}
+    .map-block.blocked{background:#ede9fe;border-color:#7c3aed}
+    .map-editor{
+      border:2px solid #e5e7eb;
+      background:#fff;
+      border-radius:22px;
+      padding:20px;
+      margin:18px 0;
+    }
+
+    @media(max-width:900px){
+      .grid2,.grid3,.grid4,.row{grid-template-columns:1fr}
+      .rack-grid{grid-template-columns:repeat(4,1fr)}
+      .tile{font-size:28px;min-height:140px}
+      .topbar{display:block}
+      .topbar .user{text-align:left;margin-top:8px}
+    }
+  </style>
+
+
+
+
+<style>
+#mapEditToolbar{
+  position:fixed;
+  left:18px;
+  bottom:18px;
+  z-index:999999;
+  display:flex;
+  gap:8px;
+  flex-wrap:wrap;
+  background:#111827;
+  color:#fff;
+  padding:10px;
+  border-radius:14px;
+  box-shadow:0 8px 24px #0004;
+}
+#mapEditToolbar button{
+  border:0;
+  border-radius:10px;
+  padding:9px 12px;
+  font-weight:900;
+  cursor:pointer;
+}
+#mapEditToolbar .red{background:#d60000;color:white}
+#mapEditToolbar .dark{background:#374151;color:white}
+.map-editing .map-block,
+.map-editing .fixed-aisle,
+.map-editing .clean-aisle,
+.map-editing .aisle,
+.map-editing .fixed-dock,
+.map-editing .clean-dock,
+.map-editing .dock-real,
+.map-editing .dock{
+  cursor:move !important;
+  user-select:none !important;
+}
+.map-selected{
+  outline:4px solid #111827 !important;
+  outline-offset:2px;
+}
+.map-resize-handle{
+  position:absolute;
+  right:-6px;
+  bottom:-6px;
+  width:14px;
+  height:14px;
+  background:#111827;
+  border:2px solid white;
+  border-radius:4px;
+  z-index:999999;
+  cursor:nwse-resize;
+}
+</style>
+
+
+<style>
+.map-edit-active .map-block,
+.map-edit-active .clean-aisle,
+.map-edit-active .clean-dock,
+.map-edit-active .fixed-aisle,
+.map-edit-active .fixed-dock,
+.map-edit-active .aisle,
+.map-edit-active .dock,
+.map-edit-active .dock-real{
+  cursor:move !important;
+  user-select:none !important;
+}
+.map-edit-selected{
+  outline:3px solid #111827 !important;
+  outline-offset:2px !important;
+}
+.map-edit-handle{
+  position:absolute;
+  right:-8px;
+  bottom:-8px;
+  width:18px;
+  height:18px;
+  background:#d60000;
+  border:2px solid white;
+  border-radius:5px;
+  z-index:999999;
+  cursor:nwse-resize;
+  box-shadow:0 2px 8px #0005;
+}
+.clean-map{transform-origin:top left;}
+</style>
+
+  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2/dist/umd/supabase.js"></script>
+</head>
+<body>
+<div id="app"></div>
+
+<script>
+const PRODUCTS = {
+  P001:{name:"Caja vacía VR200/237", rotation:"Media"},
+  P002A:{name:"Aquabona VR500", rotation:"Media"},
+  P027:{name:"Caja vacía VR300/350", rotation:"Media"},
+  P903:{name:"Sprite VR200", rotation:"Media"},
+  P906:{name:"VR350", rotation:"Media"},
+  P910:{name:"Contour VR237", rotation:"Media"},
+  P901:{name:"CAPPY VR200", rotation:"Media"},
+  P002B:{name:"Aquabona VR365/500", rotation:"Media"},
+  P925:{name:"MIXER VR200", rotation:"Media"},
+  P012:{name:"Aquabona VR1L", rotation:"Media"},
+  P019:{name:"Aquabona VR365", rotation:"Media"},
+  P018:{name:"Aquabona VR1L", rotation:"Media"},
+  P907:{name:"Sprite VR350", rotation:"Media"},
+  P905:{name:"Cappy VR300", rotation:"Media"},
+  P928:{name:"SPIRAL VR237", rotation:"Media"},
+  P908:{name:"SPLASH VR350", rotation:"Media"},
+  P707:{name:"Megabox", rotation:"Media"}
+};
+
+const USERS = {
+  carlos:{password:"1234", name:"Carlos Fernández", role:"carretillero"},
+  checker:{password:"1234", name:"Checker", role:"checker"},
+  sga:{password:"1234", name:"Usuario SGA", role:"sga"},
+  encargado:{password:"1234", name:"Encargado", role:"encargado"}
+};
+
+const ROLE_OPTIONS = ["carretillero", "sga", "encargado", "checker"];
+const ROLE_LABELS = {
+  carretillero: "Carretillero",
+  sga: "SGA",
+  encargado: "Encargado",
+  checker: "Checker"
+};
+
+function defaultSapUsers(){
+  return Object.entries(USERS).map(([username,u])=>({
+    username,
+    role:u.role
+  }));
+}
+
+let state = loadState();
+window.state = state;
+
+function defaultState(){
+  const capacities = [
+    ...Array(43).fill(132),
+    ...Array(42).fill(180),
+    ...Array(30).fill(120),
+    ...Array(44).fill(216),
+    ...Array(27).fill(192)
+  ];
+  const cycle = ["P001","P002A","P027","P903","P906","P910","P901",""];
+  const racks = [];
+  for(let i=0;i<186;i++){
+    const id = String(1+i);
+    const cap = capacities[i];
+    const p = cycle[i % cycle.length];
+    const occupied = p ? Math.min(cap, 24 + ((i*12) % Math.max(24,cap-10))) : 0;
+    racks.push({
+      id,
+      capacity:cap,
+      product:p,
+      occupied,
+      entryDate:p ? `2026-05-${String((i%20)+1).padStart(2,"0")}` : "",
+      zone:i<50 ? "Frontal" : i<120 ? "Central" : "Trasera",
+      reserved:["143","144","145"].includes(id),
+      blocked:id==="150",
+      mapX: 20 + ((i % 12) * 92),
+      mapY: 20 + (Math.floor(i / 12) * 72)
+    });
+  }
+  // Aplicar geometría fija inicial por bloques limpios, basada en el plano real
+  racks.forEach((r,i)=>{
+    r.mapX = -9999;
+    r.mapY = -9999;
+    r.mapW = 48;
+    r.mapH = 110;
+    r.mapDir = "v";
+  });
+
+  const V = (ids,x,y,dx=54,dy=0)=>{
+    ids.forEach((id,i)=>{
+      const rr=racks.find(a=>a.id===String(id));
+      if(!rr) return;
+      rr.mapX=x+i*dx;
+      rr.mapY=y+i*dy;
+      rr.mapW=48;
+      rr.mapH=110;
+      rr.mapDir="v";
+    });
+  };
+
+  const H = (ids,x,y,dx=0,dy=50)=>{
+    ids.forEach((id,i)=>{
+      const rr=racks.find(a=>a.id===String(id));
+      if(!rr) return;
+      rr.mapX=x+i*dx;
+      rr.mapY=y+i*dy;
+      rr.mapW=116;
+      rr.mapH=42;
+      rr.mapDir="h";
+    });
+  };
+
+  // IZQUIERDA: grupos de la zona de muelles M24 / M25 / M26
+  V([21,22,23,24,25,26,27,28,29,30,31,32,33,34,35], 40, 70);
+  V([15,16,17,18,19,20], 40, 330);
+  V([10,11,12,13,14], 40, 575);
+  V([1,2,3,4,5,6,7,8,9], 40, 820);
+
+  // Muelles fuera del bloque, alineados en pasillo izquierdo
+  let d24=racks.find(r=>r.id==="184"); if(d24){d24.mapX=235;d24.mapY=180;d24.mapW=92;d24.mapH=55;d24.mapDir="h";}
+  let d25=racks.find(r=>r.id==="185"); if(d25){d25.mapX=235;d25.mapY=430;d25.mapW=92;d25.mapH=55;d25.mapDir="h";}
+  let d26=racks.find(r=>r.id==="186"); if(d26){d26.mapX=235;d26.mapY=680;d26.mapW=92;d26.mapH=55;d26.mapDir="h";}
+
+  // CENTRO-IZQUIERDA: bloques rectos
+  V([36,37,38,39,40,41,42], 390, 330);
+  V([43,44,45,46,47,48,49,50,51,52], 390, 575);
+  V([53,54,55,56,57,58,59,60], 390, 820);
+
+  // CENTRO: bloques horizontales como en plano
+  H([61,62,63,64,65,66,67,68,69,70], 620, 575);
+  H([71,72,73,74,75,76,77,78,79,80], 760, 330);
+  H([81,82,83,84,85,86,87], 760, 760);
+
+  // DERECHA-CENTRO: columnas separadas, sin cruzar pasillos
+  H([88,89,90,91,92,93,94,95,96,97,98,99,100], 980, 760, 0, 46);
+  H([101,102,103,104,105,106,107], 980, 70);
+  H([108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123], 1125, 70);
+  H([124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142], 1125, 545, 0, 44);
+
+  // DERECHA LARGA: columna tipo plano real
+  H([149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183], 1410, 60, 0, 29);
+
+  // Auxiliares / huecos superiores
+  H([143,144,145,146,147,148], 1285, 70);
+
+
+  // v46: asegurar que existe la estiba 0 desde el estado inicial
+  if(!racks.some(r => String(r.id) === "0")){
+    const ref0 = racks.find(r => String(r.id) === "1") || racks[0] || {};
+    racks.unshift({
+      id:"0",
+      capacity: ref0.capacity || 192,
+      product:"",
+      occupied:0,
+      entryDate:"",
+      zone:"Frontal",
+      reserved:false,
+      blocked:false,
+      mapX:60,
+      mapY:0,
+      mapW:120,
+      mapH:42,
+      mapDir:"h"
+    });
+  }
+
+  return {
+    user:null,
+    view:"login",
+    racks,
+    incidents:[
+      {id:1, ts:now(), user:"Sistema", type:"Estiba mezclada", rack:"150", product:"P001", qty:0, status:"abierta", detail:"Bloqueada hasta revisión"}
+    ],
+    history:[],
+    cartRequests:[],
+    campaigns:[],
+    campaignTasks:[],
+    unloadPlans:[],
+    albaranes:[],
+    selectedAlbaranId:null,
+    sapUsers: defaultSapUsers()
+  };
+}
+
+function loadState(){
+  const saved = localStorage.getItem("tracepro_state_v46_estiba_0_real");
+  if(saved){
+    const s = migrateAllProducts(JSON.parse(saved));
+    if(!s.cartRequests) s.cartRequests = [];
+    if(!s.campaigns) s.campaigns = [];
+    if(!s.campaignTasks) s.campaignTasks = [];
+    if(!s.unloadPlans) s.unloadPlans = [];
+    if(!s.albaranes) s.albaranes = [];
+    if(!s.selectedAlbaranId) s.selectedAlbaranId = null;
+    if(!s.sapUsers) s.sapUsers = defaultSapUsers();
+    s.sapUsers = s.sapUsers.map(u=>({username:String(u.username||"").trim().toLowerCase(), role:ROLE_OPTIONS.includes(u.role)?u.role:"carretillero"})).filter(u=>u.username);
+    defaultSapUsers().forEach(def=>{ if(!s.sapUsers.some(u=>u.username===def.username)) s.sapUsers.push(def); });
+    if(s.incidents) s.incidents = s.incidents.map(i=>({...i,status:i.status||"pendiente"}));
+    if(s.racks){
+      s.racks = s.racks.map((r,i)=>({
+        ...r,
+        mapX: r.mapX ?? (20 + ((i % 12) * 92)),
+        mapY: r.mapY ?? (20 + (Math.floor(i / 12) * 72))
+      }));
+    }
+
+    // v46: asegurar que existe la estiba 0 también al cargar localStorage
+    if(s.racks && !s.racks.some(r => String(r.id) === "0")){
+      const ref0 = s.racks.find(r => String(r.id) === "1") || s.racks[0] || {};
+      s.racks.unshift({
+        id:"0",
+        capacity: ref0.capacity || 192,
+        product:"",
+        occupied:0,
+        entryDate:"",
+        zone:"Frontal",
+        reserved:false,
+        blocked:false,
+        mapX:60,
+        mapY:0,
+        mapW:120,
+        mapH:42,
+        mapDir:"h"
+      });
+    }
+
+    return s;
+  }
+  return defaultState();
+}
+function save(){
+  localStorage.setItem("tracepro_state_v46_estiba_0_real", JSON.stringify(state));
+  window.state = state;
+}
+
+// Solo llamar esto desde botones de confirmar/guardar, nunca automáticamente
+async function pushToCloud(){
+  if(!traceCloudReady || !traceSupabaseClient || traceApplyingRemote) return;
+  try{
+    const payload = sharedStateSnapshot();
+    const { error } = await traceSupabaseClient
+      .from("trace_state")
+      .upsert({ id: TRACE_STATE_ID, data: payload, updated_at: new Date().toISOString() });
+    if(error) cloudStatus("⚠️ Error al guardar en nube", "warn");
+    else cloudStatus("☁️ Guardado en nube", "ok");
+  }catch(e){ cloudStatus("⚠️ Error nube", "warn"); }
+}
+
+//━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+// SINCRONIZACIÓN SUPABASE — MODO MULTIUSUARIO
+//━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+const TRACE_SUPABASE_URL = "https://lpwcfqkrzxvpfoaikgxl.supabase.co";
+const TRACE_SUPABASE_KEY = "sb_publishable_nEWO6o9kevRmJWrD4-1EFQ_A9SKS2c6";
+const TRACE_STATE_ID = "main";
+const TRACE_SHARED_KEYS = [
+  "racks",
+  "incidents",
+  "history",
+  "cartRequests",
+  "campaigns",
+  "campaignTasks",
+  "unloadPlans",
+  "sapUsers",
+  "albaranes"
+];
+
+let traceSupabaseClient = null;
+let traceApplyingRemote = false;
+let traceSaveTimer = null;
+let traceCloudReady = false;
+let traceLastRemoteAt = 0;
+// FIX: usar sessionStorage en vez de localStorage para que cada pestaña
+// tenga su propio clientId único, incluso en el mismo PC y navegador.
+// Así el filtro anti-bucle no descarta cambios de otras pestañas.
+let traceClientId = sessionStorage.getItem("tracepro_client_id");
+if(!traceClientId){
+  traceClientId = "client_" + Date.now() + "_" + Math.random().toString(36).slice(2);
+  sessionStorage.setItem("tracepro_client_id", traceClientId);
+}
+
+function cloudStatus(msg, type="ok"){
+  try{
+    let el = document.getElementById("cloudStatusBadge");
+    if(!el){
+      el = document.createElement("div");
+      el.id = "cloudStatusBadge";
+      el.style.position = "fixed";
+      el.style.right = "18px";
+      el.style.top = "86px";
+      el.style.zIndex = "999999";
+      el.style.padding = "10px 14px";
+      el.style.borderRadius = "14px";
+      el.style.fontWeight = "900";
+      el.style.fontSize = "14px";
+      el.style.boxShadow = "0 8px 20px #0002";
+      document.body.appendChild(el);
+    }
+    el.textContent = msg;
+    el.style.background = type === "error" ? "#fee2e2" : type === "warn" ? "#fef3c7" : "#dcfce7";
+    el.style.border = type === "error" ? "2px solid #dc2626" : type === "warn" ? "2px solid #f59e0b" : "2px solid #16a34a";
+    el.style.color = "#111827";
+  }catch(e){}
+}
+
+function sharedStateSnapshot(){
+  const snap = {
+    _meta:{
+      version:"v63-supabase-sync",
+      clientId: traceClientId,
+      updatedAt: new Date().toISOString(),
+      updatedBy: state.user?.username || state.user?.name || "sin_usuario"
+    }
+  };
+  TRACE_SHARED_KEYS.forEach(k=>{
+    snap[k] = JSON.parse(JSON.stringify(state[k] ?? (Array.isArray(defaultState()[k]) ? [] : null)));
+  });
+  return snap;
+}
+
+function applySharedState(data){
+  if(!data || typeof data !== "object") return false;
+  if(!Array.isArray(data.racks)) return false;
+
+  const localUser = state.user;
+  const localView = state.view;
+  const localSelectedAlbaranId = state.selectedAlbaranId;
+
+  TRACE_SHARED_KEYS.forEach(k=>{
+    if(data[k] !== undefined){
+      state[k] = JSON.parse(JSON.stringify(data[k]));
+    }
+  });
+
+  state.user = localUser;
+  state.view = localView;
+  state.selectedAlbaranId = localSelectedAlbaranId;
+  window.state = state;
+
+  localStorage.setItem("tracepro_state_v46_estiba_0_real", JSON.stringify(state));
+  return true;
+}
+
+function queueCloudSave(){ /* desactivado — save() sube directamente */ }
+async function pushCloudState(){ /* desactivado — save() sube directamente */ }
+
+async function syncNow(){
+  if(!traceSupabaseClient || !traceCloudReady){ cloudStatus("⚠️ Sin conexión", "warn"); return; }
+  try{
+    cloudStatus("🔄 Sincronizando...", "warn");
+    const { data, error } = await traceSupabaseClient
+      .from("trace_state")
+      .select("data,updated_at")
+      .eq("id", TRACE_STATE_ID)
+      .maybeSingle();
+    if(error || !data || !data.data){ cloudStatus("⚠️ Error al sincronizar", "warn"); return; }
+    const remote = data.data;
+    if(!remote || remote?._meta?.clientId === traceClientId){
+      cloudStatus("✅ Ya estás al día", "ok"); return;
+    }
+    if(remote?._meta?.updatedAt === state._lastRemoteUpdatedAt){
+      cloudStatus("✅ Ya estás al día", "ok"); return;
+    }
+    traceApplyingRemote = true;
+    if(applySharedState(remote)){
+      state._lastRemoteUpdatedAt = remote._meta?.updatedAt;
+      traceLastRemoteAt = Date.now();
+      render();
+      cloudStatus("✅ Sincronizado", "ok");
+    }
+    traceApplyingRemote = false;
+  }catch(e){
+    cloudStatus("⚠️ Error al sincronizar", "warn");
+  }
+}
+
+function addSyncButton(){
+  if(document.getElementById("syncNowBtn")) return;
+  const btn = document.createElement("button");
+  btn.id = "syncNowBtn";
+  btn.textContent = "🔄 Sincronizar";
+  btn.onclick = syncNow;
+  Object.assign(btn.style, {
+    position:"fixed", left:"18px", top:"18px", zIndex:"999999",
+    background:"#16a34a", color:"white", border:"none",
+    borderRadius:"12px", padding:"10px 16px", fontWeight:"900",
+    fontSize:"14px", cursor:"pointer", boxShadow:"0 4px 12px #0003"
+  });
+  document.body.appendChild(btn);
+}
+
+async function initSupabaseSync(){
+  try{
+    if(!window.supabase){
+      cloudStatus("⚠️ Supabase no cargado", "warn");
+      return;
+    }
+    traceSupabaseClient = window.supabase.createClient(TRACE_SUPABASE_URL, TRACE_SUPABASE_KEY);
+    traceCloudReady = true;
+    cloudStatus("☁️ Listo — pulsa 🔄 para ver cambios de otros", "ok");
+  }catch(err){
+    console.error("No se pudo iniciar Supabase", err);
+    traceCloudReady = false;
+    cloudStatus("⚠️ Error Supabase", "error");
+  }
+}
+function now(){ return new Date().toLocaleString("es-ES",{hour12:false}); }
+function productName(code){ return PRODUCTS[code]?.name || "Vacía"; }
+
+function migrateProductCode(code){
+  const legacy = {
+    CCD001:"P001", CCP001:"P027", SPD001:"P903", SPR001:"P907", FAD001:"P906", ESP001:"P928",
+    CAPD01:"P901", CAP001:"P905", MIX001:"P925", AG500:"P002A", AG1L:"P012", AGGAS:"P002B",
+    CAJP:"P001", CAJG:"P027"
+  };
+  return legacy[code] || code;
+}
+function migrateProductFields(obj){
+  if(!obj || typeof obj !== "object") return obj;
+  ["product", "prod", "productCode"].forEach(k=>{ if(obj[k]) obj[k]=migrateProductCode(obj[k]); });
+  return obj;
+}
+function migrateAllProducts(s){
+  if(!s) return s;
+  (s.racks||[]).forEach(migrateProductFields);
+  (s.incidents||[]).forEach(migrateProductFields);
+  (s.history||[]).forEach(migrateProductFields);
+  (s.cartRequests||[]).forEach(migrateProductFields);
+  (s.campaigns||[]).forEach(migrateProductFields);
+  (s.campaignTasks||[]).forEach(migrateProductFields);
+  (s.unloadPlans||[]).forEach(p=>{
+    migrateProductFields(p);
+    (p.lines||[]).forEach(migrateProductFields);
+  });
+  (s.albaranes||[]).forEach(a=>{
+    migrateProductFields(a);
+    (a.lines||[]).forEach(migrateProductFields);
+  });
+  return s;
+}
+
+function currentShift(){
+  const h = new Date().getHours();
+  if(h>=6 && h<14) return "Mañana";
+  if(h>=14 && h<22) return "Tarde";
+  return "Noche";
+}
+function setView(v){ state.view=v; save(); render(); }
+function logout(){ state.user=null; state.view="login"; save(); render(); }
+
+function render(){
+  const app = document.getElementById("app");
+  if(!state.user) return renderLogin(app);
+  const office = ["encargado","sga","checker"].includes(state.user.role);
+  let html = header();
+  html += `<div class="wrap">`;
+  if(state.view==="menu") html += office ? officeMenu() : forkliftMenu();
+  if(state.view==="carga") html += cargaView();
+  if(state.view==="descarga") html += descargaView();
+  if(state.view==="carro") html += carroView();
+  if(state.view==="incidencia") html += incidenciaView();
+  if(state.view==="dashboard") html += dashboardView();
+  if(state.view==="mapa") html += mapaView();
+  if(state.view==="inventario") html += inventarioView();
+  if(state.view==="historial") html += historialView();
+  if(state.view==="registroEstiba") html += registroEstibaView();
+  if(state.view==="albaranes") html += albaranesView();
+  if(state.view==="campanas") html += campanasView();
+  if(state.view==="campanaTareas") html += campanaTareasView();
+  if(state.view==="roles") html += rolesView();
+  html += `</div>`;
+  app.innerHTML = html;
+}
+
+function renderLogin(app){
+  app.innerHTML = `
+  <div class="login">
+    <div class="login-card">
+      <div class="brand">Coca-Cola TRACE PRO</div>
+      <div class="subtitle">MVP navegador · Login SAP simulado</div>
+      <label>Usuario SAP</label>
+      <input id="loginUser" value="carlos"/>
+      <label>Contraseña SAP</label>
+      <input id="loginPass" type="password" value="1234"/>
+      <button class="btn btn-red" style="width:100%" onclick="login()">INICIAR SESIÓN</button>
+      <div class="alert">
+        Usuarios demo: <b>carlos</b>, <b>checker</b>, <b>sga</b>, <b>encargado</b><br/>
+        Contraseña: <b>1234</b>
+      </div>
+    </div>
+  </div>`;
+}
+function login(){
+  const u = document.getElementById("loginUser").value.trim().toLowerCase();
+  const p = document.getElementById("loginPass").value;
+  const sapUser = state.sapUsers?.find(x=>x.username===u);
+  const baseUser = USERS[u] || {password:"1234", name:u.toUpperCase(), role:sapUser?.role || "carretillero"};
+  if(!sapUser && !USERS[u]){ alert("Usuario SAP no encontrado. Pide al encargado que lo añada en Roles."); return; }
+  if(baseUser.password !== p){ alert("Usuario o contraseña incorrectos"); return; }
+  state.user = {...baseUser, role:sapUser?.role || baseUser.role, username:u, shift:currentShift()};
+  state.view = "menu";
+  save(); 
+}
+
+function header(){
+  return `<div class="topbar">
+    <div class="title">Coca-Cola TRACE PRO</div>
+    <div class="user">${state.user.name}<br/>Rol: ${state.user.role} · Turno: ${state.user.shift}
+      <br/><button class="btn btn-gray" style="padding:8px 12px;font-size:14px" onclick="logout()">Salir</button>
+    </div>
+  </div>`;
+}
+function backTitle(title){ return `<button class="btn btn-gray" onclick="setView('menu')">← Volver</button><h1>${title}</h1>`; }
+
+function forkliftMenu(){
+  return `<div class="grid2">
+    <button class="tile" onclick="setView('carga')"><span>🚛</span>CARGA CAMIÓN</button>
+    <button class="tile" onclick="setView('descarga')"><span>📦</span>DESCARGA CAMIÓN</button>
+    <button class="tile" onclick="setView('carro')"><span>🚜</span>CARRO INTERNO</button>
+    <button class="tile" onclick="setView('campanaTareas')"><span>🏗️</span>ZONAS RESTRINGIDAS</button>
+    <button class="tile" onclick="setView('incidencia')"><span>⚠️</span>INCIDENCIA</button>
+  </div>`;
+}
+function officeMenu(){
+  return `<div class="grid3">
+    <button class="tile" onclick="setView('dashboard')"><span>📊</span>DASHBOARD</button>
+    <button class="tile" onclick="setView('mapa')"><span>🗺️</span>MAPA CAMPA</button>
+    <button class="tile" onclick="setView('descarga')"><span>📦</span>DESCARGAS</button>
+    <button class="tile" onclick="setView('carro')"><span>🚜</span>CARRO INTERNO</button>
+    <button class="tile" onclick="setView('inventario')"><span>📋</span>AJUSTE INVENTARIO</button>
+    <button class="tile" onclick="setView('historial')"><span>🕘</span>HISTORIAL</button>
+    <button class="tile" onclick="setView('registroEstiba')"><span>🔎</span>REGISTRO ESTIBA</button>
+    <button class="tile" onclick="setView('albaranes')"><span>📄</span>REGISTRO ALBARANES</button>
+    <button class="tile" onclick="setView('campanas')"><span>⚙️</span>ZONAS RESTRINGIDAS</button>
+    ${state.user.role==="encargado" ? `<button class="tile" onclick="setView('roles')"><span>👥</span>ROLES</button>` : ""}
+    <button class="tile" onclick="setView('incidencia')"><span>⚠️</span>INCIDENCIAS</button>
+  </div>`;
+}
+
+
+function rolesView(){
+  if(!state.user || state.user.role!=="encargado"){
+    return `<div class="card">${backTitle("👥 Roles usuarios SAP")}<div class="alert">Solo el rol Encargado puede asignar roles.</div></div>`;
+  }
+  const users = [...(state.sapUsers || [])].sort((a,b)=>a.username.localeCompare(b.username));
+  return `<div class="card">${backTitle("👥 Roles usuarios SAP")}
+    <div class="alert">
+      Asigna a cada usuario SAP uno de los 4 roles cerrados del sistema: Carretillero, SGA, Encargado o Checker.
+    </div>
+
+    <h2>Añadir usuario SAP</h2>
+    <div class="row">
+      <div>
+        <label>Usuario SAP</label>
+        <input id="newSapUser" placeholder="Ejemplo: A34521" />
+      </div>
+      <div>
+        <label>Rol</label>
+        <select id="newSapRole">${roleOptionsHtml("carretillero")}</select>
+      </div>
+    </div>
+    <button class="btn btn-red" onclick="addSapUserRole()">Añadir usuario</button>
+
+    <h2>Usuarios SAP</h2>
+    <table>
+      <tr><th>Usuario SAP</th><th>Rol asignado</th><th>Acción</th></tr>
+      ${users.map(u=>`<tr>
+        <td><b>${u.username.toUpperCase()}</b></td>
+        <td><select id="role_${u.username}">${roleOptionsHtml(u.role)}</select></td>
+        <td><button class="btn btn-blue" style="font-size:16px;padding:10px 14px" onclick="saveSapUserRole('${u.username}')">Guardar</button></td>
+      </tr>`).join("")}
+    </table>
+  </div>`;
+}
+
+function roleOptionsHtml(selected){
+  return ROLE_OPTIONS.map(r=>`<option value="${r}" ${selected===r?"selected":""}>${ROLE_LABELS[r]}</option>`).join("");
+}
+
+function addSapUserRole(){
+  if(!state.sapUsers) state.sapUsers = defaultSapUsers();
+  const username = document.getElementById("newSapUser").value.trim().toLowerCase();
+  const role = document.getElementById("newSapRole").value;
+  if(!username){ alert("Introduce un usuario SAP."); return; }
+  if(!ROLE_OPTIONS.includes(role)){ alert("Rol no válido."); return; }
+  if(state.sapUsers.some(u=>u.username===username)){ alert("Ese usuario SAP ya existe en la tabla."); return; }
+  state.sapUsers.push({username, role});
+  addHistory("roles", "", "", username.toUpperCase(), 0, `Usuario SAP añadido con rol ${ROLE_LABELS[role]}`);
+  save();
+  render();
+}
+
+function saveSapUserRole(username){
+  if(!state.sapUsers) state.sapUsers = defaultSapUsers();
+  const role = document.getElementById(`role_${username}`).value;
+  if(!ROLE_OPTIONS.includes(role)){ alert("Rol no válido."); return; }
+  const u = state.sapUsers.find(x=>x.username===username);
+  if(!u){ alert("Usuario SAP no encontrado."); return; }
+  u.role = role;
+  if(state.user?.username===username){ state.user.role = role; }
+  addHistory("roles", "", "", username.toUpperCase(), 0, `Rol asignado: ${ROLE_LABELS[role]}`);
+  save();
+  pushToCloud();
+  alert("Rol guardado correctamente.");
+  render();
+}
+
+function productSelect(id, selected="P001"){
+  return `<select id="${id}">
+    ${Object.entries(PRODUCTS).map(([k,v])=>`<option value="${k}" ${selected===k?"selected":""}>${v.name}</option>`).join("")}
+  </select>`;
+}
+
+function recommendEntry(product, qty){
+  return state.racks
+    .filter(r => !r.reserved && !r.blocked)
+    .filter(r => r.product===product || !r.product)
+    .filter(r => r.capacity - r.occupied >= qty)
+    .sort((a,b)=>{
+      const sameA = a.product===product ? 0 : 1;
+      const sameB = b.product===product ? 0 : 1;
+      if(sameA!==sameB) return sameA-sameB;
+      return (a.entryDate || "2999-12-31").localeCompare(b.entryDate || "2999-12-31");
+    }).slice(0,3);
+}
+function recommendExit(product, qty){
+  return state.racks
+    .filter(r => r.product===product && r.occupied>=qty && !r.reserved && !r.blocked)
+    .sort((a,b)=>(a.entryDate||"").localeCompare(b.entryDate||""))
+    .slice(0,3);
+}
+let tempOptions = [];
+function optionHtml(opts){
+  if(!opts.length) return `<div class="alert">Sin opciones disponibles.</div>`;
+  return `<div>${opts.map((o,i)=>`
+    <div class="option ${i===0?'selected':''}" onclick="selectOption('${o.id}', this)">
+      <b>${["🥇","🥈","🥉"][i]} Estiba ${o.id}</b><br/>
+      ${productName(o.product)} · ${o.occupied}/${o.capacity} · Entrada: ${o.entryDate || "vacía"}
+    </div>`).join("")}</div>
+    <input type="hidden" id="selectedRack" value="${opts[0].id}"/>`;
+}
+function selectOption(id, el){
+  document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
+  el.classList.add("selected");
+  document.getElementById("selectedRack").value=id;
+}
+
+function moveStock(product, rackId, qty, type, detail=""){
+  qty = Number(qty);
+  if(qty<=0 || qty%2!==0){ alert("La cantidad debe ser positiva y múltiplo de 2."); return false; }
+  const r = state.racks.find(x=>x.id===rackId);
+  if(!r){ alert("Estiba no encontrada"); return false; }
+  if(r.reserved || r.blocked){ alert("Estiba reservada o bloqueada."); return false; }
+  if(type==="entrada" || type==="descarga"){
+    if(r.product && r.product!==product){ alert("No se permite mezclar productos."); return false; }
+    if(r.occupied + qty > r.capacity){ alert("Capacidad superada."); return false; }
+    r.product=product; r.occupied += qty; if(!r.entryDate) r.entryDate = new Date().toISOString().slice(0,10);
+    addHistory(type, product, "", rackId, qty, detail);
+  }else{
+    if(r.product!==product){ alert("La estiba no contiene ese producto."); return false; }
+    if(r.occupied < qty){ alert("No hay suficientes palets."); return false; }
+    r.occupied -= qty;
+    if(r.occupied===0){ r.product=""; r.entryDate=""; }
+    addHistory(type, product, rackId, type==="carro" ? "Inbound" : "", -qty, detail);
+  }
+  save(); return true;
+}
+function addHistory(type, product, origin, dest, qty, detail=""){
+  state.history.unshift({id:Date.now(), ts:now(), user:state.user?.name || "Sistema", type, product, origin, dest, qty, detail});
+}
+
+
+function datePartsFromNow(){
+  const d = new Date();
+  return {
+    date: d.toLocaleDateString("es-ES"),
+    time: d.toLocaleTimeString("es-ES", {hour12:false}),
+    iso: d.toISOString()
+  };
+}
+
+function registerAlbaranRecord(data){
+  if(!data || !data.deliveryNote || data.deliveryNote === "Sin albarán") return;
+  if(!state.albaranes) state.albaranes = [];
+  const sourceId = data.sourceId || `${data.type}_${data.deliveryNote}_${Date.now()}`;
+  if(state.albaranes.some(a=>a.sourceId === sourceId)) return;
+  const dt = datePartsFromNow();
+  const lines = (data.lines || []).map(l=>({
+    product:l.product,
+    productName:productName(l.product),
+    qty:Number(l.qty || 0),
+    rack:l.rack || "",
+    extra:!!l.extra,
+    expected:Number(l.expected || l.qty || 0)
+  })).filter(l=>l.qty>0);
+  const totalPalets = lines.reduce((sum,l)=>sum + Number(l.qty || 0),0);
+  const record = {
+    id: Date.now() + Math.floor(Math.random()*1000),
+    sourceId,
+    date: dt.date,
+    time: dt.time,
+    iso: dt.iso,
+    type:data.type || "Operación",
+    dock:data.dock || "",
+    plate:data.plate || "",
+    deliveryNote:String(data.deliveryNote || "").trim().toUpperCase(),
+    operator:data.operator || state.user?.name || "Sistema",
+    lines,
+    totalPalets,
+    status:"Completado"
+  };
+  state.albaranes.unshift(record);
+  addHistory("registro albarán", "", "", record.dock, totalPalets, `${record.type} ${record.deliveryNote} · ${record.plate} · ${totalPalets} palets`);
+}
+
+function albaranSummary(a){
+  return (a.lines || []).map(l=>`${l.productName || productName(l.product)} (${l.qty})`).join(", ");
+}
+
+function xmlEscape(value){
+  return String(value ?? "")
+    .replace(/&/g,"&amp;")
+    .replace(/</g,"&lt;")
+    .replace(/>/g,"&gt;")
+    .replace(/"/g,"&quot;")
+    .replace(/'/g,"&apos;");
+}
+
+function xlsxColName(n){
+  let s="";
+  while(n>=0){
+    s = String.fromCharCode((n % 26) + 65) + s;
+    n = Math.floor(n / 26) - 1;
+  }
+  return s;
+}
+
+function makeSheetXml(rows){
+  const sheetRows = rows.map((row, rIdx)=>{
+    const cells = row.map((value, cIdx)=>{
+      const ref = xlsxColName(cIdx) + (rIdx + 1);
+      const isNumber = typeof value === "number" && Number.isFinite(value);
+      if(isNumber){
+        return `<c r="${ref}"><v>${value}</v></c>`;
+      }
+      return `<c r="${ref}" t="inlineStr"><is><t>${xmlEscape(value)}</t></is></c>`;
+    }).join("");
+    return `<row r="${rIdx+1}">${cells}</row>`;
+  }).join("");
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+  <sheetViews><sheetView workbookViewId="0"><pane ySplit="1" topLeftCell="A2" activePane="bottomLeft" state="frozen"/></sheetView></sheetViews>
+  <cols>
+    <col min="1" max="1" width="14" customWidth="1"/>
+    <col min="2" max="2" width="12" customWidth="1"/>
+    <col min="3" max="7" width="18" customWidth="1"/>
+    <col min="8" max="8" width="38" customWidth="1"/>
+    <col min="9" max="11" width="12" customWidth="1"/>
+  </cols>
+  <sheetData>${sheetRows}</sheetData>
+</worksheet>`;
+}
+
+function crc32Array(bytes){
+  let crc = -1;
+  for(let i=0;i<bytes.length;i++){
+    crc ^= bytes[i];
+    for(let j=0;j<8;j++) crc = (crc >>> 1) ^ (0xEDB88320 & -(crc & 1));
+  }
+  return (crc ^ -1) >>> 0;
+}
+
+function strToBytes(str){
+  return new TextEncoder().encode(str);
+}
+
+function u16(n){
+  return new Uint8Array([n & 255, (n >>> 8) & 255]);
+}
+
+function u32(n){
+  return new Uint8Array([n & 255, (n >>> 8) & 255, (n >>> 16) & 255, (n >>> 24) & 255]);
+}
+
+function concatBytes(parts){
+  const total = parts.reduce((s,p)=>s+p.length,0);
+  const out = new Uint8Array(total);
+  let offset = 0;
+  parts.forEach(p=>{ out.set(p, offset); offset += p.length; });
+  return out;
+}
+
+function makeZip(files){
+  const localParts = [];
+  const centralParts = [];
+  let offset = 0;
+
+  files.forEach(file=>{
+    const nameBytes = strToBytes(file.name);
+    const dataBytes = strToBytes(file.content);
+    const crc = crc32Array(dataBytes);
+
+    const localHeader = concatBytes([
+      u32(0x04034b50), u16(20), u16(0), u16(0), u16(0), u16(0),
+      u32(crc), u32(dataBytes.length), u32(dataBytes.length),
+      u16(nameBytes.length), u16(0), nameBytes
+    ]);
+
+    localParts.push(localHeader, dataBytes);
+
+    const centralHeader = concatBytes([
+      u32(0x02014b50), u16(20), u16(20), u16(0), u16(0), u16(0), u16(0),
+      u32(crc), u32(dataBytes.length), u32(dataBytes.length),
+      u16(nameBytes.length), u16(0), u16(0), u16(0), u16(0), u32(0), u32(offset), nameBytes
+    ]);
+
+    centralParts.push(centralHeader);
+    offset += localHeader.length + dataBytes.length;
+  });
+
+  const centralDir = concatBytes(centralParts);
+  const localData = concatBytes(localParts);
+  const endRecord = concatBytes([
+    u32(0x06054b50), u16(0), u16(0), u16(files.length), u16(files.length),
+    u32(centralDir.length), u32(localData.length), u16(0)
+  ]);
+
+  return concatBytes([localData, centralDir, endRecord]);
+}
+
+function buildXlsxBlob(rows){
+  const files = [
+    {name:"[Content_Types].xml", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types">
+  <Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/>
+  <Default Extension="xml" ContentType="application/xml"/>
+  <Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/>
+  <Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/>
+</Types>`},
+    {name:"_rels/.rels", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/>
+</Relationships>`},
+    {name:"xl/workbook.xml", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+  <sheets><sheet name="Registro Albaranes" sheetId="1" r:id="rId1"/></sheets>
+</workbook>`},
+    {name:"xl/_rels/workbook.xml.rels", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
+  <Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/>
+</Relationships>`},
+    {name:"xl/worksheets/sheet1.xml", content:makeSheetXml(rows)}
+  ];
+  return new Blob([makeZip(files)], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+}
+
+function exportAlbaranesExcel(){
+  const rows = [];
+  rows.push(["Fecha","Hora","Tipo","Muelle","Matrícula","Albarán","Operario","Producto","Palets","Estiba","Estado"]);
+  (state.albaranes || []).slice().reverse().forEach(a=>{
+    (a.lines || []).forEach(l=>{
+      rows.push([a.date,a.time,a.type,a.dock,a.plate,a.deliveryNote,a.operator,l.productName || productName(l.product),Number(l.qty || 0),l.rack || "",a.status || "Completado"]);
+    });
+  });
+  if(rows.length===1){ alert("No hay albaranes registrados para exportar."); return; }
+  const blob = buildXlsxBlob(rows);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `registro_albaranes_${new Date().toISOString().slice(0,10)}.xlsx`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function openAlbaranRecord(id){
+  state.selectedAlbaranId = id;
+  save();
+  render();
+}
+
+function albaranesView(){
+  const records = state.albaranes || [];
+  const selected = records.find(a=>String(a.id)===String(state.selectedAlbaranId));
+  return `<div class="card">${backTitle("📄 Registro albaranes")}
+    <div class="alert">
+      El registro se genera automáticamente cuando una carga o descarga con albarán queda completada. El listado está agrupado por albarán.
+    </div>
+    <div class="actions" style="margin-bottom:18px">
+      <button class="btn btn-green" onclick="exportAlbaranesExcel()">⬇️ Exportar Excel</button>
+    </div>
+    ${records.length ? `<table>
+      <tr><th>Fecha</th><th>Hora</th><th>Tipo</th><th>Muelle</th><th>Matrícula</th><th>Albarán</th><th>Operario</th><th>Palets</th><th>Productos</th></tr>
+      ${records.map(a=>`<tr style="cursor:pointer" onclick="openAlbaranRecord(${a.id})">
+        <td>${a.date || "-"}</td>
+        <td>${a.time || "-"}</td>
+        <td><b>${a.type || "-"}</b></td>
+        <td>${a.dock || "-"}</td>
+        <td>${a.plate || "-"}</td>
+        <td><b>${a.deliveryNote || "-"}</b></td>
+        <td>${a.operator || "-"}</td>
+        <td><b>${a.totalPalets || 0}</b></td>
+        <td>${albaranSummary(a)}</td>
+      </tr>`).join("")}
+    </table>` : `<div class="alert">Todavía no hay albaranes registrados. Se crearán automáticamente al completar cargas o descargas con albarán.</div>`}
+    ${selected ? `<div class="card" style="margin-top:22px;box-shadow:none;border:2px solid #eee">
+      <h2>${selected.type} · Albarán ${selected.deliveryNote}</h2>
+      <div class="grid4">
+        <div class="metric"><div class="n">${selected.dock || "-"}</div><div class="t">Muelle</div></div>
+        <div class="metric"><div class="n" style="font-size:26px">${selected.plate || "-"}</div><div class="t">Matrícula</div></div>
+        <div class="metric"><div class="n">${selected.totalPalets || 0}</div><div class="t">Palets</div></div>
+        <div class="metric"><div class="n" style="font-size:22px">${selected.operator || "-"}</div><div class="t">Operario</div></div>
+      </div>
+      <h2>Detalle productos</h2>
+      <table>
+        <tr><th>Producto</th><th>Palets</th><th>Estiba</th><th>Observación</th></tr>
+        ${(selected.lines || []).map(l=>`<tr>
+          <td>${l.productName || productName(l.product)}</td>
+          <td><b>${l.qty}</b></td>
+          <td>${l.rack || "-"}</td>
+          <td>${l.extra ? "Extra no previsto" : (l.expected!==l.qty ? `Diferencia previsto ${l.expected} / real ${l.qty}` : "Correcto")}</td>
+        </tr>`).join("")}
+      </table>
+    </div>` : ""}
+  </div>`;
+}
+
+function cargaView(){
+  return `<div class="card">${backTitle("🚛 Carga camión")}
+    <div class="row">
+      <div><label>Muelle</label><select id="dock"><option>M24</option><option>M25</option><option selected>M26</option></select></div>
+      <div><label>Matrícula camión</label><input id="plate" placeholder="Ejemplo: 1234ABC"/></div>
+    </div>
+    <div class="row">
+      <div><label>Albarán</label><input id="deliveryNote" placeholder="Ejemplo: ALB-2026-000123"/></div>
+      <div><label>Producto</label>${productSelect("prod","P002A")}</div>
+    </div>
+    <div class="row">
+      <div><label>Cantidad</label><input id="qty" value="32"/></div>
+      <button class="btn btn-red" onclick="calcCarga()">Buscar Top 3 FIFO</button>
+    </div>
+    <div id="optionsBox"></div>
+    <div class="actions"><button class="btn btn-green" onclick="confirmCarga()">ESCANEAR / CONFIRMAR ESTIBA</button></div>
+  </div>`;
+}
+function calcCarga(){
+  const p=document.getElementById("prod").value, q=Number(document.getElementById("qty").value);
+  tempOptions = recommendExit(p,q);
+  document.getElementById("optionsBox").innerHTML = optionHtml(tempOptions);
+}
+function confirmCarga(){
+  const p=document.getElementById("prod").value, q=Number(document.getElementById("qty").value), d=document.getElementById("dock").value;
+  const plate=(document.getElementById("plate")?.value || "").trim().toUpperCase();
+  const deliveryNote=(document.getElementById("deliveryNote")?.value || "").trim().toUpperCase();
+  const rack=document.getElementById("selectedRack")?.value;
+  if(!rack){ alert("Calcula y selecciona una estiba."); return; }
+  const detail = deliveryNote ? `Carga ${d} matrícula ${plate || "Sin matrícula"} · Albarán ${deliveryNote}` : `Carga ${d}`;
+  if(moveStock(p,rack,q,"carga", detail)){
+    if(deliveryNote){
+      registerAlbaranRecord({
+        type:"Carga",
+        dock:d,
+        plate:plate || "Sin matrícula",
+        deliveryNote,
+        operator:state.user?.name || "Sistema",
+        lines:[{product:p, qty:q, rack}],
+        sourceId:"carga_" + Date.now()
+      });
+    }
+    alert("Carga confirmada" + (deliveryNote ? " y albarán registrado" : ""));
+    pushToCloud();
+    render();
+  }
+}
+
+
+function descargaView(){
+  const office = state.user && ["encargado","sga","checker"].includes(state.user.role);
+
+  if(office){
+    return `<div class="card">${backTitle("📦 Crear descarga camión")}
+      <div class="alert">
+        SGA/Checker crea la descarga indicando muelle, matrícula y productos. Después el carretillero selecciona muelle y matrícula para ejecutarla.
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Muelle</label>
+          <select id="dock"><option>M24</option><option>M25</option><option selected>M26</option></select>
+        </div>
+        <div>
+          <label>Matrícula camión</label>
+          <input id="plate" placeholder="Ejemplo: 1234ABC"/>
+        </div>
+      </div>
+
+      <div>
+        <label>Albarán</label>
+        <input id="deliveryNote" placeholder="Ejemplo: ALB-2026-000123"/>
+      </div>
+
+      <h2>Productos de descarga</h2>
+      <div class="alert">Puedes registrar hasta 10 productos en la misma descarga. Deja a 0 los productos que no se usen.</div>
+
+      ${Array.from({length:10},(_,idx)=>{
+        const n = idx + 1;
+        const defaults = ["P001","P027","P907","P906","P002A","P012","P905","P901","P903","P001"];
+        const qtyDefaults = [20,12,0,0,0,0,0,0,0,0];
+        return `<div class="row">
+          <div><label>Producto ${n}${n>3 ? " opcional" : ""}</label>${productSelect("prod"+n, defaults[idx])}</div>
+          <div><label>Palets</label><input id="qty${n}" value="${qtyDefaults[idx]}"/></div>
+        </div>`;
+      }).join("")}
+
+      <button class="btn btn-red" onclick="createUnloadPlan()">Crear descarga</button>
+
+      <h2>Descargas pendientes</h2>
+      <div>${unloadPlansHtml()}</div>
+    </div>`;
+  }
+
+  return `<div class="card">${backTitle("📦 Descarga camión")}
+    <div class="alert">
+      Selecciona el muelle donde estás trabajando y abre la matrícula creada por SGA/Checker.
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Muelle</label>
+        <select id="dock" onchange="showUnloadPlansByDock()">
+          <option>M24</option>
+          <option>M25</option>
+          <option selected>M26</option>
+        </select>
+      </div>
+      <div>
+        <label>Descargas pendientes</label>
+        <select id="unloadSelect"></select>
+      </div>
+    </div>
+
+    <button class="btn btn-red" onclick="openUnloadPlan()">Abrir matrícula</button>
+
+    <div id="unloadPlansBox"></div>
+    <div id="unloadWorkBox"></div>
+  </div>`;
+}
+
+function createUnloadPlan(){
+  const dock = document.getElementById("dock").value;
+  const plate = document.getElementById("plate").value.trim().toUpperCase();
+  const deliveryNote = document.getElementById("deliveryNote").value.trim().toUpperCase();
+  if(!plate){ alert("Introduce la matrícula del camión."); return; }
+  if(!deliveryNote){ alert("Introduce el albarán de la descarga."); return; }
+
+  const lines = [];
+  for(let i=1;i<=10;i++){
+    const productEl = document.getElementById("prod"+i);
+    const qtyEl = document.getElementById("qty"+i);
+    if(!productEl || !qtyEl) continue;
+    const product = productEl.value;
+    const qty = Number(qtyEl.value);
+    if(qty>0){
+      if(qty % 2 !== 0){ alert("Las cantidades deben ser múltiplos de 2 palets."); return; }
+      lines.push({id: Date.now()+i, product, expected: qty, received: qty, done:false, rack:""});
+    }
+  }
+
+  if(!lines.length){ alert("Añade al menos un producto con cantidad."); return; }
+
+  if(!state.unloadPlans) state.unloadPlans = [];
+
+  state.unloadPlans.push({
+    id: Date.now(),
+    dock,
+    plate,
+    deliveryNote,
+    lines,
+    status:"pendiente",
+    createdBy: state.user.name,
+    createdAt: now()
+  });
+
+  addHistory("crear descarga", "", "", dock, 0, `Matrícula ${plate}. Albarán ${deliveryNote}. Líneas: ${lines.length}`);
+  save();
+  pushToCloud();
+  alert("Descarga creada para " + dock + " / " + plate + " / Albarán " + deliveryNote);
+  
+}
+
+function unloadPlansHtml(){
+  const plans = (state.unloadPlans || []).filter(p=>p.status==="pendiente");
+  if(!plans.length) return `<div class="alert">No hay descargas pendientes.</div>`;
+
+  return plans.map(p=>`<div class="option">
+    <b>${p.dock} · ${p.plate}</b><br/>
+    Albarán: <b>${p.deliveryNote || "Sin albarán"}</b><br/>
+    Creada por ${p.createdBy} · ${p.createdAt}<br/>
+    ${p.lines.map(l=>`${productName(l.product)}: ${l.expected} palets ${l.done ? "✅" : ""}`).join("<br/>")}
+  </div>`).join("");
+}
+
+function showUnloadPlansByDock(){
+  const dock = document.getElementById("dock").value;
+  const select = document.getElementById("unloadSelect");
+  const plans = (state.unloadPlans || []).filter(p=>p.status==="pendiente" && p.dock===dock);
+
+  if(!plans.length){
+    select.innerHTML = `<option value="">Sin descargas pendientes</option>`;
+    return;
+  }
+
+  select.innerHTML = plans.map(p=>`<option value="${p.id}">${p.plate} · Alb. ${p.deliveryNote || "-"} · ${p.lines.filter(l=>!l.done).length} productos pendientes</option>`).join("");
+}
+
+function openUnloadPlan(){
+  showUnloadPlansByDock();
+  const id = Number(document.getElementById("unloadSelect").value);
+  const plan = (state.unloadPlans || []).find(p=>p.id===id);
+  const box = document.getElementById("unloadPlansBox");
+
+  if(!plan){
+    box.innerHTML = `<div class="alert">No hay descarga pendiente para este muelle.</div>`;
+    return;
+  }
+
+  box.innerHTML = `
+    <div class="card" style="box-shadow:none;border:2px solid #eee">
+      <h2>Descarga ${plan.dock} · Matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"}</h2>
+      <div class="alert">Confirma cada producto por separado. Si la cantidad real no coincide, modifica "recibido real" y continúa sin bloquear la operación.</div>
+      ${plan.lines.map((l,idx)=>`
+        <div class="option">
+          <b>${idx+1}. ${productName(l.product)} ${l.extra ? "· EXTRA NO PREVISTO" : ""}</b><br/>
+          ${l.extra ? `No previsto en descarga · Recibido: ${l.received} palets` : `Previsto: ${l.expected} palets`} · Estado: ${l.done ? "✅ Ubicado" : "Pendiente"}
+          ${!l.done ? `
+            <div class="row" style="margin-top:12px">
+              <div>
+                <label>Recibido real</label>
+                <input id="received_${l.id}" value="${l.received}"/>
+              </div>
+              <div style="display:flex;align-items:end">
+                <button class="btn btn-gray" onclick="calcUnloadLine(${plan.id}, ${l.id})">Buscar estiba FIFO</button>
+              </div>
+            </div>
+          ` : ""}
+        </div>
+      `).join("")}
+
+      <div class="option" style="border-color:#2563eb;background:#eff6ff">
+        <b>➕ Añadir producto no previsto</b><br/>
+        Usa esta opción cuando el camión trae un producto que no estaba en la descarga inicial.
+        <div class="row" style="margin-top:12px">
+          <div>
+            <label>Producto extra</label>
+            ${productSelect("extraUnloadProduct", "P907")}
+          </div>
+          <div>
+            <label>Palets extra</label>
+            <input id="extraUnloadQty" value="2"/>
+          </div>
+        </div>
+        <button class="btn btn-blue" onclick="addExtraUnloadLine(${plan.id})">Añadir a esta descarga</button>
+      </div>
+    </div>
+  `;
+}
+
+function addExtraUnloadLine(planId){
+  const plan = (state.unloadPlans || []).find(p=>p.id===planId);
+  if(!plan){ alert("Descarga no encontrada."); return; }
+
+  const product = document.getElementById("extraUnloadProduct")?.value;
+  const qty = Number(document.getElementById("extraUnloadQty")?.value);
+
+  if(!product){ alert("Selecciona el producto extra."); return; }
+  if(qty<=0 || qty%2!==0){ alert("La cantidad extra debe ser positiva y múltiplo de 2 palets."); return; }
+
+  plan.lines.push({
+    id: Date.now(),
+    product,
+    expected: 0,
+    received: qty,
+    done: false,
+    rack: "",
+    extra: true,
+    addedBy: state.user?.name || "Sistema",
+    addedAt: now()
+  });
+
+  addHistory("producto extra descarga", product, "", plan.dock, qty, `Producto no previsto añadido a matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"}`);
+  save();
+  alert(`${productName(product)} añadido como producto extra (${qty} palets).`);
+  openUnloadPlan();
+}
+
+function calcUnloadLine(planId, lineId){
+  const plan = (state.unloadPlans || []).find(p=>p.id===planId);
+  const line = plan?.lines.find(l=>l.id===lineId);
+  if(!plan || !line){ alert("Línea no encontrada."); return; }
+
+  const received = Number(document.getElementById("received_"+line.id).value);
+  if(received<=0 || received%2!==0){ alert("Cantidad recibida debe ser múltiplo de 2."); return; }
+
+  line.received = received;
+
+  tempOptions = recommendEntry(line.product, received);
+  const recommended = tempOptions[0]?.id || "";
+
+  document.getElementById("unloadWorkBox").innerHTML = `
+    <div class="card" style="box-shadow:none;border:2px solid #eee;margin-top:20px">
+      <h2>Ubicar producto</h2>
+
+      <div class="row">
+        <div>
+          <div class="small">Matrícula</div>
+          <div class="value">${plan.plate}</div>
+        </div>
+        <div>
+          <div class="small">Muelle</div>
+          <div class="value">${plan.dock}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="small">Albarán</div>
+          <div class="value">${plan.deliveryNote || "Sin albarán"}</div>
+        </div>
+        <div>
+          <div class="small">Estado descarga</div>
+          <div class="value">${plan.status}</div>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <div class="small">Producto</div>
+          <div class="value">${productName(line.product)}</div>
+        </div>
+        <div>
+          <div class="small">Cantidad real</div>
+          <div class="value">${received}</div>
+        </div>
+      </div>
+
+      ${line.extra ? `<div class="alert">➕ Producto no previsto en la descarga inicial. Se ubicará como extra real: ${received} palets.</div>` : (received !== line.expected ? `<div class="alert">⚠ Diferencia: previsto ${line.expected}, recibido ${received}. Se ubicará cantidad real.</div>` : `<div class="ok">✅ Cantidad física confirmada.</div>`)}
+
+      <h2>Top 3 estibas FIFO</h2>
+      ${optionHtml(tempOptions)}
+
+      <input type="hidden" id="activeUnloadPlan" value="${plan.id}"/>
+      <input type="hidden" id="activeUnloadLine" value="${line.id}"/>
+
+      <div class="row" style="margin-top:18px">
+        <div>
+          <label>Estiba seleccionada por la app</label>
+          <input id="expectedRack" value="${recommended}" readonly/>
+        </div>
+        <div>
+          <label>Escanear / introducir estiba real</label>
+          <input id="scannedRack" placeholder="Ejemplo: ${recommended}"/>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-blue" onclick="validateUnloadRack(${plan.id}, ${line.id})">VALIDAR ESTIBA</button>
+        <button class="btn btn-green" id="confirmUnloadBtn" onclick="confirmUnloadLine(${plan.id}, ${line.id})" disabled style="opacity:.45">CONFIRMAR UBICACIÓN</button>
+      </div>
+
+      <div id="unloadValidationMsg"></div>
+    </div>
+  `;
+
+  save();
+}
+
+function validateUnloadRack(planId, lineId){
+  const selected = document.getElementById("selectedRack")?.value;
+  const scanned = document.getElementById("scannedRack")?.value.trim();
+  const msg = document.getElementById("unloadValidationMsg");
+  const btn = document.getElementById("confirmUnloadBtn");
+
+  if(!selected){
+    msg.innerHTML = `<div class="alert">Primero selecciona una estiba del Top 3.</div>`;
+    btn.disabled = true; btn.style.opacity = ".45"; return;
+  }
+
+  if(!scanned){
+    msg.innerHTML = `<div class="alert">Introduce o escanea la estiba real.</div>`;
+    btn.disabled = true; btn.style.opacity = ".45"; return;
+  }
+
+  if(scanned !== selected){
+    msg.innerHTML = `<div class="alert">❌ ERROR: estiba introducida ${scanned}, pero la seleccionada es ${selected}. No se puede confirmar.</div>`;
+    btn.disabled = true; btn.style.opacity = ".45"; return;
+  }
+
+  msg.innerHTML = `<div class="ok">✅ Estiba correcta. Puedes confirmar ubicación.</div>`;
+  btn.disabled = false; btn.style.opacity = "1";
+}
+
+function confirmUnloadLine(planId, lineId){
+  const plan = (state.unloadPlans || []).find(p=>p.id===planId);
+  const line = plan?.lines.find(l=>l.id===lineId);
+  const rack = document.getElementById("selectedRack")?.value;
+  const scanned = document.getElementById("scannedRack")?.value.trim();
+
+  if(!plan || !line){ alert("Línea no encontrada."); return; }
+  if(!rack || scanned !== rack){ alert("No se puede confirmar. La estiba no está validada."); return; }
+
+  const unloadDetail = line.extra
+    ? `Descarga ${plan.dock} matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"} · EXTRA NO PREVISTO`
+    : (line.received !== line.expected ? `Descarga ${plan.dock} matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"} · Diferencia previsto ${line.expected} / real ${line.received}` : `Descarga ${plan.dock} matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"}`);
+
+  if(moveStock(line.product, rack, line.received, "descarga", unloadDetail)){
+    line.done = true;
+    line.rack = rack;
+
+    if(plan.lines.every(l=>l.done)){
+      plan.status = "completada";
+      plan.completedAt = now();
+      registerAlbaranRecord({
+        type:"Descarga",
+        dock:plan.dock,
+        plate:plan.plate || "Sin matrícula",
+        deliveryNote:plan.deliveryNote || "Sin albarán",
+        operator:state.user?.name || plan.createdBy || "Sistema",
+        lines:plan.lines.map(l=>({product:l.product, qty:Number(l.received || l.expected || 0), rack:l.rack || "", extra:!!l.extra, expected:Number(l.expected || 0)})),
+        sourceId:"descarga_" + plan.id
+      });
+    }
+
+    save();
+
+    if(plan.status === "completada"){
+      pushToCloud();
+      alert(`Descarga completada. Último producto ubicado: ${productName(line.product)} → Estiba ${rack}`);
+      render();
+    }else{
+      const pending = plan.lines.filter(l=>!l.done).length;
+      pushToCloud();
+      alert(`Producto ubicado. ${productName(line.product)} → Estiba ${rack}. Quedan ${pending} producto(s) por confirmar.`);
+      openUnloadPlan();
+      const workBox = document.getElementById("unloadWorkBox");
+      if(workBox){
+        workBox.innerHTML = `<div class="ok">✅ Producto confirmado. Continúa con el siguiente producto pendiente de esta misma descarga.</div>`;
+      }
+    }
+  }
+}
+
+function carroView(){
+  const canManage = state.user && ["encargado","sga"].includes(state.user.role);
+
+  return `<div class="card">${backTitle("🚜 Carro interno")}
+    <div class="alert">Carro interno: siempre Campa → Inbound · 1 carro = 24 palets.</div>
+
+    ${canManage ? `
+      <h2>Crear solicitud de turno</h2>
+      <div class="row">
+        <div><label>Turno</label><select id="shift"><option>Mañana</option><option selected>Tarde</option><option>Noche</option></select></div>
+        <div><label>Producto</label>${productSelect("prod","P001")}</div>
+      </div>
+      <div class="row">
+        <div><label>Carros solicitados</label><input id="carts" value="10"/></div>
+        <button class="btn btn-red" onclick="createCartRequest()">Crear solicitud</button>
+      </div>
+    ` : `
+      <h2>Solicitudes activas</h2>
+      <div class="alert">
+        Modo carretillero: solo puedes ejecutar solicitudes creadas por Encargado/SGA.
+      </div>
+    `}
+
+    <h2>Tareas activas</h2>
+    <div id="cartList">${cartListHtml()}</div>
+
+    ${canManage ? `
+      <h2>Solicitudes canceladas / completadas</h2>
+      <div>${cartClosedHtml()}</div>
+    ` : ""}
+
+    <div id="optionsBox"></div>
+  </div>`;
+}
+function createCartRequest(){
+  if(!state.user || !["encargado","sga"].includes(state.user.role)){
+    alert("Solo Encargado/SGA pueden crear solicitudes de carros.");
+    return;
+  }
+  const req = {id:Date.now(), shift:document.getElementById("shift").value, product:document.getElementById("prod").value, requested:Number(document.getElementById("carts").value), done:0, status:"activa"};
+  state.cartRequests.push(req);
+  addHistory("crear solicitud carros", req.product, "", "Inbound", 0, `Turno ${req.shift}. Carros solicitados: ${req.requested}`);
+  save();
+  pushToCloud();
+}
+function cartClosedHtml(){
+  const closed = state.cartRequests
+    .filter(r=>r.status==="cancelada" || r.status==="completada")
+    .slice(-8)
+    .reverse();
+
+  if(!closed.length) return `<div class="alert">Sin solicitudes cerradas todavía.</div>`;
+
+  return closed.map(r=>`<div class="option" style="opacity:.82">
+    <b>${r.status==="cancelada" ? "❌ Cancelada" : "✅ Completada"} · ${productName(r.product)}</b><br/>
+    Turno ${r.shift} · Realizados ${r.done}/${r.requested}
+    ${r.status==="cancelada" ? `<br/><span class="small">Cancelada por ${r.cancelledBy || "-"} · Motivo: ${r.cancelReason || "-"}</span>` : ""}
+  </div>`).join("");
+}
+
+function cartListHtml(){
+  const active = state.cartRequests.filter(r=>r.status==="activa");
+  if(!active.length) return `<div class="alert">No hay solicitudes activas.</div>`;
+  const canCancel = state.user && ["encargado","sga"].includes(state.user.role);
+  return active.map(r=>`<div class="option">
+    <b>${productName(r.product)}</b><br/>
+    Turno ${r.shift} · Carros ${r.done}/${r.requested} · Pendientes ${r.requested-r.done}
+    <div class="actions" style="margin-top:12px">
+      <button class="btn btn-gray" onclick="calcCarro(${r.id})">Buscar estiba FIFO</button>
+      ${canCancel ? `<button class="btn btn-red" onclick="cancelCartRequest(${r.id})">Cancelar solicitud</button>` : ""}
+    </div>
+  </div>`).join("");
+}
+
+function cancelCartRequest(id){
+  const req = state.cartRequests.find(r=>r.id===id);
+  if(!req){ alert("Solicitud no encontrada."); return; }
+
+  const pending = req.requested - req.done;
+  const reason = prompt(
+    `Motivo de cancelación para ${productName(req.product)}\n` +
+    `Carros realizados: ${req.done}/${req.requested}\n` +
+    `Carros pendientes que se cancelan: ${pending}`,
+    "Cambio de planificación / producción cancelada"
+  );
+
+  if(reason === null) return;
+
+  if(!reason.trim()){
+    alert("Debes indicar un motivo para cancelar la solicitud.");
+    return;
+  }
+
+  req.status = "cancelada";
+  req.cancelledAt = now();
+  req.cancelledBy = state.user.name;
+  req.cancelReason = reason.trim();
+
+  addHistory(
+    "cancelación carros",
+    req.product,
+    "",
+    "Inbound",
+    0,
+    `Solicitud cancelada. Realizados ${req.done}/${req.requested}. Pendientes cancelados ${pending}. Motivo: ${reason.trim()}`
+  );
+
+  save();
+  alert("Solicitud de carros cancelada. Queda registrada en historial.");
+  
+}
+
+function calcCarro(id){
+  const req=state.cartRequests.find(r=>r.id===id);
+  tempOptions = recommendExit(req.product,24);
+  const recommended = tempOptions[0]?.id || "";
+  document.getElementById("optionsBox").innerHTML = `
+    <div class="card" style="box-shadow:none;border:2px solid #eee">
+      <h2>Orden carro interno</h2>
+      <div class="row">
+        <div>
+          <div class="small">Producto</div>
+          <div class="value">${productName(req.product)}</div>
+        </div>
+        <div>
+          <div class="small">Carros</div>
+          <div class="value">${req.done}/${req.requested}</div>
+        </div>
+      </div>
+
+      <div class="alert">
+        La app recomienda coger de la estiba FIFO. Para descontar 24 palets, primero hay que escanear o introducir la estiba.
+      </div>
+
+      <h2>Top 3 estibas FIFO</h2>
+      ${optionHtml(tempOptions)}
+
+      <input type="hidden" id="activeReq" value="${id}"/>
+
+      <div class="row" style="margin-top:18px">
+        <div>
+          <label>Estiba indicada por la app</label>
+          <input id="expectedRack" value="${recommended}" readonly/>
+        </div>
+        <div>
+          <label>Escanear / introducir estiba real</label>
+          <input id="scannedRack" placeholder="Ejemplo: ${recommended}"/>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-blue" onclick="validateCartRack(${id})">VALIDAR ESTIBA</button>
+        <button class="btn btn-green" id="confirmCartBtn" onclick="confirmCarro(${id})" disabled style="opacity:.45">CONFIRMAR 24 PALETS</button>
+      </div>
+
+      <div id="cartValidationMsg"></div>
+    </div>
+  `;
+}
+
+function validateCartRack(id){
+  const selected = document.getElementById("selectedRack")?.value;
+  const scanned = document.getElementById("scannedRack")?.value.trim();
+  const msg = document.getElementById("cartValidationMsg");
+  const btn = document.getElementById("confirmCartBtn");
+
+  if(!selected){
+    msg.innerHTML = `<div class="alert">Primero selecciona una estiba del Top 3.</div>`;
+    btn.disabled = true;
+    btn.style.opacity = ".45";
+    return;
+  }
+
+  if(!scanned){
+    msg.innerHTML = `<div class="alert">Introduce o escanea el número de estiba.</div>`;
+    btn.disabled = true;
+    btn.style.opacity = ".45";
+    return;
+  }
+
+  if(scanned !== selected){
+    msg.innerHTML = `<div class="alert">❌ ERROR: la estiba escaneada es ${scanned}, pero la seleccionada/recomendada es ${selected}. No se puede confirmar.</div>`;
+    btn.disabled = true;
+    btn.style.opacity = ".45";
+    return;
+  }
+
+  msg.innerHTML = `<div class="ok">✅ Estiba correcta: ${scanned}. Ya puedes confirmar el carro de 24 palets.</div>`;
+  btn.disabled = false;
+  btn.style.opacity = "1";
+}
+
+function confirmCarro(id){
+  const req=state.cartRequests.find(r=>r.id===id);
+  const rack=document.getElementById("selectedRack")?.value;
+  const scanned=document.getElementById("scannedRack")?.value.trim();
+
+  if(!rack){
+    alert("Primero busca y selecciona una estiba FIFO.");
+    return;
+  }
+
+  if(scanned !== rack){
+    alert("No se puede confirmar. La estiba escaneada/introducida no coincide con la estiba seleccionada.");
+    return;
+  }
+
+  if(moveStock(req.product,rack,24,"carro",`Carro ${req.done+1}/${req.requested}`)){
+    req.done += 1;
+    if(req.done>=req.requested) req.status="completada";
+    save();
+    pushToCloud();
+    alert("Carro confirmado. Se han descontado 24 palets de la estiba " + rack);
+    render();
+  }
+}
+
+
+function incidenciaView(){
+ const office=state.user && ["encargado","sga"].includes(state.user.role);
+ const pending=state.incidents.filter(i=>i.status==="abierta"||i.status==="pendiente");
+ const resolved=state.incidents.filter(i=>i.status==="resuelta");
+ return `<div class="card">${backTitle("⚠ Incidencias")}
+ <div class="row">
+ <div><label>Tipo</label><select id="type"><option>Palet roto</option><option>Caída de carga</option><option>Estiba mezclada</option><option>Producto equivocado</option></select></div>
+ <div><label>Estiba</label><input id="rack" value="136"/></div></div>
+ <div class="row">
+ <div><label>Producto</label>${productSelect("prod","P001")}</div>
+ <div><label>Cantidad</label><input id="qty" value="2"/></div></div>
+ <label>Observaciones</label><textarea id="detail"></textarea>
+ <button class="btn btn-red" onclick="createIncident()">Registrar incidencia</button>
+
+ ${office?`<h2>Pendientes</h2>
+ ${pending.map(i=>`<div class="option"><b>${i.type}</b><br/>Estiba ${i.rack}<br/>${productName(i.product)}<br/>Estado:${i.status}
+ <div class="actions"><button class="btn btn-green" onclick="resolveIncident(${i.id})">Resolver</button></div></div>`).join("")||"<div class='alert'>Sin pendientes</div>"}
+
+ <h2>Resueltas</h2>
+ ${resolved.map(i=>`<div class="option"><b>${i.type}</b><br/>Estiba ${i.rack}<br/>Resuelta:${i.resolvedAt||""}</div>`).join("")||"<div class='alert'>Sin resueltas</div>"}`:""}
+ </div>`;
+}
+function createIncident(){
+  const inc={id:Date.now(), ts:now(), user:state.user.name, type:document.getElementById("type").value, rack:document.getElementById("rack").value, product:document.getElementById("prod").value, qty:Number(document.getElementById("qty").value), detail:document.getElementById("detail").value, status:"abierta"};
+  state.incidents.unshift(inc);
+  const r=state.racks.find(x=>x.id===inc.rack);
+  if(r && ["Estiba mezclada","Producto equivocado"].includes(inc.type)) r.blocked=true;
+  if(r && ["Palet roto","Caída de carga"].includes(inc.type)){ r.occupied=Math.max(0,r.occupied-inc.qty); }
+  addHistory("incidencia",inc.product,inc.rack,"",-inc.qty,inc.type+" "+inc.detail);
+  save();
+  pushToCloud();
+  alert("Incidencia registrada");
+}
+
+function dashboardView(){
+  const cap=state.racks.reduce((a,r)=>a+r.capacity,0);
+  const occ=state.racks.reduce((a,r)=>a+r.occupied,0);
+  const metrics={
+    occupancy:Math.round((occ/cap)*100),
+    empty:state.racks.filter(r=>r.occupied===0&&!r.reserved).length,
+    reserved:state.racks.filter(r=>r.reserved).length,
+    incidents:state.incidents.filter(i=>i.status==="abierta").length,
+    pending:state.cartRequests.filter(r=>r.status==="activa").reduce((a,r)=>a+(r.requested-r.done),0)
+  };
+  return `<div class="card">${backTitle("📊 Dashboard Encargado / SGA")}
+    <div class="grid4">
+      <div class="metric"><div class="t">Ocupación</div><div class="n">${metrics.occupancy}%</div></div>
+      <div class="metric"><div class="t">Vacías</div><div class="n">${metrics.empty}</div></div>
+      <div class="metric"><div class="t">Reservadas</div><div class="n">${metrics.reserved}</div></div>
+      <div class="metric"><div class="t">Incidencias</div><div class="n">${metrics.incidents}</div></div>
+    </div>
+    <div class="alert">Carros pendientes para siguiente turno: <b>${metrics.pending}</b></div>
+    <h2>Carros internos por turno</h2>
+    <table><tr><th>Turno</th><th>Realizados</th><th>Pendientes</th></tr>
+      ${["Mañana","Tarde","Noche"].map(s=>{
+        const req=state.cartRequests.filter(r=>r.shift===s);
+        const done=req.reduce((a,r)=>a+r.done,0);
+        const pen=req.filter(r=>r.status==="activa").reduce((a,r)=>a+(r.requested-r.done),0);
+        return `<tr><td>${s}</td><td>${done}</td><td>${pen}</td></tr>`;
+      }).join("")}
+    </table>
+  </div>`;
+}
+
+
+
+function applyRealCampLayout(){
+  state.racks.forEach((r,i)=>{ r.mapX=-9999; r.mapY=-9999; r.mapW=48; r.mapH=110; r.mapDir="v"; });
+
+  const V=(ids,x,y,dx=54,dy=0)=>{ ids.forEach((id,i)=>{ const r=state.racks.find(a=>a.id===String(id)); if(!r)return; r.mapX=x+i*dx; r.mapY=y+i*dy; r.mapW=48; r.mapH=110; r.mapDir="v"; }); };
+  const H=(ids,x,y,dx=0,dy=50)=>{ ids.forEach((id,i)=>{ const r=state.racks.find(a=>a.id===String(id)); if(!r)return; r.mapX=x+i*dx; r.mapY=y+i*dy; r.mapW=116; r.mapH=42; r.mapDir="h"; }); };
+
+  V([21,22,23,24,25,26,27,28,29,30,31,32,33,34,35],40,70);
+  V([15,16,17,18,19,20],40,330);
+  V([10,11,12,13,14],40,575);
+  V([1,2,3,4,5,6,7,8,9],40,820);
+
+  let d24=state.racks.find(r=>r.id==="184"); if(d24){d24.mapX=235;d24.mapY=180;d24.mapW=92;d24.mapH=55;d24.mapDir="h";}
+  let d25=state.racks.find(r=>r.id==="185"); if(d25){d25.mapX=235;d25.mapY=430;d25.mapW=92;d25.mapH=55;d25.mapDir="h";}
+  let d26=state.racks.find(r=>r.id==="186"); if(d26){d26.mapX=235;d26.mapY=680;d26.mapW=92;d26.mapH=55;d26.mapDir="h";}
+
+  V([36,37,38,39,40,41,42],390,330);
+  V([43,44,45,46,47,48,49,50,51,52],390,575);
+  V([53,54,55,56,57,58,59,60],390,820);
+
+  H([61,62,63,64,65,66,67,68,69,70],620,575);
+  H([71,72,73,74,75,76,77,78,79,80],760,330);
+  H([81,82,83,84,85,86,87],760,760);
+
+  H([88,89,90,91,92,93,94,95,96,97,98,99,100],980,760,0,46);
+  H([101,102,103,104,105,106,107],980,70);
+  H([108,109,110,111,112,113,114,115,116,117,118,119,120,121,122,123],1125,70);
+  H([124,125,126,127,128,129,130,131,132,133,134,135,136,137,138,139,140,141,142],1125,545,0,44);
+
+  H([149,150,151,152,153,154,155,156,157,158,159,160,161,162,163,164,165,166,167,168,169,170,171,172,173,174,175,176,177,178,179,180,181,182,183],1410,60,0,29);
+  H([143,144,145,146,147,148],1285,70);
+
+  save(); 
+}
+
+function mapaView(){
+  function cls(r){
+    if(r.blocked) return "blocked";
+    if(r.reserved) return "reserved";
+    if(r.occupied>=r.capacity) return "full";
+    if(r.occupied > 0 && r.occupied <= 50) return "mid";
+    if(r.occupied>0) return "ok";
+    return "empty";
+  }
+
+  const stock = {};
+  state.racks.forEach(r=>{
+    if(!r.product || r.occupied<=0) return;
+    if(!stock[r.product]) stock[r.product] = {product:r.product,total:0,racks:0,reserved:0,blocked:0};
+    stock[r.product].total += r.occupied;
+    stock[r.product].racks += 1;
+    if(r.reserved) stock[r.product].reserved += r.occupied;
+    if(r.blocked) stock[r.product].blocked += r.occupied;
+  });
+
+  const stockRows = Object.values(stock)
+    .sort((a,b)=>productName(a.product).localeCompare(productName(b.product)))
+    .map(s=>`<tr>
+      <td><b>${productName(s.product)}</b></td>
+      <td>${s.total}</td>
+      <td>${s.racks}</td>
+      <td>${s.reserved}</td>
+      <td>${s.blocked}</td>
+    </tr>`).join("");
+
+  return `<div class="card">${backTitle("🗺️ Mapa campa")}
+    <div class="alert">
+      🟢 Empezada · 🟡 Parcial · 🔴 Completa · ⚪ Vacía · 🔵 Reservada · 🟣 Bloqueada<br/>
+      Mapa por bloques limpios: estibas, pasillos y muelles M24/M25/M26.
+    </div>
+
+    <div class="actions">
+      <button class="btn btn-red" onclick="toggleMapMenu()">✏️ Editar mapa</button><button class="btn btn-gray" onclick="zoomMapOut()">➖ Zoom</button><button class="btn btn-gray" onclick="zoomMapIn()">➕ Zoom</button><button class="btn btn-gray" onclick="zoomMapReset()">🔄 Reset</button>
+      
+    </div>
+
+    <div id="rackEditorBox"></div>
+
+    <div class="map-canvas">
+      <div class="clean-map">
+        <!-- Pasillos principales -->
+        <div class="clean-aisle" style="left:20px;top:245px;width:1620px;height:42px"></div>
+        <div class="clean-aisle" style="left:20px;top:500px;width:1620px;height:42px"></div>
+        <div class="clean-aisle" style="left:20px;top:745px;width:1620px;height:42px"></div>
+
+        <!-- Pasillos verticales -->
+        <div class="clean-aisle" style="left:335px;top:40px;width:42px;height:1030px"></div>
+        <div class="clean-aisle" style="left:555px;top:40px;width:42px;height:1030px"></div>
+        <div class="clean-aisle" style="left:905px;top:40px;width:42px;height:1030px"></div>
+        <div class="clean-aisle" style="left:1265px;top:40px;width:52px;height:1030px"></div>
+
+        <!-- Muelles -->
+        <div class="clean-dock" style="left:220px;top:185px">M24</div>
+        <div class="clean-dock" style="left:220px;top:435px">M25</div>
+        <div class="clean-dock" style="left:220px;top:685px">M26</div>
+
+        ${state.racks.filter(r=>r.mapX>-1000).map(r=>`<div class="map-block ${cls(r)} ${r.mapDir==='h'?'h':''}" onclick="showRackEditor('${r.id}')" style="left:${r.mapX}px;top:${r.mapY}px;width:${r.mapW||48}px;height:${r.mapH||110}px">
+          <b>${r.id}</b><br/>
+          ${productName(r.product).slice(0,15)}<br/>
+          ${r.occupied}/${r.capacity}
+        </div>`).join("")}
+      </div>
+    </div>
+
+    <div style="margin-top:28px">
+      <h2>📦 Stock actual por producto</h2>
+      <div class="alert">Stock calculado en tiempo real según las estibas actuales.</div>
+      <table>
+        <tr>
+          <th>Producto</th>
+          <th>Palets totales</th>
+          <th>Estibas con stock</th>
+          <th>Palets en reservadas</th>
+          <th>Palets bloqueados</th>
+        </tr>
+        ${stockRows || `<tr><td colspan="5">No hay stock registrado.</td></tr>`}
+      </table>
+    </div>
+  </div>`;
+}
+
+function showRackEditor(rackId=""){
+  const id = rackId || state.racks[0]?.id || "";
+  const r = state.racks.find(x=>x.id===id);
+  if(!r){ return; }
+
+  document.getElementById("rackEditorBox").innerHTML = `
+    <div class="map-editor">
+      <h2>Editar estiba</h2>
+      <div class="row">
+        <div>
+          <label>Seleccionar estiba</label>
+          <select id="editRackId" onchange="showRackEditor(this.value)">
+            ${state.racks.map(x=>`<option value="${x.id}" ${x.id===r.id?"selected":""}>Estiba ${x.id}</option>`).join("")}
+          </select>
+        </div>
+        <div>
+          <label>Capacidad</label>
+          <input id="editCapacity" value="${r.capacity}"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Producto</label>
+          ${productSelect("editProduct", r.product || "P001")}
+        </div>
+        <div>
+          <label>Palets actuales</label>
+          <input id="editOccupied" value="${r.occupied}"/>
+        </div>
+      </div>
+
+      <div class="row">
+        <div>
+          <label>Zona</label>
+          <input id="editZone" value="${r.zone || ""}" placeholder="Frontal / Central / Trasera / Precarga..."/>
+        </div>
+        <div>
+          <label>Estado</label>
+          <select id="editStatus">
+            <option value="activa" ${!r.reserved && !r.blocked ? "selected" : ""}>Activa</option>
+            <option value="reservada" ${r.reserved ? "selected" : ""}>Reservada</option>
+            <option value="bloqueada" ${r.blocked ? "selected" : ""}>Bloqueada</option>
+          </select>
+        </div>
+      </div>
+
+      <h2>Posición visual en mapa</h2>
+      <div class="row">
+        <div>
+          <label>Posición X</label>
+          <input id="editMapX" value="${r.mapX || 20}"/>
+        </div>
+        <div>
+          <label>Posición Y</label>
+          <input id="editMapY" value="${r.mapY || 20}"/>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-green" onclick="saveRackEdit()">Guardar cambios</button>
+        <button class="btn btn-gray" onclick="moveRackQuick(-20,0)">←</button>
+        <button class="btn btn-gray" onclick="moveRackQuick(20,0)">→</button>
+        <button class="btn btn-gray" onclick="moveRackQuick(0,-20)">↑</button>
+        <button class="btn btn-gray" onclick="moveRackQuick(0,20)">↓</button>
+      </div>
+    </div>
+  `;
+}
+
+function saveRackEdit(){
+  const id = document.getElementById("editRackId").value;
+  const r = state.racks.find(x=>x.id===id);
+  if(!r) return;
+
+  const status = document.getElementById("editStatus").value;
+  const occupied = Number(document.getElementById("editOccupied").value);
+  const capacity = Number(document.getElementById("editCapacity").value);
+
+  if(capacity <= 0){ alert("Capacidad no válida"); return; }
+  if(occupied < 0 || occupied > capacity){ alert("Palets actuales no válidos"); return; }
+
+  r.capacity = capacity;
+  r.occupied = occupied;
+  r.product = occupied > 0 ? document.getElementById("editProduct").value : "";
+  r.zone = document.getElementById("editZone").value;
+  r.reserved = status === "reservada";
+  r.blocked = status === "bloqueada";
+  r.mapX = Number(document.getElementById("editMapX").value);
+  r.mapY = Number(document.getElementById("editMapY").value);
+
+  addHistory("editar estiba", r.product, r.id, "", 0, `Estiba ${r.id} editada desde mapa campa`);
+  save();
+  
+}
+
+function moveRackQuick(dx,dy){
+  const id = document.getElementById("editRackId").value;
+  const r = state.racks.find(x=>x.id===id);
+  if(!r) return;
+  r.mapX = Number(r.mapX || 20) + dx;
+  r.mapY = Number(r.mapY || 20) + dy;
+  save();
+  render();
+  setTimeout(()=>showRackEditor(id), 50);
+}
+
+function resetMapLayout(){
+  if(!confirm("¿Restablecer la distribución visual demo del mapa?")) return;
+  state.racks.forEach((r,i)=>{
+    r.mapX = 20 + ((i % 12) * 92);
+    r.mapY = 20 + (Math.floor(i / 12) * 72);
+    r.mapW = 46;
+    r.mapH = 126;
+    r.mapDir = "v";
+  });
+  save();
+  
+}
+
+
+function inventarioView(){
+  return `<div class="card">${backTitle("📋 Ajuste inventario")}
+    <div class="alert">
+      Corrige una estiba y el cambio quedará guardado en Ajuste Inventario, Mapa Campa, Dashboard, FIFO e Historial.
+    </div>
+    <div class="row">
+      <div><label>Estiba</label><input id="rack" value="136"/></div>
+      <div><label>Producto real</label>${productSelect("invProduct","P001")}</div>
+    </div>
+    <div class="row">
+      <div><label>Cantidad real</label><input id="real" value="" placeholder="Ejemplo: 48"/></div>
+      <button class="btn btn-red" onclick="inventoryCheck()">Guardar corrección</button>
+    </div>
+    <div class="small">Si la cantidad real es 0, la estiba quedará vacía y sin producto.</div>
+  </div>`;
+}
+function inventoryCheck(){
+  const rack=document.getElementById("rack").value.trim();
+  const real=Number(document.getElementById("real").value);
+  const product=document.getElementById("invProduct").value;
+  const r=state.racks.find(x=>String(x.id)===String(rack));
+
+  if(!r){ alert("Estiba no encontrada."); return; }
+  if(!Number.isFinite(real) || real < 0){ alert("Cantidad real no válida."); return; }
+  if(real > Number(r.capacity)){ alert("La cantidad real no puede superar la capacidad de la estiba."); return; }
+
+  const beforeProduct = r.product;
+  const beforeQty = Number(r.occupied || 0);
+
+  r.occupied = real;
+  r.product = real > 0 ? product : "";
+  if(real > 0 && !r.entryDate) r.entryDate = new Date().toISOString().slice(0,10);
+  if(real === 0) r.entryDate = "";
+
+  const diff = real - beforeQty;
+  const detail = `Corrección ajuste inventario estiba ${rack}: ${productName(beforeProduct)} ${beforeQty} → ${productName(r.product)} ${real}`;
+
+  addHistory("inventario", r.product, rack, "", diff, detail);
+
+  if(diff !== 0 || beforeProduct !== r.product){
+    state.incidents.unshift({
+      id:Date.now(),
+      ts:now(),
+      user:state.user.name,
+      type:"Corrección ajuste inventario",
+      rack,
+      product:r.product,
+      qty:diff,
+      status:"resuelta",
+      detail
+    });
+  }
+
+  save();
+  pushToCloud();
+  alert("Ajuste de inventario guardado. El cambio ya aparece en Mapa Campa y Dashboard.");
+  render();
+}
+
+
+function historialView(){
+ const items=state.history.filter(h=>["carga","descarga","carro"].includes(h.type));
+ return `<div class="card">${backTitle("🕘 Historial")}
+ <h2>Camiones y carros finalizados</h2>
+ <table><tr><th>Fecha</th><th>Tipo</th><th>Usuario</th><th>Producto</th><th>Origen</th><th>Destino</th><th>Cantidad</th></tr>
+ ${items.slice(0,200).map(h=>`<tr><td>${h.ts}</td><td>${h.type}</td><td>${h.user}</td><td>${productName(h.product)}</td><td>${h.origin}</td><td>${h.dest}</td><td>${h.qty}</td></tr>`).join("")}
+ </table></div>`;
+}
+
+
+
+function registroEstibaView(){
+  const q = (state.registroEstibaQuery || "").trim();
+  const rack = q || "27";
+  const logs = getRackHistory(rack);
+  const current = state.racks.find(r=>String(r.id)===String(rack));
+
+  return `<div class="card">${backTitle("🔎 Registro de estiba")}
+    <div class="alert">
+      Busca una estiba para ver todo lo que se ha tocado en ella: cargas, descargas, carro interno, ajuste inventario, incidencias y zonas restringidas.
+    </div>
+
+    <div class="row">
+      <div>
+        <label>Número de estiba</label>
+        <input id="rackLogSearch" value="${rack}" placeholder="Ejemplo: 27" onkeydown="if(event.key==='Enter') searchRackLog()"/>
+      </div>
+      <div style="display:flex;align-items:end">
+        <button class="btn btn-red" onclick="searchRackLog()">Buscar registro</button>
+      </div>
+    </div>
+
+    ${current ? `<div class="ok">
+      <b>Estado actual estiba ${current.id}</b><br/>
+      Producto: <b>${productName(current.product)}</b> · Cantidad: <b>${current.occupied}/${current.capacity}</b> palets · Zona: <b>${current.zone || "-"}</b>
+      ${current.blocked ? "<br/>🔴 Bloqueada" : ""}
+      ${current.reserved ? "<br/>🔵 Reservada" : ""}
+    </div>` : `<div class="alert">La estiba ${rack} no existe en el mapa actual.</div>`}
+
+    <h2>Movimientos registrados</h2>
+    ${logs.length ? `<table>
+      <tr><th>Fecha</th><th>Tipo</th><th>Usuario</th><th>Producto</th><th>Origen</th><th>Destino</th><th>Cantidad</th><th>Detalle</th></tr>
+      ${logs.slice(0,300).map(h=>`<tr>
+        <td>${h.ts || "-"}</td>
+        <td><b>${h.type || "-"}</b></td>
+        <td>${h.user || "-"}</td>
+        <td>${productName(h.product)}</td>
+        <td>${h.origin || "-"}</td>
+        <td>${h.dest || "-"}</td>
+        <td>${h.qty ?? "-"}</td>
+        <td>${h.detail || ""}</td>
+      </tr>`).join("")}
+    </table>` : `<div class="alert">No hay movimientos registrados para la estiba ${rack}.</div>`}
+  </div>`;
+}
+
+function searchRackLog(){
+  const v = document.getElementById("rackLogSearch")?.value.trim();
+  if(!v){ alert("Introduce un número de estiba."); return; }
+  state.registroEstibaQuery = v;
+  save();
+  render();
+}
+
+function getRackHistory(rack){
+  const key = String(rack).trim();
+  const inText = (value)=>String(value || "").toLowerCase().includes(`estiba ${key}`.toLowerCase());
+
+  const fromHistory = (state.history || []).filter(h=>
+    String(h.origin || "") === key ||
+    String(h.dest || "") === key ||
+    inText(h.detail)
+  );
+
+  const fromIncidents = (state.incidents || [])
+    .filter(i=>String(i.rack || "") === key)
+    .map(i=>({
+      id: `inc_${i.id}`,
+      ts: i.ts,
+      user: i.user,
+      type: `incidencia ${i.status || ""}`.trim(),
+      product: i.product,
+      origin: i.rack,
+      dest: "",
+      qty: i.qty,
+      detail: `${i.type || "Incidencia"}${i.detail ? " · " + i.detail : ""}`
+    }));
+
+  const all = [...fromHistory, ...fromIncidents];
+  const unique = [];
+  const seen = new Set();
+  all.forEach(item=>{
+    const k = String(item.id || `${item.ts}_${item.type}_${item.origin}_${item.dest}_${item.qty}_${item.detail}`);
+    if(!seen.has(k)){ seen.add(k); unique.push(item); }
+  });
+
+  return unique.sort((a,b)=>String(b.ts || "").localeCompare(String(a.ts || "")));
+}
+
+
+
+function campaignTaskListHtml(){
+  const tasks = (state.campaignTasks || []).filter(t=>t.status==="pendiente");
+  if(!tasks.length) return `<div class="alert">No hay tareas de zonas restringidas pendientes.</div>`;
+
+  return tasks.map(t=>`<div class="option">
+    <b>${t.campaignName}</b><br/>
+    Mover producto: <b>${productName(t.product)}</b><br/>
+    Origen: <b>Estiba ${t.origin}</b> · Cantidad: <b>${t.quantity} palets</b>
+    <div class="actions" style="margin-top:12px">
+      <button class="btn btn-gray" onclick="calcCampaignDestination(${t.id})">Buscar destino FIFO</button>
+    </div>
+  </div>`).join("");
+}
+
+function campanaTareasView(){
+  return `<div class="card">${backTitle("🏗️ Tareas de zonas restringidas")}
+    <div class="alert">
+      Estas tareas sirven para liberar zonas restringidas o reservadas. La app mueve el material a estibas del mismo producto siguiendo FIFO/capacidad disponible.
+    </div>
+    <h2>Tareas pendientes</h2>
+    <div>${campaignTaskListHtml()}</div>
+    <div id="campaignMoveBox"></div>
+  </div>`;
+}
+
+function calcCampaignDestination(taskId){
+  const task = (state.campaignTasks || []).find(t=>t.id===taskId);
+  if(!task){ alert("Tarea no encontrada"); return; }
+
+  // Buscar destinos fuera del origen, no reservados y no bloqueados, con mismo producto o vacíos.
+  tempOptions = state.racks
+    .filter(r=>r.id!==task.origin)
+    .filter(r=>!r.reserved && !r.blocked)
+    .filter(r=>r.product===task.product || !r.product)
+    .filter(r=>r.capacity-r.occupied >= task.quantity)
+    .sort((a,b)=>{
+      const sameA = a.product===task.product ? 0 : 1;
+      const sameB = b.product===task.product ? 0 : 1;
+      if(sameA!==sameB) return sameA-sameB;
+      return (a.entryDate || "2999-12-31").localeCompare(b.entryDate || "2999-12-31");
+    })
+    .slice(0,3);
+
+  const recommended = tempOptions[0]?.id || "";
+
+  document.getElementById("campaignMoveBox").innerHTML = `
+    <div class="card" style="box-shadow:none;border:2px solid #eee;margin-top:20px">
+      <h2>Movimiento zona restringida</h2>
+
+      <div class="row">
+        <div>
+          <div class="small">Producto</div>
+          <div class="value">${productName(task.product)}</div>
+        </div>
+        <div>
+          <div class="small">Cantidad</div>
+          <div class="value">${task.quantity} palets</div>
+        </div>
+      </div>
+
+      <div class="alert">
+        Origen a vaciar: <b>Estiba ${task.origin}</b>. Primero introduce/escanea origen, luego destino.
+      </div>
+
+      <h2>Top 3 destinos recomendados</h2>
+      ${optionHtml(tempOptions)}
+
+      <input type="hidden" id="activeCampaignTask" value="${task.id}"/>
+
+      <div class="row" style="margin-top:18px">
+        <div>
+          <label>Escanear / introducir estiba origen</label>
+          <input id="campaignOriginScan" placeholder="Debe ser ${task.origin}"/>
+        </div>
+        <div>
+          <label>Escanear / introducir estiba destino</label>
+          <input id="campaignDestScan" placeholder="Ejemplo: ${recommended}"/>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button class="btn btn-blue" onclick="validateCampaignMove(${task.id})">VALIDAR ORIGEN / DESTINO</button>
+        <button class="btn btn-green" id="confirmCampaignMoveBtn" onclick="confirmCampaignMove(${task.id})" disabled style="opacity:.45">CONFIRMAR MOVIMIENTO</button>
+      </div>
+
+      <div id="campaignValidationMsg"></div>
+    </div>
+  `;
+}
+
+function validateCampaignMove(taskId){
+  const task = (state.campaignTasks || []).find(t=>t.id===taskId);
+  const selectedDest = document.getElementById("selectedRack")?.value;
+  const originScan = document.getElementById("campaignOriginScan")?.value.trim();
+  const destScan = document.getElementById("campaignDestScan")?.value.trim();
+  const msg = document.getElementById("campaignValidationMsg");
+  const btn = document.getElementById("confirmCampaignMoveBtn");
+
+  if(!task || !selectedDest){
+    msg.innerHTML = `<div class="alert">Selecciona primero un destino recomendado.</div>`;
+    btn.disabled = true; btn.style.opacity = ".45"; return;
+  }
+
+  if(originScan !== task.origin){
+    msg.innerHTML = `<div class="alert">❌ ERROR origen: has introducido ${originScan || "-"}, pero el origen debe ser ${task.origin}.</div>`;
+    btn.disabled = true; btn.style.opacity = ".45"; return;
+  }
+
+  if(destScan !== selectedDest){
+    msg.innerHTML = `<div class="alert">❌ ERROR destino: has introducido ${destScan || "-"}, pero el destino seleccionado es ${selectedDest}.</div>`;
+    btn.disabled = true; btn.style.opacity = ".45"; return;
+  }
+
+  msg.innerHTML = `<div class="ok">✅ Origen y destino correctos. Ya puedes confirmar el movimiento.</div>`;
+  btn.disabled = false; btn.style.opacity = "1";
+}
+
+function confirmCampaignMove(taskId){
+  const task = (state.campaignTasks || []).find(t=>t.id===taskId);
+  const selectedDest = document.getElementById("selectedRack")?.value;
+  const originScan = document.getElementById("campaignOriginScan")?.value.trim();
+  const destScan = document.getElementById("campaignDestScan")?.value.trim();
+
+  if(!task || originScan !== task.origin || destScan !== selectedDest){
+    alert("No se puede confirmar. Origen/destino no validados.");
+    return;
+  }
+
+  const origin = state.racks.find(r=>r.id===task.origin);
+  const dest = state.racks.find(r=>r.id===selectedDest);
+
+  if(!origin || !dest){ alert("Origen o destino no encontrado."); return; }
+  if(dest.reserved || dest.blocked){ alert("Destino reservado o bloqueado."); return; }
+  if(dest.product && dest.product !== task.product){ alert("El destino tiene otro producto. No se permite mezclar."); return; }
+  if(dest.capacity - dest.occupied < task.quantity){ alert("Destino sin capacidad suficiente."); return; }
+
+  // Mover todo el stock de la estiba origen al destino.
+  dest.product = task.product;
+  dest.occupied += task.quantity;
+  if(!dest.entryDate) dest.entryDate = origin.entryDate || new Date().toISOString().slice(0,10);
+
+  origin.occupied = 0;
+  origin.product = "";
+  origin.entryDate = "";
+  origin.blocked = false;
+  origin.reserved = true;
+
+  task.status = "completada";
+  task.destination = dest.id;
+  task.completedAt = now();
+  task.completedBy = state.user.name;
+
+  addHistory("movimiento zona restringida", task.product, origin.id, dest.id, task.quantity, `Zona restringida ${task.campaignName}. Origen liberado y reservado.`);
+  updateCampaignStatus(task.campaignId);
+
+  save();
+  pushToCloud();
+  alert(`Movimiento confirmado. La estiba ${origin.id} queda libre y reservada para zona restringida.`);
+  
+}
+
+function updateCampaignStatus(campaignId){
+  const pending = (state.campaignTasks || []).some(t=>t.campaignId===campaignId && t.status==="pendiente");
+  const campaign = state.campaigns.find(c=>c.id===campaignId);
+  if(campaign && !pending) campaign.status = "zona liberada";
+}
+
+function campanasView(){
+  return `<div class="card">${backTitle("⚙️ Zonas restringidas")}
+    <div class="row">
+      <div><label>Nombre</label><input id="name" value="Zona restringida"/></div>
+      <div><label>Estiba desde</label><input id="from" value="140"/></div>
+    </div>
+    <div class="row">
+      <div><label>Estiba hasta</label><input id="to" value="155"/></div>
+      <button class="btn btn-red" onclick="createCampaign()">Reservar zona</button>
+    </div>
+  </div>`;
+}
+function createCampaign(){
+  const name=document.getElementById("name").value;
+  const from=Number(document.getElementById("from").value);
+  const to=Number(document.getElementById("to").value);
+  const campaignId = Date.now();
+
+  state.campaigns.push({id:campaignId,name,from,to,status:"pendiente liberar"});
+
+  let created = 0;
+
+  for(let i=from;i<=to;i++){
+    const r=state.racks.find(x=>x.id===String(i));
+    if(!r) continue;
+
+    // Si la estiba tiene producto, no se bloquea aún como reservada final:
+    // queda pendiente de mover para zona restringida.
+    if(r.product && r.occupied > 0){
+      state.campaignTasks.push({
+        id: Date.now()+created,
+        campaignId,
+        campaignName: name,
+        origin: r.id,
+        product: r.product,
+        quantity: r.occupied,
+        status: "pendiente",
+        destination: "",
+        createdAt: now()
+      });
+      r.blocked = true; // bloqueada para que no se use en FIFO normal
+      created++;
+    } else {
+      // Si está vacía, se reserva directamente.
+      r.reserved = true;
+    }
+  }
+
+  addHistory("zona restringida", "", String(from), String(to), 0, `Zona restringida ${name}. Tareas generadas: ${created}`);
+  save();
+  alert(`Zona restringida creada. Tareas de movimiento generadas: ${created}. Las estibas vacías quedan reservadas y las ocupadas quedan bloqueadas hasta mover el producto.`);
+  
+}
+
+window.applyRealCampLayout=applyRealCampLayout;
+window.showRackEditor=showRackEditor; window.saveRackEdit=saveRackEdit; window.moveRackQuick=moveRackQuick; window.resetMapLayout=resetMapLayout;
+window.login=login; window.logout=logout; window.setView=setView;
+window.calcCarga=calcCarga; window.confirmCarga=confirmCarga; window.openAlbaranRecord=openAlbaranRecord; window.exportAlbaranesExcel=exportAlbaranesExcel;
+window.createUnloadPlan=createUnloadPlan; window.showUnloadPlansByDock=showUnloadPlansByDock; window.openUnloadPlan=openUnloadPlan; window.calcUnloadLine=calcUnloadLine; window.validateUnloadRack=validateUnloadRack; window.confirmUnloadLine=confirmUnloadLine;
+window.createCartRequest=createCartRequest; window.calcCarro=calcCarro; window.confirmCarro=confirmCarro; window.cancelCartRequest=cancelCartRequest;
+function resolveIncident(id){
+ const x=state.incidents.find(i=>i.id===id);
+ if(!x) return;
+ x.status="resuelta";
+ x.resolvedAt=now();
+ save(); 
+}
+window.resolveIncident=resolveIncident;
+window.createIncident=createIncident; window.inventoryCheck=inventoryCheck; window.createCampaign=createCampaign; window.selectOption=selectOption; window.calcCampaignDestination=calcCampaignDestination; window.validateCampaignMove=validateCampaignMove; window.confirmCampaignMove=confirmCampaignMove;
+render();
+initSupabaseSync();
+setTimeout(addSyncButton, 500);
+</script>
+
+</body>
+</html>
