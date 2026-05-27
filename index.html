@@ -833,7 +833,36 @@ async function initSupabaseSync(){
     }
     traceSupabaseClient = window.supabase.createClient(TRACE_SUPABASE_URL, TRACE_SUPABASE_KEY);
     traceCloudReady = true;
-    cloudStatus("☁️ Listo — pulsa 🔄 para ver cambios de otros", "ok");
+    cloudStatus("☁️ Conectado", "ok");
+
+    // Comprobar cambios cada 15 segundos, SOLO si no hay ningún input activo
+    setInterval(async ()=>{
+      if(!state.user) return;
+      if(!traceCloudReady || !traceSupabaseClient) return;
+      // No sincronizar si el usuario está escribiendo en algún campo
+      const active = document.activeElement;
+      if(active && (active.tagName === "INPUT" || active.tagName === "TEXTAREA" || active.tagName === "SELECT")) return;
+      try{
+        const { data, error } = await traceSupabaseClient
+          .from("trace_state")
+          .select("data,updated_at")
+          .eq("id", TRACE_STATE_ID)
+          .maybeSingle();
+        if(error || !data || !data.data) return;
+        const remote = data.data;
+        if(!remote) return;
+        if(remote._meta?.clientId === traceClientId) return;
+        if(remote._meta?.updatedAt === state._lastRemoteUpdatedAt) return;
+        traceApplyingRemote = true;
+        if(applySharedState(remote)){
+          state._lastRemoteUpdatedAt = remote._meta?.updatedAt;
+          render();
+          cloudStatus("🔄 Actualizado", "ok");
+        }
+        traceApplyingRemote = false;
+      }catch(e){}
+    }, 15000);
+
   }catch(err){
     console.error("No se pudo iniciar Supabase", err);
     traceCloudReady = false;
