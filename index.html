@@ -722,14 +722,16 @@ function cloudStatus(msg, type="ok"){
       el = document.createElement("div");
       el.id = "cloudStatusBadge";
       el.style.position = "fixed";
-      el.style.right = "18px";
-      el.style.top = "86px";
+      el.style.right = "10px";
+      el.style.bottom = "10px";
+      el.style.top = "auto";
       el.style.zIndex = "999999";
-      el.style.padding = "10px 14px";
-      el.style.borderRadius = "14px";
-      el.style.fontWeight = "900";
-      el.style.fontSize = "14px";
-      el.style.boxShadow = "0 8px 20px #0002";
+      el.style.padding = "5px 10px";
+      el.style.borderRadius = "10px";
+      el.style.fontWeight = "700";
+      el.style.fontSize = "11px";
+      el.style.opacity = "0.7";
+      el.style.boxShadow = "0 2px 8px #0001";
       document.body.appendChild(el);
     }
     el.textContent = msg;
@@ -817,10 +819,11 @@ function addSyncButton(){
   btn.textContent = "🔄 Sincronizar";
   btn.onclick = syncNow;
   Object.assign(btn.style, {
-    position:"fixed", left:"18px", top:"18px", zIndex:"999999",
+    position:"fixed", left:"10px", bottom:"10px", top:"auto", zIndex:"999999",
     background:"#16a34a", color:"white", border:"none",
-    borderRadius:"12px", padding:"10px 16px", fontWeight:"900",
-    fontSize:"14px", cursor:"pointer", boxShadow:"0 4px 12px #0003"
+    borderRadius:"10px", padding:"5px 12px", fontWeight:"700",
+    fontSize:"12px", cursor:"pointer", boxShadow:"0 2px 8px #0002",
+    opacity:"0.8"
   });
   document.body.appendChild(btn);
 }
