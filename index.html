@@ -2876,8 +2876,9 @@ function createCampaign(){
 
   addHistory("zona restringida", "", String(from), String(to), 0, `Zona restringida ${name}. Tareas generadas: ${created}`);
   save();
+  pushToCloud();
   alert(`Zona restringida creada. Tareas de movimiento generadas: ${created}. Las estibas vacías quedan reservadas y las ocupadas quedan bloqueadas hasta mover el producto.`);
-  
+  render();
 }
 
 window.applyRealCampLayout=applyRealCampLayout;
