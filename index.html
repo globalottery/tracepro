@@ -948,7 +948,7 @@ async function initSupabaseSync(){
         }
         traceApplyingRemote = false;
       }catch(e){}
-    }, 15000);
+    }, 8000);
 
   }catch(err){
     console.error("No se pudo iniciar Supabase", err);
@@ -1051,7 +1051,9 @@ function login(){
   if(baseUser.password !== p){ alert("Usuario o contraseña incorrectos"); return; }
   state.user = {...baseUser, role:sapUser?.role || baseUser.role, username:u, shift:currentShift()};
   state.view = "menu";
-  save(); 
+  save();
+  // Al iniciar sesión, descargar estado actualizado de Supabase inmediatamente
+  syncNow().then(()=>{ render(); });
 }
 
 function header(){
@@ -1948,6 +1950,7 @@ function createCartRequest(){
   addHistory("crear solicitud carros", req.product, "", "Inbound", 0, `Turno ${req.shift}. Carros solicitados: ${req.requested}`);
   save();
   pushToCloud();
+  render();
 }
 function cartClosedHtml(){
   const closed = state.cartRequests
@@ -1984,8 +1987,10 @@ function cancelCartRequest(id){
 
   const pending = req.requested - req.done;
   const reason = prompt(
-    `Motivo de cancelación para ${productName(req.product)}\n` +
-    `Carros realizados: ${req.done}/${req.requested}\n` +
+    `Motivo de cancelación para ${productName(req.product)}
+` +
+    `Carros realizados: ${req.done}/${req.requested}
+` +
     `Carros pendientes que se cancelan: ${pending}`,
     "Cambio de planificación / producción cancelada"
   );
@@ -2012,8 +2017,9 @@ function cancelCartRequest(id){
   );
 
   save();
+  pushToCloud();
   alert("Solicitud de carros cancelada. Queda registrada en historial.");
-  
+  render();
 }
 
 function calcCarro(id){
