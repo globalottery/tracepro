@@ -2891,7 +2891,9 @@ function resolveIncident(id){
  if(!x) return;
  x.status="resuelta";
  x.resolvedAt=now();
- save(); 
+ save();
+ pushToCloud();
+ render();
 }
 window.resolveIncident=resolveIncident;
 window.createIncident=createIncident; window.inventoryCheck=inventoryCheck; window.createCampaign=createCampaign; window.selectOption=selectOption; window.calcCampaignDestination=calcCampaignDestination; window.validateCampaignMove=validateCampaignMove; window.confirmCampaignMove=confirmCampaignMove;
