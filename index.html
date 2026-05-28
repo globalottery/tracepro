@@ -525,6 +525,20 @@
 <div id="app"></div>
 
 <script>
+// Limpiar service worker y caché automáticamente
+if('serviceWorker' in navigator){
+  navigator.serviceWorker.getRegistrations().then(regs=>{
+    regs.forEach(reg=>reg.unregister());
+  });
+}
+if('caches' in window){
+  caches.keys().then(keys=>{
+    keys.forEach(key=>caches.delete(key));
+  });
+}
+</script>
+
+<script>
 const PRODUCTS = {
   P001:{name:"Caja vacía VR200/237", rotation:"Media"},
   P002A:{name:"Aquabona VR500", rotation:"Media"},
