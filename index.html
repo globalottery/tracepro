@@ -1043,11 +1043,16 @@ function migrateAllProducts(s){
   return s;
 }
 
-function currentShift(){
-  const h = new Date().getHours();
-  if(h>=6 && h<14) return "Mañana";
-  if(h>=14 && h<22) return "Tarde";
+function shiftFromMinutes(totalMinutes){
+  // Mañana: 06:00-14:00 · Tarde: 14:01-22:00 · Noche: 22:01-05:59
+  if(totalMinutes >= 360 && totalMinutes <= 840) return "Mañana";
+  if(totalMinutes >= 841 && totalMinutes <= 1320) return "Tarde";
   return "Noche";
+}
+
+function currentShift(){
+  const d = new Date();
+  return shiftFromMinutes((d.getHours() * 60) + d.getMinutes());
 }
 
 function shiftFromTimestamp(ts){
@@ -1055,13 +1060,15 @@ function shiftFromTimestamp(ts){
   const m = String(ts).match(/\b(\d{1,2}):(\d{2})(?::\d{2})?\b/);
   if(!m) return "-";
   const h = Number(m[1]);
-  if(h>=6 && h<14) return "Mañana";
-  if(h>=14 && h<22) return "Tarde";
-  return "Noche";
+  const min = Number(m[2]);
+  if(Number.isNaN(h) || Number.isNaN(min)) return "-";
+  return shiftFromMinutes((h * 60) + min);
 }
 
 function historyShift(h){
-  return h?.shift || shiftFromTimestamp(h?.ts) || "-";
+  // El turno del historial se calcula por la hora real del movimiento.
+  // Si un registro antiguo no tiene hora legible, usa el turno guardado como respaldo.
+  return shiftFromTimestamp(h?.ts) || h?.shift || "-";
 }
 function setView(v){ state.view=v; save(); render(); }
 function logout(){ state.user=null; state.view="login"; save(); render(); }
