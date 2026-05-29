@@ -520,6 +520,17 @@
 }
 </style>
 
+
+<style id="tracepro-map-zoom-edit-fix">
+.map-zoom-stage{
+  position:relative;
+  transform-origin:top left;
+}
+.map-canvas{
+  overflow:auto !important;
+}
+</style>
+
 </head>
 <body>
 <div id="app"></div>
@@ -2292,6 +2303,9 @@ function applyRealCampLayout(){
 }
 
 function mapaView(){
+  const mapZoom = Number(state.mapZoom || 1);
+  const baseMapW = 1680;
+  const baseMapH = 2050;
   function cls(r){
     if(r.blocked) return "blocked";
     if(r.reserved) return "reserved";
@@ -2328,14 +2342,15 @@ function mapaView(){
     </div>
 
     <div class="actions">
-      <button class="btn btn-red" onclick="toggleMapMenu()">✏️ Editar mapa</button><button class="btn btn-gray" onclick="zoomMapOut()">➖ Zoom</button><button class="btn btn-gray" onclick="zoomMapIn()">➕ Zoom</button><button class="btn btn-gray" onclick="zoomMapReset()">🔄 Reset</button>
+      <button class="btn btn-red" onclick="toggleMapMenu()">✏️ Editar mapa</button><button class="btn btn-gray" onclick="zoomMapOut()">➖ Zoom</button><button class="btn btn-gray" onclick="zoomMapIn()">➕ Zoom</button><button class="btn btn-gray" onclick="zoomMapReset()">🔄 Reset</button><span style="font-weight:900;padding:18px 8px">Zoom: ${Math.round(mapZoom*100)}%</span>
       
     </div>
 
     <div id="rackEditorBox"></div>
 
     <div class="map-canvas">
-      <div class="clean-map">
+      <div class="map-zoom-stage" style="width:${baseMapW*mapZoom}px;height:${baseMapH*mapZoom}px">
+      <div class="clean-map" style="transform:scale(${mapZoom})">
         <!-- Pasillos principales -->
         <div class="clean-aisle" style="left:20px;top:245px;width:1620px;height:42px"></div>
         <div class="clean-aisle" style="left:20px;top:500px;width:1620px;height:42px"></div>
@@ -2357,6 +2372,7 @@ function mapaView(){
           ${productName(r.product).slice(0,15)}<br/>
           ${r.occupied}/${r.capacity}
         </div>`).join("")}
+      </div>
       </div>
     </div>
 
@@ -2470,7 +2486,9 @@ function saveRackEdit(){
 
   addHistory("editar estiba", r.product, r.id, "", 0, `Estiba ${r.id} editada desde mapa campa`);
   save();
-  
+  pushToCloud();
+  render();
+  setTimeout(()=>showRackEditor(id), 50);
 }
 
 function moveRackQuick(dx,dy){
@@ -2480,6 +2498,7 @@ function moveRackQuick(dx,dy){
   r.mapX = Number(r.mapX || 20) + dx;
   r.mapY = Number(r.mapY || 20) + dy;
   save();
+  pushToCloud();
   render();
   setTimeout(()=>showRackEditor(id), 50);
 }
@@ -2497,6 +2516,43 @@ function resetMapLayout(){
   
 }
 
+
+
+function ensureMapZoom(){
+  if(!state.mapZoom || isNaN(Number(state.mapZoom))) state.mapZoom = 1;
+  state.mapZoom = Math.max(0.35, Math.min(2.5, Number(state.mapZoom)));
+}
+
+function zoomMapIn(){
+  ensureMapZoom();
+  state.mapZoom = Math.min(2.5, Math.round((state.mapZoom + 0.1) * 100) / 100);
+  save();
+  render();
+}
+
+function zoomMapOut(){
+  ensureMapZoom();
+  state.mapZoom = Math.max(0.35, Math.round((state.mapZoom - 0.1) * 100) / 100);
+  save();
+  render();
+}
+
+function zoomMapReset(){
+  state.mapZoom = 1;
+  save();
+  render();
+}
+
+function toggleMapMenu(){
+  const box = document.getElementById("rackEditorBox");
+  if(!box) return;
+  if(box.innerHTML.trim()){
+    box.innerHTML = "";
+    return;
+  }
+  const firstVisible = state.racks.find(r=>Number(r.mapX)>-1000) || state.racks[0];
+  showRackEditor(firstVisible?.id || "");
+}
 
 function inventarioView(){
   return `<div class="card">${backTitle("📋 Ajuste inventario")}
