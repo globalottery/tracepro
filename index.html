@@ -174,7 +174,7 @@
     .map-canvas{
       position:relative;
       width:100%;
-      min-height:1200px;
+      min-height:760px;
       background:#f8fafc;
       border:3px solid #e5e7eb;
       border-radius:24px;
@@ -224,7 +224,7 @@
     .clean-map{
       position:relative;
       width:1680px;
-      height: 2050px;
+      height:auto;
       background:#f8fafc;
       border:2px solid #e5e7eb;
       border-radius:22px;
@@ -528,6 +528,23 @@
 }
 .map-canvas{
   overflow:auto !important;
+}
+</style>
+
+
+<style id="tracepro-map-height-final-fix">
+.map-canvas{
+  min-height:760px !important;
+  max-height:780px !important;
+  height:780px !important;
+  overflow:auto !important;
+}
+.clean-map{
+  height:1040px !important;
+  min-height:1040px !important;
+}
+.map-zoom-stage{
+  min-height:calc(1040px * var(--mapZoom, 1)) !important;
 }
 </style>
 
@@ -2305,7 +2322,7 @@ function applyRealCampLayout(){
 function mapaView(){
   const mapZoom = Number(state.mapZoom || 1);
   const baseMapW = 1680;
-  const baseMapH = 1200;
+  const baseMapH = 1040;
   function cls(r){
     if(r.blocked) return "blocked";
     if(r.reserved) return "reserved";
@@ -2349,7 +2366,7 @@ function mapaView(){
     <div id="rackEditorBox"></div>
 
     <div class="map-canvas">
-      <div class="map-zoom-stage" style="width:${baseMapW*mapZoom}px;height:${baseMapH*mapZoom}px">
+      <div class="map-zoom-stage" style="width:${baseMapW*mapZoom}px;height:${baseMapH*mapZoom}px;--mapZoom:${mapZoom}">
       <div class="clean-map" style="transform:scale(${mapZoom})">
         <!-- Pasillos principales -->
         <div class="clean-aisle" style="left:20px;top:245px;width:1620px;height:42px"></div>
