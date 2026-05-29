@@ -521,13 +521,40 @@
 </style>
 
 
-<style id="tracepro-map-only-zoom-edit-fix">
-.map-zoom-stage{
-  position:relative;
-  transform-origin:top left;
-}
+<style id="tracepro-map-campa-only-fix">
 .clean-map{
   transform-origin:top left;
+}
+.map-edit-banner{
+  border:2px solid #111827;
+  background:#f9fafb;
+  border-radius:18px;
+  padding:14px;
+  margin:12px 0;
+  font-weight:900;
+}
+.map-edit-active .map-block,
+.map-edit-active .clean-aisle,
+.map-edit-active .clean-dock{
+  cursor:move !important;
+  user-select:none !important;
+}
+.map-edit-active .map-editable-selected{
+  outline:4px solid #111827 !important;
+  outline-offset:2px !important;
+}
+.map-edit-active .map-edit-resize{
+  position:absolute;
+  right:-7px;
+  bottom:-7px;
+  width:16px;
+  height:16px;
+  background:#d60000;
+  border:2px solid #fff;
+  border-radius:5px;
+  cursor:nwse-resize;
+  z-index:999999;
+  box-shadow:0 2px 8px #0004;
 }
 </style>
 
@@ -2304,8 +2331,10 @@ function applyRealCampLayout(){
 
 function mapaView(){
   const mapZoom = Number(state.mapZoom || 1);
-  const baseMapW = 1680;
-  const baseMapH = 2050;
+  function mapItemStyle(id, defStyle){
+    const saved = state.mapItemLayouts && state.mapItemLayouts[id];
+    return saved || defStyle;
+  }
   function cls(r){
     if(r.blocked) return "blocked";
     if(r.reserved) return "reserved";
@@ -2342,37 +2371,37 @@ function mapaView(){
     </div>
 
     <div class="actions">
-      <button class="btn btn-red" onclick="toggleMapMenu()">✏️ Editar mapa</button><button class="btn btn-gray" onclick="zoomMapOut()">➖ Zoom</button><button class="btn btn-gray" onclick="zoomMapIn()">➕ Zoom</button><button class="btn btn-gray" onclick="zoomMapReset()">🔄 Reset</button><span style="font-weight:900;padding:18px 8px">Zoom: ${Math.round(mapZoom*100)}%</span>
+      ${state.mapEditMode ? `<button class="btn btn-red" onclick="toggleMapMenu()">✅ Salir edición</button>` : `<button class="btn btn-red" onclick="toggleMapMenu()">✏️ Editar mapa</button>`}<button class="btn btn-gray" onclick="zoomMapOut()">➖ Zoom</button><button class="btn btn-gray" onclick="zoomMapIn()">➕ Zoom</button><button class="btn btn-gray" onclick="zoomMapReset()">🔄 Reset</button><span style="font-weight:900;padding:18px 8px">Zoom: ${Math.round(mapZoom*100)}%</span>
       
     </div>
 
     <div id="rackEditorBox"></div>
 
+    ${state.mapEditMode ? `<div class="map-edit-banner">Modo edición activo: arrastra estibas, pasillos o muelles. Usa la esquina roja para cambiar tamaño. Los cambios se guardan al soltar.</div>` : ""}
+
     <div class="map-canvas">
-      <div class="map-zoom-stage" style="width:${baseMapW*mapZoom}px;height:${baseMapH*mapZoom}px">
-      <div class="clean-map" style="transform:scale(${mapZoom})">
+      <div class="clean-map ${state.mapEditMode ? 'map-edit-active' : ''}" style="zoom:${mapZoom}">
         <!-- Pasillos principales -->
-        <div class="clean-aisle" style="left:20px;top:245px;width:1620px;height:42px"></div>
-        <div class="clean-aisle" style="left:20px;top:500px;width:1620px;height:42px"></div>
-        <div class="clean-aisle" style="left:20px;top:745px;width:1620px;height:42px"></div>
+        <div class="clean-aisle" data-map-edit="item" data-map-id="aisle-h-1" style="${mapItemStyle('aisle-h-1','left:20px;top:245px;width:1620px;height:42px')}"></div>
+        <div class="clean-aisle" data-map-edit="item" data-map-id="aisle-h-2" style="${mapItemStyle('aisle-h-2','left:20px;top:500px;width:1620px;height:42px')}"></div>
+        <div class="clean-aisle" data-map-edit="item" data-map-id="aisle-h-3" style="${mapItemStyle('aisle-h-3','left:20px;top:745px;width:1620px;height:42px')}"></div>
 
         <!-- Pasillos verticales -->
-        <div class="clean-aisle" style="left:335px;top:40px;width:42px;height:1030px"></div>
-        <div class="clean-aisle" style="left:555px;top:40px;width:42px;height:1030px"></div>
-        <div class="clean-aisle" style="left:905px;top:40px;width:42px;height:1030px"></div>
-        <div class="clean-aisle" style="left:1265px;top:40px;width:52px;height:1030px"></div>
+        <div class="clean-aisle" data-map-edit="item" data-map-id="aisle-v-1" style="${mapItemStyle('aisle-v-1','left:335px;top:40px;width:42px;height:1030px')}"></div>
+        <div class="clean-aisle" data-map-edit="item" data-map-id="aisle-v-2" style="${mapItemStyle('aisle-v-2','left:555px;top:40px;width:42px;height:1030px')}"></div>
+        <div class="clean-aisle" data-map-edit="item" data-map-id="aisle-v-3" style="${mapItemStyle('aisle-v-3','left:905px;top:40px;width:42px;height:1030px')}"></div>
+        <div class="clean-aisle" data-map-edit="item" data-map-id="aisle-v-4" style="${mapItemStyle('aisle-v-4','left:1265px;top:40px;width:52px;height:1030px')}"></div>
 
         <!-- Muelles -->
-        <div class="clean-dock" style="left:220px;top:185px">M24</div>
-        <div class="clean-dock" style="left:220px;top:435px">M25</div>
-        <div class="clean-dock" style="left:220px;top:685px">M26</div>
+        <div class="clean-dock" data-map-edit="item" data-map-id="dock-m24" style="${mapItemStyle('dock-m24','left:220px;top:185px;width:90px;height:58px')}">M24</div>
+        <div class="clean-dock" data-map-edit="item" data-map-id="dock-m25" style="${mapItemStyle('dock-m25','left:220px;top:435px;width:90px;height:58px')}">M25</div>
+        <div class="clean-dock" data-map-edit="item" data-map-id="dock-m26" style="${mapItemStyle('dock-m26','left:220px;top:685px;width:90px;height:58px')}">M26</div>
 
-        ${state.racks.filter(r=>r.mapX>-1000).map(r=>`<div class="map-block ${cls(r)} ${r.mapDir==='h'?'h':''}" onclick="showRackEditor('${r.id}')" style="left:${r.mapX}px;top:${r.mapY}px;width:${r.mapW||48}px;height:${r.mapH||110}px">
+        ${state.racks.filter(r=>r.mapX>-1000).map(r=>`<div class="map-block ${cls(r)} ${r.mapDir==='h'?'h':''}" data-map-edit="rack" data-rack-id="${r.id}" onclick="if(!state.mapEditMode) showRackEditor('${r.id}')" style="left:${r.mapX}px;top:${r.mapY}px;width:${r.mapW||48}px;height:${r.mapH||110}px">
           <b>${r.id}</b><br/>
           ${productName(r.product).slice(0,15)}<br/>
           ${r.occupied}/${r.capacity}
         </div>`).join("")}
-      </div>
       </div>
     </div>
 
@@ -2512,6 +2541,7 @@ function resetMapLayout(){
     r.mapH = 126;
     r.mapDir = "v";
   });
+  state.mapItemLayouts = {};
   save();
   pushToCloud();
   render();
@@ -2545,14 +2575,116 @@ function zoomMapReset(){
 }
 
 function toggleMapMenu(){
-  const box = document.getElementById("rackEditorBox");
-  if(!box) return;
-  if(box.innerHTML.trim()){
-    box.innerHTML = "";
-    return;
+  state.mapEditMode = !state.mapEditMode;
+  if(!state.mapItemLayouts) state.mapItemLayouts = {};
+  save();
+  render();
+  if(state.mapEditMode) setTimeout(initMapEditMode, 80);
+}
+
+function styleToObj(styleText){
+  const obj = {};
+  String(styleText || "").split(";").forEach(part=>{
+    const [k,v] = part.split(":");
+    if(k && v) obj[k.trim()] = v.trim();
+  });
+  return obj;
+}
+
+function styleObjToText(obj){
+  return Object.entries(obj).map(([k,v])=>`${k}:${v}`).join(";");
+}
+
+function pxNumber(v, fallback=0){
+  const n = Number(String(v || "").replace("px",""));
+  return Number.isFinite(n) ? n : fallback;
+}
+
+function persistMapElement(el){
+  if(!el) return;
+  if(el.dataset.mapEdit === "rack"){
+    const r = state.racks.find(x=>String(x.id) === String(el.dataset.rackId));
+    if(!r) return;
+    r.mapX = Math.round(pxNumber(el.style.left, r.mapX || 0));
+    r.mapY = Math.round(pxNumber(el.style.top, r.mapY || 0));
+    r.mapW = Math.round(pxNumber(el.style.width, r.mapW || el.offsetWidth || 48));
+    r.mapH = Math.round(pxNumber(el.style.height, r.mapH || el.offsetHeight || 110));
+  }else{
+    if(!state.mapItemLayouts) state.mapItemLayouts = {};
+    const id = el.dataset.mapId;
+    if(!id) return;
+    const obj = {
+      left: `${Math.round(pxNumber(el.style.left, el.offsetLeft))}px`,
+      top: `${Math.round(pxNumber(el.style.top, el.offsetTop))}px`,
+      width: `${Math.round(pxNumber(el.style.width, el.offsetWidth))}px`,
+      height: `${Math.round(pxNumber(el.style.height, el.offsetHeight))}px`
+    };
+    state.mapItemLayouts[id] = styleObjToText(obj);
   }
-  const firstVisible = state.racks.find(r=>Number(r.mapX)>-1000) || state.racks[0];
-  showRackEditor(firstVisible?.id || "");
+}
+
+function initMapEditMode(){
+  if(!state.mapEditMode) return;
+  const map = document.querySelector(".clean-map");
+  if(!map) return;
+
+  map.querySelectorAll("[data-map-edit]").forEach(el=>{
+    if(!el.querySelector(":scope > .map-edit-resize")){
+      const h = document.createElement("span");
+      h.className = "map-edit-resize";
+      h.dataset.resizeHandle = "1";
+      el.appendChild(h);
+    }
+  });
+
+  let active = null;
+  let mode = "move";
+  let startX = 0, startY = 0, startLeft = 0, startTop = 0, startW = 0, startH = 0;
+
+  map.onpointerdown = (ev)=>{
+    const target = ev.target.closest("[data-map-edit]");
+    if(!target) return;
+
+    ev.preventDefault();
+    ev.stopPropagation();
+
+    map.querySelectorAll(".map-editable-selected").forEach(x=>x.classList.remove("map-editable-selected"));
+    target.classList.add("map-editable-selected");
+
+    active = target;
+    mode = ev.target.dataset.resizeHandle ? "resize" : "move";
+    startX = ev.clientX;
+    startY = ev.clientY;
+    startLeft = pxNumber(active.style.left, active.offsetLeft);
+    startTop = pxNumber(active.style.top, active.offsetTop);
+    startW = pxNumber(active.style.width, active.offsetWidth);
+    startH = pxNumber(active.style.height, active.offsetHeight);
+
+    try{ active.setPointerCapture(ev.pointerId); }catch(e){}
+  };
+
+  map.onpointermove = (ev)=>{
+    if(!active) return;
+    const zoom = Number(state.mapZoom || 1) || 1;
+    const dx = (ev.clientX - startX) / zoom;
+    const dy = (ev.clientY - startY) / zoom;
+
+    if(mode === "resize"){
+      active.style.width = Math.max(24, Math.round(startW + dx)) + "px";
+      active.style.height = Math.max(24, Math.round(startH + dy)) + "px";
+    }else{
+      active.style.left = Math.max(0, Math.round(startLeft + dx)) + "px";
+      active.style.top = Math.max(0, Math.round(startTop + dy)) + "px";
+    }
+  };
+
+  map.onpointerup = (ev)=>{
+    if(!active) return;
+    persistMapElement(active);
+    save();
+    pushToCloud();
+    active = null;
+  };
 }
 
 function inventarioView(){
