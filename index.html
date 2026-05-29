@@ -1011,6 +1011,58 @@ async function initSupabaseSync(){
 function now(){ return new Date().toLocaleString("es-ES",{hour12:false}); }
 function productName(code){ return PRODUCTS[code]?.name || "Vacía"; }
 
+function productExcelLabel(code, fallback=""){
+  const labels = {
+    P001:"1 - Caja vacía VR 200/237",
+    P002A:"2 - Caja Aquabona VR500",
+    P027:"27 - Caja vacía VR300/350",
+    P903:"903 - Caja + Botellas Sprite VR200",
+    P906:"906 - Caja + Botellas VR350",
+    P910:"910 - Caja + Botellas Contour VR237",
+    P901:"901 - Caja + Botellas CAPPY VR200",
+    P002B:"2 - Caja vacía Aquabona VR365/500",
+    P925:"925 - Caja + Botellas MIXER VR200",
+    P012:"12 - Caja vacía Aquabona VR1L",
+    P019:"19 - Caja + Botella Aquabona VR365",
+    P018:"18 - Caja + Botella Aquabona VR1L",
+    P907:"907 - Caja + Botellas Sprite VR350",
+    P905:"905 - Caja + Botellas Cappy VR300",
+    P928:"928 - Caja + Botellas SPIRAL VR237",
+    P908:"908 - Caja + Botellas SPLASH VR350",
+    P707:"707 - Contenedor Megabox"
+  };
+  if(labels[code]) return labels[code];
+  const plain = String(fallback || productName(code) || "").trim();
+  const normalized = plain.toLowerCase()
+    .normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/\s+/g, " ")
+    .replace(/\s*\/\s*/g, "/");
+  const byName = {
+    "caja vacia vr200/237":"1 - Caja vacía VR 200/237",
+    "caja vacia vr 200/237":"1 - Caja vacía VR 200/237",
+    "aquabona vr500":"2 - Caja Aquabona VR500",
+    "caja aquabona vr500":"2 - Caja Aquabona VR500",
+    "caja vacia vr300/350":"27 - Caja vacía VR300/350",
+    "sprite vr200":"903 - Caja + Botellas Sprite VR200",
+    "caja + botellas sprite vr200":"903 - Caja + Botellas Sprite VR200",
+    "vr350":"906 - Caja + Botellas VR350",
+    "caja + botellas vr350":"906 - Caja + Botellas VR350",
+    "contour vr237":"910 - Caja + Botellas Contour VR237",
+    "cappy vr200":"901 - Caja + Botellas CAPPY VR200",
+    "aquabona vr365/500":"2 - Caja vacía Aquabona VR365/500",
+    "mixer vr200":"925 - Caja + Botellas MIXER VR200",
+    "aquabona vr1l":"12 - Caja vacía Aquabona VR1L",
+    "aquabona vr365":"19 - Caja + Botella Aquabona VR365",
+    "sprite vr350":"907 - Caja + Botellas Sprite VR350",
+    "cappy vr300":"905 - Caja + Botellas Cappy VR300",
+    "spiral vr237":"928 - Caja + Botellas SPIRAL VR237",
+    "splash vr350":"908 - Caja + Botellas SPLASH VR350",
+    "megabox":"707 - Contenedor Megabox",
+    "contenedor megabox":"707 - Contenedor Megabox"
+  };
+  return byName[normalized] || plain;
+}
+
 function migrateProductCode(code){
   const legacy = {
     CCD001:"P001", CCP001:"P027", SPD001:"P903", SPR001:"P907", FAD001:"P906", ESP001:"P928",
@@ -1494,7 +1546,7 @@ function exportAlbaranesExcel(){
   rows.push(["Fecha","Hora","Tipo","Muelle","Matrícula","Albarán","Operario","Producto","Palets","Estiba","Estado"]);
   (state.albaranes || []).slice().reverse().forEach(a=>{
     (a.lines || []).forEach(l=>{
-      rows.push([a.date,a.time,a.type,a.dock,a.plate,a.deliveryNote,a.operator,l.productName || productName(l.product),Number(l.qty || 0),l.rack || "",a.status || "Completado"]);
+      rows.push([a.date,a.time,a.type,a.dock,a.plate,a.deliveryNote,a.operator,productExcelLabel(l.product, l.productName),Number(l.qty || 0),l.rack || "",a.status || "Completado"]);
     });
   });
   if(rows.length===1){ alert("No hay albaranes registrados para exportar."); return; }
