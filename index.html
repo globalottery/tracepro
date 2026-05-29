@@ -1049,6 +1049,20 @@ function currentShift(){
   if(h>=14 && h<22) return "Tarde";
   return "Noche";
 }
+
+function shiftFromTimestamp(ts){
+  if(!ts) return "-";
+  const m = String(ts).match(/\b(\d{1,2}):(\d{2})(?::\d{2})?\b/);
+  if(!m) return "-";
+  const h = Number(m[1]);
+  if(h>=6 && h<14) return "Mañana";
+  if(h>=14 && h<22) return "Tarde";
+  return "Noche";
+}
+
+function historyShift(h){
+  return h?.shift || shiftFromTimestamp(h?.ts) || "-";
+}
 function setView(v){ state.view=v; save(); render(); }
 function logout(){ state.user=null; state.view="login"; save(); render(); }
 
@@ -1274,7 +1288,13 @@ function moveStock(product, rackId, qty, type, detail=""){
   save(); return true;
 }
 function addHistory(type, product, origin, dest, qty, detail=""){
-  state.history.unshift({id:Date.now(), ts:now(), user:state.user?.name || "Sistema", type, product, origin, dest, qty, detail});
+  state.history.unshift({
+    id: Date.now(),
+    ts: now(),
+    shift: currentShift(),
+    user: state.user?.name || "Sistema",
+    type, product, origin, dest, qty, detail
+  });
 }
 
 
@@ -2751,8 +2771,8 @@ function historialView(){
  const items=state.history.filter(h=>["carga","descarga","carro"].includes(h.type));
  return `<div class="card">${backTitle("🕘 Historial")}
  <h2>Camiones y carros finalizados</h2>
- <table><tr><th>Fecha</th><th>Tipo</th><th>Usuario</th><th>Producto</th><th>Origen</th><th>Destino</th><th>Cantidad</th></tr>
- ${items.slice(0,200).map(h=>`<tr><td>${h.ts}</td><td>${h.type}</td><td>${h.user}</td><td>${productName(h.product)}</td><td>${h.origin}</td><td>${h.dest}</td><td>${h.qty}</td></tr>`).join("")}
+ <table><tr><th>Fecha</th><th>Turno</th><th>Tipo</th><th>Usuario</th><th>Producto</th><th>Origen</th><th>Destino</th><th>Cantidad</th></tr>
+ ${items.slice(0,200).map(h=>`<tr><td>${h.ts}</td><td>${historyShift(h)}</td><td>${h.type}</td><td>${h.user}</td><td>${productName(h.product)}</td><td>${h.origin}</td><td>${h.dest}</td><td>${h.qty}</td></tr>`).join("")}
  </table></div>`;
 }
 
