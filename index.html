@@ -1352,7 +1352,8 @@ function moveStock(product, rackId, qty, type, detail=""){
 }
 function addHistory(type, product, origin, dest, qty, detail=""){
   state.history.unshift({
-    id: Date.now(),
+    // ID único real: antes Date.now() podía repetirse si se guardaban varias líneas a la vez
+    id: `${Date.now()}_${Math.random().toString(36).slice(2,9)}`,
     ts: now(),
     shift: currentShift(),
     user: state.user?.name || "Sistema",
@@ -2267,10 +2268,18 @@ function incidenciaView(){
  const office=state.user && ["encargado","sga"].includes(state.user.role);
  const pending=state.incidents.filter(i=>i.status==="abierta"||i.status==="pendiente");
  const resolved=state.incidents.filter(i=>i.status==="resuelta");
+ const incidentLocationLabel = (i)=>{
+   const kind = i.locationType || (i.vehicle ? "camion" : "estiba");
+   if(kind === "camion") return "Camión " + (i.vehicle || i.rack || "");
+   return "Estiba " + (i.rack || "");
+ };
  return `<div class="card">${backTitle("⚠ Incidencias")}
  <div class="row">
  <div><label>Tipo</label><select id="type"><option>Palet roto</option><option>Caída de carga</option><option>Estiba mezclada</option><option>Producto equivocado</option></select></div>
- <div><label>Estiba</label><input id="rack" value="136"/></div></div>
+ <div><label>Ubicación</label><select id="incidentLocationType" onchange="toggleIncidentLocationFields()"><option value="estiba" selected>Estiba</option><option value="camion">Camión</option></select></div></div>
+ <div class="row">
+ <div id="incidentRackBox"><label>Estiba</label><input id="rack" value="136" placeholder="Introduce número de estiba"/></div>
+ <div id="incidentTruckBox" style="display:none"><label>Camión / Matrícula</label><input id="incidentTruck" placeholder="Introduce matrícula o camión"/></div></div>
  <div class="row">
  <div><label>Producto</label>${productSelect("prod","P001")}</div>
  <div><label>Cantidad</label><input id="qty" value="2"/></div></div>
@@ -2278,20 +2287,61 @@ function incidenciaView(){
  <button class="btn btn-red" onclick="createIncident()">Registrar incidencia</button>
 
  ${office?`<h2>Pendientes</h2>
- ${pending.map(i=>`<div class="option"><b>${i.type}</b><br/>Estiba ${i.rack}<br/>${productName(i.product)}<br/>Estado:${i.status}
+ ${pending.map(i=>`<div class="option"><b>${i.type}</b><br/>${incidentLocationLabel(i)}<br/>${productName(i.product)}<br/>Estado:${i.status}
  <div class="actions"><button class="btn btn-green" onclick="resolveIncident(${i.id})">Resolver</button></div></div>`).join("")||"<div class='alert'>Sin pendientes</div>"}
 
  <h2>Resueltas</h2>
- ${resolved.map(i=>`<div class="option"><b>${i.type}</b><br/>Estiba ${i.rack}<br/>Resuelta:${i.resolvedAt||""}</div>`).join("")||"<div class='alert'>Sin resueltas</div>"}`:""}
+ ${resolved.map(i=>`<div class="option"><b>${i.type}</b><br/>${incidentLocationLabel(i)}<br/>Resuelta:${i.resolvedAt||""}</div>`).join("")||"<div class='alert'>Sin resueltas</div>"}`:""}
  </div>`;
 }
+function toggleIncidentLocationFields(){
+  const typeEl=document.getElementById("incidentLocationType");
+  const truckBox=document.getElementById("incidentTruckBox");
+  const rackBox=document.getElementById("incidentRackBox");
+  const isTruck=typeEl && typeEl.value==="camion";
+  if(truckBox) truckBox.style.display=isTruck?"":"none";
+  if(rackBox) rackBox.style.display=isTruck?"none":"";
+}
 function createIncident(){
-  const inc={id:Date.now(), ts:now(), user:state.user.name, type:document.getElementById("type").value, rack:document.getElementById("rack").value, product:document.getElementById("prod").value, qty:Number(document.getElementById("qty").value), detail:document.getElementById("detail").value, status:"abierta"};
+  const locationTypeEl=document.getElementById("incidentLocationType");
+  const locationType=locationTypeEl ? locationTypeEl.value : "estiba";
+  const rackEl=document.getElementById("rack");
+  const truckEl=document.getElementById("incidentTruck");
+  const rackValue=rackEl ? rackEl.value.trim() : "";
+  const truckValue=truckEl ? truckEl.value.trim() : "";
+
+  if(locationType==="camion" && !truckValue){
+    alert("Introduce el camión o matrícula de la incidencia.");
+    return;
+  }
+  if(locationType==="estiba" && !rackValue){
+    alert("Introduce la estiba de la incidencia.");
+    return;
+  }
+
+  const inc={
+    id:Date.now(),
+    ts:now(),
+    user:state.user.name,
+    type:document.getElementById("type").value,
+    locationType,
+    rack:locationType==="estiba" ? rackValue : "",
+    vehicle:locationType==="camion" ? truckValue : "",
+    product:document.getElementById("prod").value,
+    qty:Number(document.getElementById("qty").value),
+    detail:document.getElementById("detail").value,
+    status:"abierta"
+  };
   state.incidents.unshift(inc);
-  const r=state.racks.find(x=>x.id===inc.rack);
-  if(r && ["Estiba mezclada","Producto equivocado"].includes(inc.type)) r.blocked=true;
-  if(r && ["Palet roto","Caída de carga"].includes(inc.type)){ r.occupied=Math.max(0,r.occupied-inc.qty); }
-  addHistory("incidencia",inc.product,inc.rack,"",-inc.qty,inc.type+" "+inc.detail);
+
+  if(locationType==="estiba"){
+    const r=state.racks.find(x=>x.id===inc.rack);
+    if(r && ["Estiba mezclada","Producto equivocado"].includes(inc.type)) r.blocked=true;
+    if(r && ["Palet roto","Caída de carga"].includes(inc.type)){ r.occupied=Math.max(0,r.occupied-inc.qty); }
+  }
+
+  const locationText=locationType==="camion" ? "Camión "+inc.vehicle : "Estiba "+inc.rack;
+  addHistory("incidencia",inc.product,inc.rack || inc.vehicle,"",-inc.qty,inc.type+" · "+locationText+" "+inc.detail);
   save();
   pushToCloud();
   alert("Incidencia registrada");
@@ -2896,16 +2946,21 @@ function searchRackLog(){
 
 function getRackHistory(rack){
   const key = String(rack).trim();
-  const inText = (value)=>String(value || "").toLowerCase().includes(`estiba ${key}`.toLowerCase());
+
+  // Coincidencia exacta de "Estiba X" dentro del detalle.
+  // Antes se usaba includes("estiba 1"), por eso Estiba 1 también cogía Estiba 10, 11, 136, etc.
+  const escapeRegExp = (txt)=>String(txt).replace(/[.*+?^${}()|[\]\]/g, "\$&");
+  const rackDetailRegex = new RegExp(`\bestiba\s*${escapeRegExp(key)}\b`, "i");
+  const inText = (value)=>rackDetailRegex.test(String(value || ""));
 
   const fromHistory = (state.history || []).filter(h=>
-    String(h.origin || "") === key ||
-    String(h.dest || "") === key ||
+    String(h.origin || "").trim() === key ||
+    String(h.dest || "").trim() === key ||
     inText(h.detail)
   );
 
   const fromIncidents = (state.incidents || [])
-    .filter(i=>String(i.rack || "") === key)
+    .filter(i=>String(i.rack || "").trim() === key)
     .map(i=>({
       id: `inc_${i.id}`,
       ts: i.ts,
@@ -2922,7 +2977,9 @@ function getRackHistory(rack){
   const unique = [];
   const seen = new Set();
   all.forEach(item=>{
-    const k = String(item.id || `${item.ts}_${item.type}_${item.origin}_${item.dest}_${item.qty}_${item.detail}`);
+    // La clave incluye todos los datos del movimiento. Antes, si varias líneas tenían el mismo Date.now(),
+    // se podía ocultar una línea distinta y el detalle de la estiba quedaba mal calculado.
+    const k = `${item.id || ""}_${item.ts || ""}_${item.type || ""}_${item.product || ""}_${item.origin || ""}_${item.dest || ""}_${item.qty ?? ""}_${item.detail || ""}`;
     if(!seen.has(k)){ seen.add(k); unique.push(item); }
   });
 
@@ -3169,11 +3226,29 @@ function resolveIncident(id){
  render();
 }
 window.resolveIncident=resolveIncident;
-window.createIncident=createIncident; window.inventoryCheck=inventoryCheck; window.createCampaign=createCampaign; window.selectOption=selectOption; window.calcCampaignDestination=calcCampaignDestination; window.validateCampaignMove=validateCampaignMove; window.confirmCampaignMove=confirmCampaignMove;
+window.createIncident=createIncident; window.toggleIncidentLocationFields=toggleIncidentLocationFields; window.inventoryCheck=inventoryCheck; window.createCampaign=createCampaign; window.selectOption=selectOption; window.calcCampaignDestination=calcCampaignDestination; window.validateCampaignMove=validateCampaignMove; window.confirmCampaignMove=confirmCampaignMove;
 render();
 initSupabaseSync();
 setTimeout(addSyncButton, 500);
 </script>
 
+<script>
+
+/* FIX INCIDENCIAS CAMION/ESTIBA - aplicado sobre archivo enviado */
+document.addEventListener("change", function(e){
+  if(e && e.target && e.target.id === "incidentLocationType" && typeof toggleIncidentLocationFields === "function"){
+    toggleIncidentLocationFields();
+  }
+});
+document.addEventListener("click", function(){
+  const typeEl=document.getElementById("incidentLocationType");
+  const truckBox=document.getElementById("incidentTruckBox");
+  const rackBox=document.getElementById("incidentRackBox");
+  if(typeEl && truckBox && rackBox && typeof toggleIncidentLocationFields === "function"){
+    toggleIncidentLocationFields();
+  }
+}, true);
+
+</script>
 </body>
 </html>
