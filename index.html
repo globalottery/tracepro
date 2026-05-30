@@ -2948,9 +2948,9 @@ function getRackHistory(rack){
   const key = String(rack).trim();
 
   // Coincidencia exacta de "Estiba X" dentro del detalle.
-  // Antes se usaba includes("estiba 1"), por eso Estiba 1 también cogía Estiba 10, 11, 136, etc.
-  const escapeRegExp = (txt)=>String(txt).replace(/[.*+?^${}()|[\]\]/g, "\$&");
-  const rackDetailRegex = new RegExp(`\bestiba\s*${escapeRegExp(key)}\b`, "i");
+  // Evita que Estiba 1 coja también Estiba 10, 11, 136, etc.
+  const escapeRegExp = (txt)=>String(txt).replace(/[.*+?^${}()|[\]\\]/g, "\$&");
+  const rackDetailRegex = new RegExp("\\bestiba\\s*" + escapeRegExp(key) + "\\b", "i");
   const inText = (value)=>rackDetailRegex.test(String(value || ""));
 
   const fromHistory = (state.history || []).filter(h=>
@@ -2977,8 +2977,7 @@ function getRackHistory(rack){
   const unique = [];
   const seen = new Set();
   all.forEach(item=>{
-    // La clave incluye todos los datos del movimiento. Antes, si varias líneas tenían el mismo Date.now(),
-    // se podía ocultar una línea distinta y el detalle de la estiba quedaba mal calculado.
+    // La clave incluye todos los datos del movimiento para no ocultar líneas distintas.
     const k = `${item.id || ""}_${item.ts || ""}_${item.type || ""}_${item.product || ""}_${item.origin || ""}_${item.dest || ""}_${item.qty ?? ""}_${item.detail || ""}`;
     if(!seen.has(k)){ seen.add(k); unique.push(item); }
   });
