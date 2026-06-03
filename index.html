@@ -558,58 +558,265 @@
 }
 </style>
 
+
+<style id="ocupacion-campa-pro-style">
+.ocup-wrap{max-width:100% !important;margin:0 auto;padding:0 0 20px}.ocup-head{display:grid;grid-template-columns:1.4fr .7fr .55fr;gap:16px;align-items:stretch;margin:12px 0 16px}.ocup-head h1{font-size:32px;margin:0 0 10px}.ocup-head p{font-size:16px;color:#555;margin:0}.ocup-filter{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;box-shadow:0 6px 18px #0000000d}.ocup-filter label{font-size:13px;color:#333}.ocup-filter select,.fake-select{margin:0;border:1px solid #cfd3da;border-radius:8px;padding:12px;font-size:17px;background:#fff}.fake-select{font-weight:700;color:#333}.ocup-chart-card,.ocup-panel{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:18px;box-shadow:0 6px 18px #0000000d}.ocup-chart-title{display:flex;justify-content:space-between;gap:16px;align-items:center;margin-bottom:10px;font-size:15px}.ocup-legend{display:flex;gap:25px;font-size:13px;font-weight:700;color:#444}.legend-bar{display:inline-block;width:16px;height:14px;background:#ffb4a8;border:2px solid #ff5b50;border-radius:3px;margin-right:7px;vertical-align:middle}.legend-line{display:inline-block;width:30px;height:4px;background:#2563eb;border-radius:99px;margin-right:7px;vertical-align:middle}.ocup-chart-scroll{overflow-x:auto;overflow-y:hidden}.ocup-chart{position:relative;background:#fff}.ocup-grid-line{position:absolute;height:1px;background:#d7dbe2}.ocup-y{position:absolute;left:3px;width:42px;text-align:right;font-size:12px;color:#666}.ocup-y-title{position:absolute;left:-33px;top:185px;transform:rotate(-90deg);font-size:12px;font-weight:900;color:#666}.ocup-bar{position:absolute;background:linear-gradient(90deg,#ffb2a6 0%,#ff8d7c 55%,#ffd6d0 100%);border:2px solid #ff6b5f;border-radius:5px 5px 0 0;cursor:pointer;transition:.15s;z-index:3}.ocup-bar:hover{filter:brightness(1.03);transform:translateY(-3px)}.ocup-bar-selected{outline:4px solid #111827;outline-offset:2px}.ocup-empty-week{position:absolute;cursor:pointer;z-index:2}.ocup-x{position:absolute;font-size:10px;color:#555;text-align:center;width:32px}.ocup-bar-label{position:absolute;font-size:10px;color:#ff1f1f;font-weight:800;text-align:center;width:45px;z-index:4}.ocup-tooltip{position:absolute;background:#111;color:#fff;border-radius:6px;padding:8px 10px;font-size:11px;text-align:center;font-weight:900;z-index:20;box-shadow:0 8px 18px #0004}.ocup-tooltip span{font-size:12px}.ocup-svg{position:absolute;left:0;top:0;pointer-events:none;overflow:visible;z-index:8}.ocup-month{position:absolute;text-align:center;border-left:1px solid #ddd;font-size:11px;color:#777;padding-top:11px;height:38px}.ocup-kpis{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin:16px 0}.ocup-kpi{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:16px;display:flex;align-items:center;gap:14px;box-shadow:0 6px 18px #0000000d}.ocup-kpi span{display:block;font-size:12px;font-weight:900;color:#333}.ocup-kpi b{display:block;font-size:30px;color:#d60000;line-height:1.1}.ocup-kpi small{display:block;font-size:12px;color:#666}.kpi-icon{width:58px;height:58px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:32px;font-weight:900}.kpi-icon.red{background:#fee2e2;color:#ef4444}.kpi-icon.purple{background:#ede9fe;color:#7c3aed}.kpi-icon.green{background:#dcfce7;color:#16a34a}.kpi-icon.orange{background:#ffedd5;color:#f97316}.kpi-icon.blue{background:#dbeafe;color:#2563eb}.ocup-bottom{display:grid;grid-template-columns:2fr 1fr;gap:16px}.ocup-panel h2{font-size:18px;margin:0 0 14px}.ocup-panel table{font-size:14px}.mini-bar{display:inline-block;width:105px;height:10px;background:#e5e7eb;border-radius:99px;overflow:hidden;vertical-align:middle;margin-right:8px}.mini-bar i{display:block;height:100%;background:#48b738;border-radius:99px}.help p{font-size:15px;line-height:1.6;color:#555;margin:16px 0}.help b:first-child{color:#ff5b50}.ocup-compare{background:#fff;border:1px solid #e5e7eb;border-radius:18px;padding:18px;box-shadow:0 6px 18px #0000000d;margin:16px 0}.ocup-compare-head{display:flex;justify-content:space-between;gap:16px;align-items:flex-end;margin-bottom:14px}.ocup-compare-head h2{font-size:20px;margin:0 0 6px}.ocup-compare-head p{margin:0;color:#555}.ocup-compare-controls{display:grid;grid-template-columns:repeat(4,1fr);gap:12px}.ocup-compare-controls label{font-size:12px;margin-bottom:5px}.ocup-compare-controls select{font-size:15px;padding:10px;margin:0}.ocup-compare-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:14px}.compare-card{border:1px solid #e5e7eb;border-radius:16px;padding:16px;background:#fafafa}.compare-card h3{margin:0 0 12px;font-size:16px}.compare-row{display:grid;grid-template-columns:70px 1fr 95px;gap:10px;align-items:center;margin:11px 0}.compare-year{font-weight:900}.compare-track{height:22px;background:#e5e7eb;border-radius:999px;overflow:hidden}.compare-fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#ffb2a6,#d60000)}.compare-fill.blue{background:linear-gradient(90deg,#93c5fd,#2563eb)}.compare-value{text-align:right;font-weight:900}.compare-delta{font-size:28px;font-weight:900;color:#111}.compare-delta.up{color:#16a34a}.compare-delta.down{color:#dc2626}.compare-note{font-size:13px;color:#666;margin-top:8px}.ocup-chart-compare-tools{display:flex;gap:10px;flex-wrap:wrap;align-items:center;margin:12px 0 4px;padding:12px;background:#f9fafb;border:1px solid #e5e7eb;border-radius:14px}.ocup-chart-compare-tools button{border:0;border-radius:12px;padding:10px 14px;font-weight:900;cursor:pointer;background:#e5e7eb;color:#111}.ocup-chart-compare-tools button.active{background:#d60000;color:#fff}.ocup-chart-compare-tools .pill{border-radius:999px;padding:9px 13px;background:#fff;border:1px solid #d1d5db;font-size:13px;font-weight:900}.ocup-compare-marker{position:absolute;top:32px;height:338px;border-left:3px dashed #111827;z-index:9;pointer-events:none}.ocup-compare-marker.blue{border-left-color:#2563eb}.ocup-compare-marker.red{border-left-color:#d60000}.ocup-compare-tag{position:absolute;top:6px;transform:translateX(-50%);background:#111827;color:#fff;border-radius:8px;padding:6px 8px;font-size:11px;font-weight:900;white-space:nowrap;z-index:12}.ocup-compare-tag.blue{background:#2563eb}.ocup-compare-tag.red{background:#d60000}.ocup-compare-ghost{position:absolute;background:rgba(37,99,235,.14);border:2px solid rgba(37,99,235,.35);border-radius:5px 5px 0 0;z-index:1}.ocup-compare-ghost-label{position:absolute;font-size:10px;color:#2563eb;font-weight:800;text-align:center;width:45px;z-index:2}.ocup-current-year-note{font-size:12px;color:#666;margin-top:8px;font-weight:700}@media(max-width:1100px){.ocup-compare-head{display:block}.ocup-compare-controls,.ocup-compare-grid{grid-template-columns:1fr}}@media(max-width:1100px){.ocup-head,.ocup-bottom{grid-template-columns:1fr}.ocup-kpis{grid-template-columns:1fr 1fr}.ocup-chart-title{display:block}.ocup-legend{margin-top:10px}.ocup-y-title{display:none}}@media(max-width:700px){.ocup-kpis{grid-template-columns:1fr}.ocup-head h1{font-size:25px}}
+</style>
+
+
+<style id="ocupacion-comparativa-selects-fix">
+.ocup-chart-compare-tools.pro-selects{
+  align-items:end !important;
+  gap:10px !important;
+  flex-wrap:wrap !important;
+  padding:12px !important;
+  background:#f8fafc !important;
+  border:1px solid #e5e7eb !important;
+  border-radius:16px !important;
+}
+.ocup-chart-compare-tools .pill.strong{
+  font-weight:900 !important;
+  background:#fff !important;
+  color:#111827 !important;
+}
+.cmp-field{
+  display:flex !important;
+  flex-direction:column !important;
+  gap:4px !important;
+  min-width:130px !important;
+}
+.cmp-field label{
+  margin:0 !important;
+  font-size:11px !important;
+  font-weight:900 !important;
+  color:#374151 !important;
+  text-transform:uppercase !important;
+}
+.cmp-field select{
+  margin:0 !important;
+  height:42px !important;
+  padding:8px 12px !important;
+  border-radius:12px !important;
+  border:2px solid #e5e7eb !important;
+  font-size:15px !important;
+  font-weight:900 !important;
+  background:#fff !important;
+}
+.cmp-field select:focus{
+  outline:3px solid #ffd1d1 !important;
+  border-color:#d60000 !important;
+}
+</style>
+
+
+<style id="ocupacion-comparativa-pro-clean-v2">
+.ocup-chart-compare-tools.pro-selects{
+  display:grid !important;
+  grid-template-columns:1.15fr 1fr 1fr auto !important;
+  gap:14px !important;
+  align-items:end !important;
+  padding:16px !important;
+  margin:14px 0 12px !important;
+  background:linear-gradient(135deg,#fff 0%,#fff7f7 100%) !important;
+  border:1px solid #fecaca !important;
+  border-radius:18px !important;
+  box-shadow:0 8px 20px rgba(214,0,0,.08) !important;
+}
+.cmp-title-box{display:flex;flex-direction:column;gap:4px}
+.cmp-title-box b{font-size:16px;color:#111827}
+.cmp-title-box span{font-size:12px;color:#6b7280;font-weight:700}
+.cmp-pair{display:grid;grid-template-columns:1fr 1fr;gap:8px;background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:10px}
+.cmp-pair strong{grid-column:1/-1;font-size:12px;color:#d60000;letter-spacing:.02em}
+.cmp-field label{font-size:10px !important;margin:0 0 4px !important;color:#6b7280 !important}
+.cmp-field select{height:38px !important;font-size:14px !important;border:1px solid #d1d5db !important;border-radius:10px !important;margin:0 !important;padding:6px 8px !important;background:#fff !important}
+.cmp-mini-result{min-width:220px;border-radius:16px;background:#111827;color:#fff;padding:12px 14px;box-shadow:0 8px 20px rgba(17,24,39,.18)}
+.cmp-mini-result small{display:block;font-size:11px;color:#d1d5db;font-weight:800;margin-bottom:4px}
+.cmp-mini-result b{display:block;font-size:22px;line-height:1.1}
+.cmp-mini-result span{font-size:12px;color:#e5e7eb}.cmp-export-btn{width:100%;margin-top:10px;border:0;border-radius:12px;padding:10px 12px;background:#16a34a;color:#fff;font-size:13px;font-weight:900;cursor:pointer}.cmp-export-btn:hover{filter:brightness(1.05)}
+.cmp-inline-bars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 14px}
+.cmp-inline-card{background:#fff;border:1px solid #e5e7eb;border-radius:16px;padding:12px 14px;box-shadow:0 4px 14px rgba(0,0,0,.05)}
+.cmp-inline-card .top{display:flex;justify-content:space-between;gap:10px;align-items:center;margin-bottom:8px}
+.cmp-inline-card .tag{font-size:12px;font-weight:900;border-radius:999px;padding:6px 10px;background:#fee2e2;color:#b91c1c}
+.cmp-inline-card.b .tag{background:#dbeafe;color:#1d4ed8}
+.cmp-inline-card .value{font-size:24px;font-weight:900;color:#111827}
+.cmp-inline-card .track{height:12px;background:#f3f4f6;border-radius:999px;overflow:hidden}
+.cmp-inline-card .fill{height:100%;border-radius:999px;background:linear-gradient(90deg,#ffb2a6,#d60000)}
+.cmp-inline-card.b .fill{background:linear-gradient(90deg,#93c5fd,#2563eb)}
+.ocup-compare-marker{top:auto !important;bottom:42px !important;height:22px !important;border-left:0 !important;border-radius:999px !important;background:rgba(17,24,39,.12) !important;width:28px !important;transform:translateX(-50%);}
+.ocup-compare-marker.blue{background:rgba(37,99,235,.22) !important}
+.ocup-compare-marker.red{background:rgba(214,0,0,.18) !important}
+.ocup-compare-tag{top:auto !important;bottom:16px !important;border-radius:999px !important;font-size:10px !important;padding:4px 7px !important;box-shadow:none !important}
+.ocup-compare-ghost{background:rgba(17,24,39,.10) !important;border:2px solid rgba(17,24,39,.25) !important}
+.ocup-compare-ghost.b{background:rgba(37,99,235,.12) !important;border-color:rgba(37,99,235,.35) !important}
+.ocup-current-year-note{display:none !important}
+@media(max-width:1100px){.ocup-chart-compare-tools.pro-selects{grid-template-columns:1fr !important}.cmp-inline-bars{grid-template-columns:1fr}.cmp-mini-result{min-width:0}}
+</style>
+
+<style id="tracepro-ocupacion-referencia-actual">
+.ocup-current-box{
+  margin-top:22px;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  background:linear-gradient(180deg,#ffffff,#f9fafb);
+  padding:18px;
+  min-height:190px;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  justify-content:center;
+  gap:12px;
+}
+.ocup-current-ring{
+  --pct:0;
+  width:132px;
+  height:132px;
+  border-radius:50%;
+  background:conic-gradient(#d60000 calc(var(--pct)*1%), #fee2e2 0);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  box-shadow:0 10px 24px rgba(214,0,0,.10);
+}
+.ocup-current-ring::before{
+  content:"";
+  position:absolute;
+  width:96px;
+  height:96px;
+  border-radius:50%;
+  background:white;
+}
+.ocup-current-ring b{
+  position:relative;
+  z-index:1;
+  font-size:34px;
+  line-height:1;
+  color:#d60000;
+  font-weight:900;
+}
+.ocup-current-title{
+  text-align:center;
+  font-size:13px;
+  color:#374151;
+  font-weight:900;
+  text-transform:uppercase;
+}
+.ocup-current-sub{
+  text-align:center;
+  font-size:12px;
+  color:#6b7280;
+  font-weight:800;
+}
+</style>
+
+<style id="extra-zone-summary-style">
+.extra-zone-summary{
+  display:flex;
+  justify-content:space-between;
+  gap:14px;
+  flex-wrap:wrap;
+  background:#fff;
+  border:1px solid #e5e7eb;
+  border-radius:18px;
+  padding:16px 18px;
+  margin-top:14px;
+  font-weight:800;
+}
+.extra-zone-summary b{color:#111827}
+</style>
 </head>
 <body>
 <div id="app"></div>
 
 <script>
-// Limpiar service worker y caché automáticamente
-if('serviceWorker' in navigator){
-  navigator.serviceWorker.getRegistrations().then(regs=>{
-    regs.forEach(reg=>reg.unregister());
-  });
-}
-if('caches' in window){
-  caches.keys().then(keys=>{
-    keys.forEach(key=>caches.delete(key));
-  });
+// Limpiar service worker y caché automáticamente solo en http/https.
+if(location.protocol === 'http:' || location.protocol === 'https:'){
+  if('serviceWorker' in navigator){
+    navigator.serviceWorker.getRegistrations().then(regs=>{
+      regs.forEach(reg=>reg.unregister());
+    }).catch(()=>{});
+  }
+  if('caches' in window){
+    caches.keys().then(keys=>{
+      keys.forEach(key=>caches.delete(key));
+    }).catch(()=>{});
+  }
 }
 </script>
 
 <script>
+const CAMPA_MAX_PALETS = 24800;
+const CAMPA_CURRENT_PALETS = 15000;
+
+function todayISO(){
+  const d = new Date();
+  const y = d.getFullYear();
+  const m = String(d.getMonth()+1).padStart(2,'0');
+  const day = String(d.getDate()).padStart(2,'0');
+  return `${y}-${m}-${day}`;
+}
+
+function campaCapacidadTotal(){
+  return CAMPA_MAX_PALETS;
+}
+
+function campaPaletsActuales(){
+  const rackTotal = state && state.racks ? state.racks.reduce((a,r)=>a+(Number(r.occupied)||0),0) : 0;
+  return rackTotal > 0 ? rackTotal : CAMPA_CURRENT_PALETS;
+}
+
+function campaOcupacionPct(value){
+  const cap = campaCapacidadTotal();
+  const v = Number(value);
+  const palets = Number.isFinite(v) ? v : campaPaletsActuales();
+  return cap > 0 ? Math.max(0, Math.min(100, Math.round((palets / cap) * 1000) / 10)) : 0;
+}
+
+function campaPaletsLibres(value){
+  const v = Number(value);
+  const palets = Number.isFinite(v) ? v : campaPaletsActuales();
+  return Math.max(0, campaCapacidadTotal() - palets);
+}
+
+function capacidadLibreActual(){
+  return campaPaletsLibres(campaPaletsActuales());
+}
+
+
 const PRODUCTS = {
-  P001:{name:"Caja vacía VR200/237", rotation:"Media"},
-  P002A:{name:"Aquabona VR500", rotation:"Media"},
-  P027:{name:"Caja vacía VR300/350", rotation:"Media"},
-  P903:{name:"Sprite VR200", rotation:"Media"},
-  P906:{name:"VR350", rotation:"Media"},
-  P910:{name:"Contour VR237", rotation:"Media"},
-  P901:{name:"CAPPY VR200", rotation:"Media"},
-  P002B:{name:"Aquabona VR365/500", rotation:"Media"},
-  P925:{name:"MIXER VR200", rotation:"Media"},
-  P012:{name:"Aquabona VR1L", rotation:"Media"},
-  P019:{name:"Aquabona VR365", rotation:"Media"},
-  P018:{name:"Aquabona VR1L", rotation:"Media"},
-  P907:{name:"Sprite VR350", rotation:"Media"},
-  P905:{name:"Cappy VR300", rotation:"Media"},
-  P928:{name:"SPIRAL VR237", rotation:"Media"},
-  P908:{name:"SPLASH VR350", rotation:"Media"},
-  P707:{name:"Megabox", rotation:"Media"}
+  P001:{name:"1 Caja vacía VR 200/237", rotation:"Media"},
+  P002A:{name:"2 Caja Aquabona VR500", rotation:"Media"},
+  P027:{name:"27 Caja vacía VR300/350", rotation:"Media"},
+  P903:{name:"903 Caja + Botellas Sprite VR200", rotation:"Media"},
+  P906:{name:"906 Caja + Botellas VR350", rotation:"Media"},
+  P910:{name:"910 Caja + Botellas Contour VR237", rotation:"Media"},
+  P901:{name:"901 Caja + Botellas CAPPY VR200", rotation:"Media"},
+  P002B:{name:"2 Caja vacía Aquabona VR365/500", rotation:"Media"},
+  P925:{name:"925 Caja + Botellas MIXER VR200", rotation:"Media"},
+  P012:{name:"12 Caja vacía Aquabona VR1L", rotation:"Media"},
+  P019:{name:"19 Caja + Botella Aquabona VR365", rotation:"Media"},
+  P018:{name:"18 Caja + Botella Aquabona VR1L", rotation:"Media"},
+  P907:{name:"907 Caja + Botellas Sprite VR350", rotation:"Media"},
+  P905:{name:"905 Caja + Botellas Cappy VR300", rotation:"Media"},
+  P928:{name:"928 Caja + Botellas SPIRAL VR237", rotation:"Media"},
+  P908:{name:"908 Caja + Botellas SPLASH VR350", rotation:"Media"},
+  P707:{name:"707 Contenedor Megabox", rotation:"Media"}
 };
 
 const USERS = {
   carlos:{password:"1234", name:"Carlos Fernández", role:"carretillero"},
   checker:{password:"1234", name:"Checker", role:"checker"},
   sga:{password:"1234", name:"Usuario SGA", role:"sga"},
-  encargado:{password:"1234", name:"Encargado", role:"encargado"}
+  encargado:{password:"1234", name:"Encargado", role:"encargado"},
+  ejecutivo:{password:"1234", name:"Ejecutivo", role:"ejecutivo"}
 };
 
-const ROLE_OPTIONS = ["carretillero", "sga", "encargado", "checker"];
+const ROLE_OPTIONS = ["carretillero", "sga", "encargado", "checker", "ejecutivo"];
 const ROLE_LABELS = {
   carretillero: "Carretillero",
   sga: "SGA",
   encargado: "Encargado",
-  checker: "Checker"
+  checker: "Checker",
+  ejecutivo: "Ejecutivo"
 };
 
 function defaultSapUsers(){
@@ -617,6 +824,20 @@ function defaultSapUsers(){
     username,
     role:u.role
   }));
+}
+
+function normalizeSapUsers(s){
+  if(!s.sapUsers) s.sapUsers = defaultSapUsers();
+  s.sapUsers = s.sapUsers
+    .map(u=>({
+      username:String(u.username||"").trim().toLowerCase(),
+      role:ROLE_OPTIONS.includes(u.role)?u.role:"carretillero"
+    }))
+    .filter(u=>u.username);
+  defaultSapUsers().forEach(def=>{
+    if(!s.sapUsers.some(u=>u.username===def.username)) s.sapUsers.push(def);
+  });
+  return s;
 }
 
 let state = loadState();
@@ -630,13 +851,25 @@ function defaultState(){
     ...Array(44).fill(216),
     ...Array(27).fill(192)
   ];
-  const cycle = ["P001","P002A","P027","P903","P906","P910","P901",""];
+  const cycle = ["P001","P002A","P027","P903","P906","P910","P901","P002B","P925","P012","P019","P018","P907","P905","P928","P908","P707",""];
   const racks = [];
+  let remainingCurrentPalets = CAMPA_CURRENT_PALETS;
+  const eligibleIdx = capacities.map((_,i)=>i).filter(i=>!["143","144","145","150"].includes(String(i+1)));
   for(let i=0;i<186;i++){
     const id = String(1+i);
     const cap = capacities[i];
-    const p = cycle[i % cycle.length];
-    const occupied = p ? Math.min(cap, 24 + ((i*12) % Math.max(24,cap-10))) : 0;
+    const reserved = ["143","144","145"].includes(id);
+    const blocked = id==="150";
+    let p = (!reserved && !blocked) ? cycle[i % cycle.length] : "";
+    let occupied = 0;
+    if(p && remainingCurrentPalets > 0){
+      occupied = Math.min(cap, remainingCurrentPalets);
+      remainingCurrentPalets -= occupied;
+    }
+    if(remainingCurrentPalets <= 0){
+      p = occupied > 0 ? p : "";
+      occupied = occupied || 0;
+    }
     racks.push({
       id,
       capacity:cap,
@@ -644,8 +877,8 @@ function defaultState(){
       occupied,
       entryDate:p ? `2026-05-${String((i%20)+1).padStart(2,"0")}` : "",
       zone:i<50 ? "Frontal" : i<120 ? "Central" : "Trasera",
-      reserved:["143","144","145"].includes(id),
-      blocked:id==="150",
+      reserved,
+      blocked,
       mapX: 20 + ((i % 12) * 92),
       mapY: 20 + (Math.floor(i / 12) * 72)
     });
@@ -750,6 +983,9 @@ function defaultState(){
     campaignTasks:[],
     unloadPlans:[],
     albaranes:[],
+    extraMaps:{},
+    extraMapLayouts:{},
+    extraMapSeedVersion:{},
     selectedAlbaranId:null,
     sapUsers: defaultSapUsers()
   };
@@ -764,10 +1000,11 @@ function loadState(){
     if(!s.campaignTasks) s.campaignTasks = [];
     if(!s.unloadPlans) s.unloadPlans = [];
     if(!s.albaranes) s.albaranes = [];
+    if(!s.extraMaps) s.extraMaps = {};
+    if(!s.extraMapLayouts) s.extraMapLayouts = {};
+    if(!s.extraMapSeedVersion) s.extraMapSeedVersion = {};
     if(!s.selectedAlbaranId) s.selectedAlbaranId = null;
-    if(!s.sapUsers) s.sapUsers = defaultSapUsers();
-    s.sapUsers = s.sapUsers.map(u=>({username:String(u.username||"").trim().toLowerCase(), role:ROLE_OPTIONS.includes(u.role)?u.role:"carretillero"})).filter(u=>u.username);
-    defaultSapUsers().forEach(def=>{ if(!s.sapUsers.some(u=>u.username===def.username)) s.sapUsers.push(def); });
+    normalizeSapUsers(s);
     if(s.incidents) s.incidents = s.incidents.map(i=>({...i,status:i.status||"pendiente"}));
     if(s.racks){
       s.racks = s.racks.map((r,i)=>({
@@ -834,7 +1071,10 @@ const TRACE_SHARED_KEYS = [
   "campaignTasks",
   "unloadPlans",
   "sapUsers",
-  "albaranes"
+  "albaranes",
+  "extraMaps",
+  "extraMapLayouts",
+  "extraMapSeedVersion"
 ];
 
 let traceSupabaseClient = null;
@@ -906,6 +1146,7 @@ function applySharedState(data){
     }
   });
 
+  normalizeSapUsers(state);
   state.user = localUser;
   state.view = localView;
   state.selectedAlbaranId = localSelectedAlbaranId;
@@ -1009,7 +1250,7 @@ async function initSupabaseSync(){
   }
 }
 function now(){ return new Date().toLocaleString("es-ES",{hour12:false}); }
-function productName(code){ return PRODUCTS[code]?.name || "Vacía"; }
+function productName(code){ if(code === "TOTAL") return "TOTAL CAMPA"; return PRODUCTS[code]?.name || "Vacía"; }
 
 
 const ALBARAN_PRODUCT_EXCEL_NAMES = {
@@ -1127,20 +1368,45 @@ function historyShift(h){
   return shiftFromTimestamp(h?.ts) || h?.shift || "-";
 }
 function setView(v){ state.view=v; save(); render(); }
+function openMapaCampa(){ state.mapArea=""; setView('mapa'); }
+function selectMapaArea(area){ state.mapArea=area; save(); render(); }
 function logout(){ state.user=null; state.view="login"; save(); render(); }
+
+function allowedViewsForRole(role){
+  const base = ["menu"];
+  if(role==="ejecutivo") return [...base, "dashboard", "controlOperativo", "ocupacion", "resumenOcupacion", "mapa", "campanas"];
+  if(role==="carretillero") return [...base, "carga", "descarga", "carro", "campanaTareas", "incidencia"];
+  const officeViews = ["dashboard", "controlOperativo", "ocupacion", "resumenOcupacion", "mapa", "descarga", "carro", "inventario", "historial", "registroEstiba", "albaranes", "campanas", "campanaTareas", "incidencia", "carga"];
+  if(role==="encargado") return [...base, ...officeViews, "roles"];
+  if(["sga", "checker"].includes(role)) return [...base, ...officeViews];
+  return base;
+}
+
+function canAccessView(role, view){
+  return allowedViewsForRole(role).includes(view || "menu");
+}
 
 function render(){
   const app = document.getElementById("app");
   if(!state.user) return renderLogin(app);
-  const office = ["encargado","sga","checker"].includes(state.user.role);
+  const role = state.user.role;
+  const office = ["encargado","sga","checker"].includes(role);
+  const executive = role==="ejecutivo";
+  if(!canAccessView(role, state.view)){
+    state.view = "menu";
+    save();
+  }
   let html = header();
   html += `<div class="wrap">`;
-  if(state.view==="menu") html += office ? officeMenu() : forkliftMenu();
+  if(state.view==="menu") html += executive ? executiveMenu() : (office ? officeMenu() : forkliftMenu());
   if(state.view==="carga") html += cargaView();
   if(state.view==="descarga") html += descargaView();
   if(state.view==="carro") html += carroView();
   if(state.view==="incidencia") html += incidenciaView();
   if(state.view==="dashboard") html += dashboardView();
+  if(state.view==="controlOperativo") html += controlOperativoView();
+  if(state.view==="ocupacion") html += ocupacionCampaView();
+  if(state.view==="resumenOcupacion") html += resumenOcupacionView();
   if(state.view==="mapa") html += mapaView();
   if(state.view==="inventario") html += inventarioView();
   if(state.view==="historial") html += historialView();
@@ -1186,14 +1452,26 @@ function login(){
 }
 
 function header(){
+  const roleLabel = ROLE_LABELS[state.user.role] || state.user.role;
   return `<div class="topbar">
     <div class="title">Coca-Cola TRACE PRO</div>
-    <div class="user">${state.user.name}<br/>Rol: ${state.user.role} · Turno: ${state.user.shift}
+    <div class="user">${state.user.name}<br/>Rol: ${roleLabel} · Turno: ${state.user.shift}
       <br/><button class="btn btn-gray" style="padding:8px 12px;font-size:14px" onclick="logout()">Salir</button>
     </div>
   </div>`;
 }
 function backTitle(title){ return `<button class="btn btn-gray" onclick="setView('menu')">← Volver</button><h1>${title}</h1>`; }
+
+function executiveMenu(){
+  return `<div class="grid3">
+    <button class="tile tile-dashboard" onclick="setView('dashboard')"><span class="menu-img"></span>DASHBOARD</button>
+    <button class="tile tile-dashboard" onclick="setView('controlOperativo')"><span class="menu-img"></span>CONTROL OPERATIVO</button>
+    <button class="tile tile-dashboard" onclick="setView('ocupacion')"><span class="menu-img"></span>USO MAPA CAMPA</button>
+    <button class="tile tile-dashboard" onclick="setView('resumenOcupacion')"><span class="menu-img"></span>RESUMEN OCUPACIÓN</button>
+    <button class="tile tile-mapa" onclick="openMapaCampa()"><span class="menu-img"></span>MAPA CAMPA</button>
+    <button class="tile tile-zonas" onclick="setView('campanas')"><span class="menu-img"></span>ZONAS RESTRINGIDAS</button>
+  </div>`;
+}
 
 function forkliftMenu(){
   return `<div class="grid3">
@@ -1208,7 +1486,10 @@ function forkliftMenu(){
 function officeMenu(){
   return `<div class="grid3">
     <button class="tile tile-dashboard" onclick="setView('dashboard')"><span class="menu-img"></span>DASHBOARD</button>
-    <button class="tile tile-mapa" onclick="setView('mapa')"><span class="menu-img"></span>MAPA CAMPA</button>
+    <button class="tile tile-dashboard" onclick="setView('controlOperativo')"><span class="menu-img"></span>CONTROL OPERATIVO</button>
+    <button class="tile tile-dashboard" onclick="setView('ocupacion')"><span class="menu-img"></span>USO MAPA CAMPA</button>
+    <button class="tile tile-dashboard" onclick="setView('resumenOcupacion')"><span class="menu-img"></span>RESUMEN OCUPACIÓN</button>
+    <button class="tile tile-mapa" onclick="openMapaCampa()"><span class="menu-img"></span>MAPA CAMPA</button>
     <button class="tile tile-descargas" onclick="setView('descarga')"><span class="menu-img"></span>DESCARGAS</button>
     <button class="tile tile-carro" onclick="setView('carro')"><span class="menu-img"></span>CARRO INTERNO</button>
     <button class="tile tile-inventario" onclick="setView('inventario')"><span class="menu-img"></span>AJUSTE INVENTARIO</button>
@@ -1230,7 +1511,7 @@ function rolesView(){
   const users = [...(state.sapUsers || [])].sort((a,b)=>a.username.localeCompare(b.username));
   return `<div class="card">${backTitle("👥 Roles usuarios SAP")}
     <div class="alert">
-      Asigna a cada usuario SAP uno de los 4 roles cerrados del sistema: Carretillero, SGA, Encargado o Checker.
+      Asigna a cada usuario SAP uno de los roles cerrados del sistema: Carretillero, SGA, Encargado, Checker o Ejecutivo.
     </div>
 
     <h2>Añadir usuario SAP</h2>
@@ -1328,6 +1609,105 @@ function selectOption(id, el){
   document.querySelectorAll(".option").forEach(x=>x.classList.remove("selected"));
   el.classList.add("selected");
   document.getElementById("selectedRack").value=id;
+}
+
+const WAREHOUSES = {
+  explanada: {label:"Explanada", total:0, cols:0},
+  "107": {label:"107", total:34, cols:6},
+  lgv: {label:"LGV", total:15, cols:5}
+};
+
+function warehouseLabel(key){
+  return WAREHOUSES[String(key||"").toLowerCase()]?.label || key || "-";
+}
+
+function getWarehouseRacks(key){
+  const k = String(key || "explanada").toLowerCase();
+  if(k === "107") return ensureExtraZoneRacks("107", 34, 6);
+  if(k === "lgv") return ensureExtraZoneRacks("lgv", 15, 5);
+  return state.racks || [];
+}
+
+function normalizeWarehouseKey(key){
+  const k = String(key || "explanada").toLowerCase();
+  if(k === "107") return "107";
+  if(k === "lgv") return "lgv";
+  return "explanada";
+}
+
+function warehouseSelect(id, selected="explanada", exclude=""){
+  const opts = [
+    ["explanada", "Explanada"],
+    ["107", "107"],
+    ["lgv", "LGV"]
+  ].filter(([k])=>k!==exclude);
+  return `<select id="${id}">${opts.map(([k,v])=>`<option value="${k}" ${selected===k?"selected":""}>${v}</option>`).join("")}</select>`;
+}
+
+function recommendExitFromWarehouse(warehouse, product, qty){
+  return getWarehouseRacks(warehouse)
+    .filter(r => r.product===product && Number(r.occupied)>=qty && !r.reserved && !r.blocked)
+    .sort((a,b)=>(a.entryDate||"").localeCompare(b.entryDate||""))
+    .slice(0,3);
+}
+
+function recommendEntryToWarehouse(warehouse, product, qty){
+  return getWarehouseRacks(warehouse)
+    .filter(r => !r.reserved && !r.blocked)
+    .filter(r => r.product===product || !r.product)
+    .filter(r => (Number(r.capacity)||0) - (Number(r.occupied)||0) >= qty)
+    .sort((a,b)=>{
+      const sameA = a.product===product ? 0 : 1;
+      const sameB = b.product===product ? 0 : 1;
+      if(sameA!==sameB) return sameA-sameB;
+      return (a.entryDate || "2999-12-31").localeCompare(b.entryDate || "2999-12-31");
+    })
+    .slice(0,3);
+}
+
+function findRackInWarehouse(warehouse, rackId){
+  return getWarehouseRacks(warehouse).find(r=>String(r.id)===String(rackId) || String(r.ref||"")===String(rackId));
+}
+
+function transferStockBetweenWarehouses({product, originWarehouse, destWarehouse, originRackId, qty, detail}){
+  qty = Number(qty);
+  originWarehouse = normalizeWarehouseKey(originWarehouse);
+  destWarehouse = normalizeWarehouseKey(destWarehouse);
+
+  if(originWarehouse === destWarehouse){ alert("El origen y el destino no pueden ser el mismo almacén."); return false; }
+  if(qty<=0 || qty%2!==0){ alert("La cantidad debe ser positiva y múltiplo de 2."); return false; }
+
+  const originRack = findRackInWarehouse(originWarehouse, originRackId);
+  if(!originRack){ alert("Estiba origen no encontrada."); return false; }
+  if(originRack.reserved || originRack.blocked){ alert("La estiba origen está reservada o bloqueada."); return false; }
+  if(originRack.product !== product){ alert("La estiba origen no contiene ese producto."); return false; }
+  if((Number(originRack.occupied)||0) < qty){ alert("No hay suficientes palets en la estiba origen."); return false; }
+
+  const destOptions = recommendEntryToWarehouse(destWarehouse, product, qty);
+  const destRack = destOptions[0];
+  if(!destRack){ alert(`No hay capacidad disponible en ${warehouseLabel(destWarehouse)} para ${qty} palets de ${productName(product)}.`); return false; }
+
+  originRack.occupied = Number(originRack.occupied)||0;
+  destRack.occupied = Number(destRack.occupied)||0;
+
+  originRack.occupied -= qty;
+  if(originRack.occupied === 0){ originRack.product = ""; originRack.entryDate = ""; }
+
+  destRack.product = product;
+  destRack.occupied += qty;
+  if(!destRack.entryDate) destRack.entryDate = new Date().toISOString().slice(0,10);
+
+  addHistory(
+    "carro",
+    product,
+    `${warehouseLabel(originWarehouse)} · Estiba ${originRack.id}`,
+    `${warehouseLabel(destWarehouse)} · Estiba ${destRack.id}`,
+    qty,
+    detail || `${warehouseLabel(originWarehouse)} → ${warehouseLabel(destWarehouse)} · ${qty} palets`
+  );
+
+  save();
+  return {originRack, destRack};
 }
 
 function moveStock(product, rackId, qty, type, detail=""){
@@ -1580,7 +1960,7 @@ function albaranesView(){
       El registro se genera automáticamente cuando una carga o descarga con albarán queda completada. El listado está agrupado por albarán.
     </div>
     <div class="actions" style="margin-bottom:18px">
-      <button class="btn btn-green" onclick="exportAlbaranesExcel()">⬇️ Exportar Excel</button>
+      <button class="btn btn-green" onclick="exportAlbaranesExcel()">⬇️ Exportar vista actual</button>
     </div>
     ${records.length ? `<table>
       <tr><th>Fecha</th><th>Hora</th><th>Tipo</th><th>Muelle</th><th>Matrícula</th><th>Albarán</th><th>Operario</th><th>Palets</th><th>Productos</th></tr>
@@ -2005,13 +2385,23 @@ function confirmUnloadLine(planId, lineId){
     ? `Descarga ${plan.dock} matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"} · EXTRA NO PREVISTO`
     : (line.received !== line.expected ? `Descarga ${plan.dock} matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"} · Diferencia previsto ${line.expected} / real ${line.received}` : `Descarga ${plan.dock} matrícula ${plan.plate} · Albarán ${plan.deliveryNote || "Sin albarán"}`);
 
-  if(moveStock(line.product, rack, line.received, "descarga", unloadDetail)){
+  if(moveStock(line.product, rack, line.received, "entrada", unloadDetail)){
     line.done = true;
     line.rack = rack;
 
     if(plan.lines.every(l=>l.done)){
       plan.status = "completada";
       plan.completedAt = now();
+      const totalReceived = plan.lines.reduce((sum,l)=>sum + Number(l.received || l.expected || 0), 0);
+      const productSummary = plan.lines.map(l=>`${productName(l.product)}: ${Number(l.received || l.expected || 0)} palets${l.extra ? " (extra)" : ""}`).join(" · ");
+      addHistory(
+        "descarga",
+        "",
+        plan.dock,
+        "Campa",
+        totalReceived,
+        `Descarga completada ${plan.dock} matrícula ${plan.plate || "Sin matrícula"} · Albarán ${plan.deliveryNote || "Sin albarán"} · ${productSummary}`
+      );
       registerAlbaranRecord({
         type:"Descarga",
         dock:plan.dock,
@@ -2046,7 +2436,7 @@ function carroView(){
   const canManage = state.user && ["encargado","sga"].includes(state.user.role);
 
   return `<div class="card">${backTitle("🚜 Carro interno")}
-    <div class="alert">Carro interno: siempre Campa → Inbound · 1 carro = 24 palets.</div>
+    <div class="alert">Carro interno sincronizado entre almacenes: <b>1 carro = 24 palets</b>. Cada confirmación mueve solo un carro: resta 24 palets del origen y suma 24 palets al destino.</div>
 
     ${canManage ? `
       <h2>Crear solicitud de turno</h2>
@@ -2055,13 +2445,17 @@ function carroView(){
         <div><label>Producto</label>${productSelect("prod","P001")}</div>
       </div>
       <div class="row">
-        <div><label>Carros solicitados</label><input id="carts" value="10"/></div>
+        <div><label>Origen</label>${warehouseSelect("cartOrigin","explanada")}</div>
+        <div><label>Destino</label>${warehouseSelect("cartDest","107")}</div>
+      </div>
+      <div class="row">
+        <div><label>Carros solicitados</label><input id="carts" value="1"/></div>
         <button class="btn btn-red" onclick="createCartRequest()">Crear solicitud</button>
       </div>
     ` : `
       <h2>Solicitudes activas</h2>
       <div class="alert">
-        Modo carretillero: solo puedes ejecutar solicitudes creadas por Encargado/SGA.
+        Modo carretillero: ejecuta las solicitudes creadas por Encargado/SGA. Cada confirmación mueve 1 carro de 24 palets del almacén origen al destino.
       </div>
     `}
 
@@ -2081,9 +2475,23 @@ function createCartRequest(){
     alert("Solo Encargado/SGA pueden crear solicitudes de carros.");
     return;
   }
-  const req = {id:Date.now(), shift:document.getElementById("shift").value, product:document.getElementById("prod").value, requested:Number(document.getElementById("carts").value), done:0, status:"activa"};
+  const origin = normalizeWarehouseKey(document.getElementById("cartOrigin").value);
+  const dest = normalizeWarehouseKey(document.getElementById("cartDest").value);
+  const requested = Number(document.getElementById("carts").value);
+  if(origin === dest){ alert("El origen y el destino no pueden ser el mismo almacén."); return; }
+  if(!requested || requested <= 0){ alert("Indica un número de carros válido."); return; }
+  const req = {
+    id:Date.now(),
+    shift:document.getElementById("shift").value,
+    product:document.getElementById("prod").value,
+    origin,
+    dest,
+    requested,
+    done:0,
+    status:"activa"
+  };
   state.cartRequests.push(req);
-  addHistory("crear solicitud carros", req.product, "", "Inbound", 0, `Turno ${req.shift}. Carros solicitados: ${req.requested}`);
+  addHistory("crear solicitud carros", req.product, warehouseLabel(origin), warehouseLabel(dest), 0, `Turno ${req.shift}. ${warehouseLabel(origin)} → ${warehouseLabel(dest)}. Carros solicitados: ${req.requested} (${req.requested*24} palets)`);
   save();
   pushToCloud();
   render();
@@ -2098,7 +2506,7 @@ function cartClosedHtml(){
 
   return closed.map(r=>`<div class="option" style="opacity:.82">
     <b>${r.status==="cancelada" ? "❌ Cancelada" : "✅ Completada"} · ${productName(r.product)}</b><br/>
-    Turno ${r.shift} · Realizados ${r.done}/${r.requested}
+    ${warehouseLabel(r.origin || "explanada")} → ${warehouseLabel(r.dest || "107")} · Turno ${r.shift} · Realizados ${r.done}/${r.requested} · ${Number(r.done||0)*24} palets movidos
     ${r.status==="cancelada" ? `<br/><span class="small">Cancelada por ${r.cancelledBy || "-"} · Motivo: ${r.cancelReason || "-"}</span>` : ""}
   </div>`).join("");
 }
@@ -2109,7 +2517,7 @@ function cartListHtml(){
   const canCancel = state.user && ["encargado","sga"].includes(state.user.role);
   return active.map(r=>`<div class="option">
     <b>${productName(r.product)}</b><br/>
-    Turno ${r.shift} · Carros ${r.done}/${r.requested} · Pendientes ${r.requested-r.done}
+    ${warehouseLabel(r.origin || "explanada")} → ${warehouseLabel(r.dest || "107")} · Turno ${r.shift} · Carros ${r.done}/${r.requested} · Pendientes ${r.requested-r.done} · Palets pendientes ${(r.requested-r.done)*24}
     <div class="actions" style="margin-top:12px">
       <button class="btn btn-gray" onclick="calcCarro(${r.id})">Buscar estiba FIFO</button>
       ${canCancel ? `<button class="btn btn-red" onclick="cancelCartRequest(${r.id})">Cancelar solicitud</button>` : ""}
@@ -2146,10 +2554,10 @@ function cancelCartRequest(id){
   addHistory(
     "cancelación carros",
     req.product,
-    "",
-    "Inbound",
+    warehouseLabel(req.origin || "explanada"),
+    warehouseLabel(req.dest || "107"),
     0,
-    `Solicitud cancelada. Realizados ${req.done}/${req.requested}. Pendientes cancelados ${pending}. Motivo: ${reason.trim()}`
+    `Solicitud cancelada. ${warehouseLabel(req.origin || "explanada")} → ${warehouseLabel(req.dest || "107")}. Realizados ${req.done}/${req.requested}. Pendientes cancelados ${pending}. Motivo: ${reason.trim()}`
   );
 
   save();
@@ -2160,8 +2568,16 @@ function cancelCartRequest(id){
 
 function calcCarro(id){
   const req=state.cartRequests.find(r=>r.id===id);
-  tempOptions = recommendExit(req.product,24);
+  if(!req){ alert("Solicitud no encontrada."); return; }
+  req.origin = normalizeWarehouseKey(req.origin || "explanada");
+  req.dest = normalizeWarehouseKey(req.dest || "107");
+  if(req.origin === req.dest){ alert("Solicitud incorrecta: origen y destino son el mismo almacén."); return; }
+
+  tempOptions = recommendExitFromWarehouse(req.origin, req.product, 24);
+  const destOptions = recommendEntryToWarehouse(req.dest, req.product, 24);
   const recommended = tempOptions[0]?.id || "";
+  const recommendedDest = destOptions[0]?.id || "";
+
   document.getElementById("optionsBox").innerHTML = `
     <div class="card" style="box-shadow:none;border:2px solid #eee">
       <h2>Orden carro interno</h2>
@@ -2171,16 +2587,26 @@ function calcCarro(id){
           <div class="value">${productName(req.product)}</div>
         </div>
         <div>
+          <div class="small">Movimiento</div>
+          <div class="value">${warehouseLabel(req.origin)} → ${warehouseLabel(req.dest)}</div>
+        </div>
+      </div>
+      <div class="row">
+        <div>
           <div class="small">Carros</div>
           <div class="value">${req.done}/${req.requested}</div>
+        </div>
+        <div>
+          <div class="small">Destino FIFO previsto</div>
+          <div class="value">${recommendedDest ? `Estiba ${recommendedDest}` : "Sin hueco disponible"}</div>
         </div>
       </div>
 
       <div class="alert">
-        La app recomienda coger de la estiba FIFO. Para descontar 24 palets, primero hay que escanear o introducir la estiba.
+        La app recomienda coger de la estiba FIFO del almacén origen. Al confirmar, se descontarán <b>24 palets</b> de <b>${warehouseLabel(req.origin)}</b> y se sumarán automáticamente en <b>${warehouseLabel(req.dest)}</b>.
       </div>
 
-      <h2>Top 3 estibas FIFO</h2>
+      <h2>Top 3 estibas FIFO origen</h2>
       ${optionHtml(tempOptions)}
 
       <input type="hidden" id="activeReq" value="${id}"/>
@@ -2243,6 +2669,10 @@ function confirmCarro(id){
   const rack=document.getElementById("selectedRack")?.value;
   const scanned=document.getElementById("scannedRack")?.value.trim();
 
+  if(!req){ alert("Solicitud no encontrada."); return; }
+  req.origin = normalizeWarehouseKey(req.origin || "explanada");
+  req.dest = normalizeWarehouseKey(req.dest || "107");
+
   if(!rack){
     alert("Primero busca y selecciona una estiba FIFO.");
     return;
@@ -2253,12 +2683,21 @@ function confirmCarro(id){
     return;
   }
 
-  if(moveStock(req.product,rack,24,"carro",`Carro ${req.done+1}/${req.requested}`)){
+  const result = transferStockBetweenWarehouses({
+    product:req.product,
+    originWarehouse:req.origin,
+    destWarehouse:req.dest,
+    originRackId:rack,
+    qty:24,
+    detail:`Carro ${req.done+1}/${req.requested} · ${warehouseLabel(req.origin)} → ${warehouseLabel(req.dest)} · 24 palets`
+  });
+
+  if(result){
     req.done += 1;
     if(req.done>=req.requested) req.status="completada";
     save();
     pushToCloud();
-    alert("Carro confirmado. Se han descontado 24 palets de la estiba " + rack);
+    alert(`Carro confirmado. Se han movido 24 palets de ${warehouseLabel(req.origin)} estiba ${result.originRack.id} a ${warehouseLabel(req.dest)} estiba ${result.destRack.id}.`);
     render();
   }
 }
@@ -2276,10 +2715,10 @@ function incidenciaView(){
  return `<div class="card">${backTitle("⚠ Incidencias")}
  <div class="row">
  <div><label>Tipo</label><select id="type"><option>Palet roto</option><option>Caída de carga</option><option>Estiba mezclada</option><option>Producto equivocado</option></select></div>
- <div><label>Ubicación</label><select id="incidentLocationType" onchange="toggleIncidentLocationFields()"><option value="estiba" selected>Estiba</option><option value="camion">Camión</option></select></div></div>
+ <div><label>Ubicación</label><select id="incidentLocationType" onchange="toggleIncidentLocationFields()"><option value="camion">Camión</option><option value="estiba">Estiba</option></select></div></div>
  <div class="row">
- <div id="incidentRackBox"><label>Estiba</label><input id="rack" value="136" placeholder="Introduce número de estiba"/></div>
- <div id="incidentTruckBox" style="display:none"><label>Camión / Matrícula</label><input id="incidentTruck" placeholder="Introduce matrícula o camión"/></div></div>
+ <div id="incidentTruckBox"><label>Camión / Matrícula</label><input id="incidentTruck" placeholder="Introduce matrícula o camión"/></div>
+ <div id="incidentRackBox" style="display:none"><label>Estiba</label><input id="rack" value="136"/></div></div>
  <div class="row">
  <div><label>Producto</label>${productSelect("prod","P001")}</div>
  <div><label>Cantidad</label><input id="qty" value="2"/></div></div>
@@ -2298,7 +2737,7 @@ function toggleIncidentLocationFields(){
   const typeEl=document.getElementById("incidentLocationType");
   const truckBox=document.getElementById("incidentTruckBox");
   const rackBox=document.getElementById("incidentRackBox");
-  const isTruck=typeEl && typeEl.value==="camion";
+  const isTruck=!typeEl || typeEl.value==="camion";
   if(truckBox) truckBox.style.display=isTruck?"":"none";
   if(rackBox) rackBox.style.display=isTruck?"none":"";
 }
@@ -2347,10 +2786,134 @@ function createIncident(){
   alert("Incidencia registrada");
 }
 
+
+
+function sameLocalDate(ts, dateLabel){
+  return String(ts || "").split(",")[0].trim() === dateLabel;
+}
+
+function operationalType(h){
+  const t = String(h?.type || "").toLowerCase().trim();
+  if(t === "carga") return "carga";
+  if(t === "carro") return "carro";
+  if(t === "descarga") return "descarga";
+  return "";
+}
+
+function extractAlbaranFromDetail(detail){
+  const txt = String(detail || "");
+  const alb = txt.match(/Albar[aá]n\s+([^·\n]+)/i);
+  const mat = txt.match(/matr[ií]cula\s+([^·\n]+)/i);
+  return `${alb ? alb[1].trim() : "sin-albaran"}_${mat ? mat[1].trim() : "sin-matricula"}`;
+}
+
+function getOperationalHistoryItems(onlyToday=false){
+  const todayLabel = new Date().toLocaleDateString("es-ES");
+  const source = (state.history || []).filter(h=>{
+    const t = operationalType(h);
+    if(!["carga","descarga","carro"].includes(t)) return false;
+    if(onlyToday && !sameLocalDate(h.ts, todayLabel)) return false;
+    return true;
+  });
+
+  // La descarga puede tener varias líneas internas de ubicación por producto.
+  // Para Control Operativo e Historial operativo se muestra una sola descarga por camión/albarán finalizado.
+  const seenLegacyUnload = new Set();
+  return source.filter(h=>{
+    const t = operationalType(h);
+    if(t !== "descarga") return true;
+    const detail = String(h.detail || "");
+    if(/Descarga completada/i.test(detail)) return true;
+    const key = `${String(h.ts || "").split(",")[0]}_${extractAlbaranFromDetail(detail)}`;
+    if(seenLegacyUnload.has(key)) return false;
+    seenLegacyUnload.add(key);
+    return true;
+  });
+}
+
+function controlOperativoView(){
+  const todayDate = new Date().toLocaleDateString("es-ES");
+  const todayItems = getOperationalHistoryItems(true);
+  const shifts = ["Mañana","Tarde","Noche"];
+  const types = ["carga","descarga","carro"];
+  const labels = {carga:"Cargas", descarga:"Descargas", carro:"Carro interno"};
+  const icon = {carga:"🚛", descarga:"📦", carro:"🔁"};
+  const counts = {};
+  shifts.forEach(sh=>{
+    counts[sh] = {carga:0, descarga:0, carro:0, total:0};
+  });
+  todayItems.forEach(h=>{
+    const sh = historyShift(h);
+    const type = operationalType(h);
+    if(counts[sh] && types.includes(type)){
+      counts[sh][type] += 1;
+      counts[sh].total += 1;
+    }
+  });
+  const totals = types.reduce((acc,t)=>{ acc[t]=todayItems.filter(h=>operationalType(h)===t).length; return acc; },{});
+  const totalDay = todayItems.length;
+  const topShift = shifts.slice().sort((a,b)=>counts[b].total-counts[a].total)[0] || "-";
+  const operators = new Set(todayItems.map(h=>h.user).filter(Boolean)).size;
+  const maxShift = Math.max(1, ...shifts.map(sh=>counts[sh].total));
+  const hours = Array.from({length:24},(_,i)=>i);
+  const byHour = hours.map(h=>{
+    const n = todayItems.filter(item=>{
+      const m = String(item.ts||"").match(/\b(\d{1,2}):(\d{2})(?::\d{2})?\b/);
+      return m && Number(m[1]) === h;
+    }).length;
+    return {hour:h, count:n};
+  }).filter(x=>x.count>0);
+  const maxHour = Math.max(1, ...byHour.map(x=>x.count));
+  const latest = todayItems.slice(0,12);
+  let html = `<div class="card">${backTitle("📊 Control Operativo")}
+    <div class="alert">Pantalla de dirección sincronizada con Historial: cada carga, descarga completada y carro interno finalizado aparece automáticamente por turno y en el total del día.</div>
+    <h2>Resumen del día · ${todayDate}</h2>
+    <div class="grid3">
+      <div class="metric"><div class="n">${totals.carga||0}</div><div class="t">Cargas realizadas</div></div>
+      <div class="metric"><div class="n">${totals.descarga||0}</div><div class="t">Descargas realizadas</div></div>
+      <div class="metric"><div class="n">${totals.carro||0}</div><div class="t">Carros internos</div></div>
+    </div>
+    <div class="grid2" style="margin-top:18px">
+      <div class="ok"><b>Turno más activo:</b> ${totalDay ? topShift + " · " + counts[topShift].total + " movimientos" : "Sin movimientos registrados hoy"}</div>
+      <div class="ok"><b>Operarios activos hoy:</b> ${operators}</div>
+    </div>
+
+    <h2>Actividad por turnos</h2>
+    <div class="grid3">`;
+  shifts.forEach(sh=>{
+    const pct = Math.round((counts[sh].total / maxShift) * 100);
+    html += `<div class="metric" style="min-height:260px">
+      <div class="t">Turno ${sh}</div>
+      <div class="small">${sh==="Mañana"?"06:00-14:00":sh==="Tarde"?"14:01-22:00":"22:01-05:59"}</div>
+      <div style="font-size:20px;line-height:1.9;margin-top:12px">
+        ${icon.carga} <b>${labels.carga}:</b> ${counts[sh].carga}<br/>
+        ${icon.descarga} <b>${labels.descarga}:</b> ${counts[sh].descarga}<br/>
+        ${icon.carro} <b>${labels.carro}:</b> ${counts[sh].carro}
+      </div>
+      <div style="margin-top:14px;font-weight:900;font-size:22px">Total: ${counts[sh].total}</div>
+      <div style="height:18px;background:#f3f4f6;border-radius:99px;overflow:hidden;margin-top:12px;border:1px solid #e5e7eb">
+        <div style="width:${pct}%;height:100%;background:#d60000;border-radius:99px"></div>
+      </div>
+    </div>`;
+  });
+  html += `</div>
+    <h2>Evolución por horas</h2>
+    <div class="card" style="box-shadow:none;border:1px solid #e5e7eb;margin-bottom:0">
+      ${byHour.length ? byHour.map(x=>`<div style="display:grid;grid-template-columns:70px 1fr 50px;gap:12px;align-items:center;margin:8px 0"><b>${String(x.hour).padStart(2,"0")}:00</b><div style="height:16px;background:#f3f4f6;border-radius:99px;overflow:hidden"><div style="width:${Math.round((x.count/maxHour)*100)}%;height:100%;background:#111827;border-radius:99px"></div></div><b>${x.count}</b></div>`).join("") : `<div class="alert">Todavía no hay movimientos registrados hoy.</div>`}
+    </div>
+
+    <h2>Últimos movimientos del día</h2>
+    <table><tr><th>Hora</th><th>Turno</th><th>Tipo</th><th>Operario</th><th>Producto</th><th>Origen</th><th>Destino</th><th>Cantidad</th></tr>
+      ${latest.length ? latest.map(h=>`<tr><td>${h.ts}</td><td>${historyShift(h)}</td><td>${String(h.type||"").toUpperCase()}</td><td>${h.user||"-"}</td><td>${productName(h.product)}</td><td>${h.origin||"-"}</td><td>${h.dest||"-"}</td><td>${Math.abs(Number(h.qty||0))}</td></tr>`).join("") : `<tr><td colspan="8">Sin movimientos registrados hoy.</td></tr>`}
+    </table>
+  </div>`;
+  return html;
+}
+
 function dashboardView(){
-  const cap=state.racks.reduce((a,r)=>a+r.capacity,0);
-  const occ=state.racks.reduce((a,r)=>a+r.occupied,0);
-  const pct=Math.round((occ/cap)*100);
+  const cap=campaCapacidadTotal();
+  const occ=campaPaletsActuales();
+  const pct=campaOcupacionPct(occ);
   const empty=state.racks.filter(r=>r.occupied===0&&!r.reserved).length;
   const reserved=state.racks.filter(r=>r.reserved).length;
   const incidents=state.incidents.filter(i=>i.status==="abierta").length;
@@ -2369,8 +2932,9 @@ function dashboardView(){
   html+='<svg width="64" height="64" viewBox="0 0 64 64"><circle cx="32" cy="32" r="28" fill="none" stroke="#f3f4f6" stroke-width="8"/>';
   html+='<circle cx="32" cy="32" r="28" fill="none" stroke="'+donutColor+'" stroke-width="8" stroke-dasharray="'+dashArr+' 251" stroke-dashoffset="63" stroke-linecap="round"/></svg>';
   html+='<div style="position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:900;color:'+donutColor+'">'+pct+'%</div></div>';
-  html+='<div><div style="font-size:12px;color:#888;font-weight:700;text-transform:uppercase">Ocupación</div>';
-  html+='<div style="font-size:13px;color:#555;margin-top:2px">'+occ+' / '+cap+' pal.</div></div></div>';
+  html+='<div><div style="font-size:12px;color:#888;font-weight:700;text-transform:uppercase">Ocupación actual</div>';
+  html+='<div style="font-size:13px;color:#555;margin-top:2px">'+occ.toLocaleString('es-ES')+' / '+cap.toLocaleString('es-ES')+' pal.</div>';
+  html+='<div style="font-size:12px;color:#777;margin-top:2px">Libres: '+campaPaletsLibres(occ).toLocaleString('es-ES')+' pal.</div></div></div>';
 
   // Vacías
   html+='<div style="background:#fff;border:1.5px solid #e5e7eb;border-radius:20px;padding:18px;display:flex;align-items:center;gap:14px">';
@@ -2428,6 +2992,899 @@ function dashboardView(){
   html+='</div>';
   return html;
 }
+function escapeHtmlTrace(value){
+  return String(value ?? "").replace(/[&<>'"]/g, ch => ({"&":"&amp;","<":"&lt;",">":"&gt;","'":"&#39;","\"":"&quot;"}[ch]));
+}
+
+function parseTraceDate(ts){
+  if(!ts) return null;
+  const raw = String(ts);
+  let m = raw.match(/(\d{4})-(\d{2})-(\d{2})/);
+  if(m) return new Date(Number(m[1]), Number(m[2])-1, Number(m[3]));
+  m = raw.match(/(\d{1,2})\/(\d{1,2})\/(\d{4})/);
+  if(m) return new Date(Number(m[3]), Number(m[2])-1, Number(m[1]));
+  const d = new Date(raw);
+  return Number.isNaN(d.getTime()) ? null : d;
+}
+
+function isoWeekTrace(date){
+  const d = new Date(Date.UTC(date.getFullYear(), date.getMonth(), date.getDate()));
+  const dayNum = d.getUTCDay() || 7;
+  d.setUTCDate(d.getUTCDate() + 4 - dayNum);
+  const yearStart = new Date(Date.UTC(d.getUTCFullYear(),0,1));
+  const weekNo = Math.ceil((((d - yearStart) / 86400000) + 1) / 7);
+  return {year:d.getUTCFullYear(), week:weekNo};
+}
+
+function productStockNow(product){
+  return state.racks.filter(r=>r.product===product).reduce((a,r)=>a+(Number(r.occupied)||0),0);
+}
+
+function weeklyOccupationForProduct(product, year){
+  const currentWeek = isoWeekTrace(new Date()).week;
+  const productSeed = String(product).split("").reduce((a,c)=>a+c.charCodeAt(0),0);
+  const yearOffset = (Number(year) - 2026);
+  const base = 520 + (productSeed % 620) + (yearOffset * (35 + (productSeed % 55)));
+  const amplitude = 120 + (productSeed % 110);
+  const growth = ((productSeed % 9) - 3) * 5.5;
+  const weeks = Array.from({length:52}, (_,i)=>{
+    const week = i + 1;
+    const wave = Math.sin((week + productSeed % 7) / 3.2) * amplitude;
+    const wave2 = Math.cos((week + productSeed % 5) / 6.5) * (amplitude * 0.45);
+    const specialPeak = (week>=18 && week<=22) ? (140 + (productSeed % 160)) : 0;
+    const summerPeak = (week>=26 && week<=35) ? (120 + (productSeed % 120)) : 0;
+    const trend = week * growth;
+    let value = Math.round(base + wave + wave2 + specialPeak + summerPeak + trend);
+    value = Math.max(80, value);
+    const forecast = Math.max(80, Math.round(value + Math.sin((week+4)/4)*140 + (week-currentWeek)*12));
+    return {week, value, forecast, entradas:0, salidas:0, movimientos:0, demo:true};
+  });
+
+  // Datos DEMO de ocupación semanal: sirven para enseñar la función a dirección.
+  // Si hay movimientos reales guardados en historial, se superponen sobre la semana correspondiente.
+  const moves = (state.history||[])
+    .filter(h=>h.product===product && typeof h.qty !== "undefined")
+    .map(h=>({ ...h, date:parseTraceDate(h.ts), qty:Number(h.qty)||0 }))
+    .filter(h=>h.date);
+
+  moves.forEach(h=>{
+    const iw = isoWeekTrace(h.date);
+    if(iw.year !== year) return;
+    const row = weeks[iw.week-1];
+    if(!row) return;
+    if(h.qty>0) row.entradas += h.qty;
+    if(h.qty<0) row.salidas += Math.abs(h.qty);
+    row.movimientos += 1;
+    row.value = Math.max(0, row.value + h.qty);
+    row.demo = false;
+  });
+
+  return weeks;
+}
+
+function weeklyTotalOccupation(year){
+  const currentWeek = isoWeekTrace(new Date()).week;
+  const currentYear = isoWeekTrace(new Date()).year;
+  const actualNow = campaPaletsActuales();
+
+  return Array.from({length:52}, (_,i)=>{
+    const week = i + 1;
+    const y = Number(year);
+
+    // 2026 TOTAL sincronizado con Dashboard:
+    // si el dashboard cambia por entradas/salidas, toda la curva de 2026 se recalcula
+    // alrededor del nuevo dato actual y la semana actual queda exactamente igual al dashboard.
+    if(y === Number(currentYear)){
+      const weekDistance = week - currentWeek;
+      const seasonal = Math.sin((week - 5) / 4.2) * 1900;
+      const soft = Math.cos((week + 3) / 7.5) * 850;
+      const summerPeak = (week >= 25 && week <= 35) ? 3200 - Math.abs(week - 30) * 180 : 0;
+      const springPeak = (week >= 12 && week <= 21) ? 1200 + ((week - 12) * 95) : 0;
+      const winterLow = (week <= 6 || week >= 49) ? -1100 : 0;
+      const noise = Math.sin((week * 1.7) + (y * 0.13)) * 390;
+
+      // Ancla la curva al valor real actual para que dashboard y ocupación 2026 estén sincronizados.
+      const anchorSeasonal = Math.sin((currentWeek - 5) / 4.2) * 1900;
+      const anchorSoft = Math.cos((currentWeek + 3) / 7.5) * 850;
+      const anchorSummer = (currentWeek >= 25 && currentWeek <= 35) ? 3200 - Math.abs(currentWeek - 30) * 180 : 0;
+      const anchorSpring = (currentWeek >= 12 && currentWeek <= 21) ? 1200 + ((currentWeek - 12) * 95) : 0;
+      const anchorWinter = (currentWeek <= 6 || currentWeek >= 49) ? -1100 : 0;
+      const anchorNoise = Math.sin((currentWeek * 1.7) + (y * 0.13)) * 390;
+
+      let demoValue = Math.round(
+        actualNow +
+        (seasonal - anchorSeasonal) +
+        (soft - anchorSoft) +
+        (summerPeak - anchorSummer) +
+        (springPeak - anchorSpring) +
+        (winterLow - anchorWinter) +
+        (noise - anchorNoise) +
+        (weekDistance * 18)
+      );
+
+      demoValue = Math.max(9000, Math.min(21500, demoValue));
+      if(week === Number(currentWeek)) demoValue = actualNow;
+
+      let demoForecast = Math.round(demoValue + Math.sin((week + 3) / 3.7) * 620 + (week - currentWeek) * 18);
+      demoForecast = Math.max(9000, Math.min(CAMPA_MAX_PALETS, demoForecast));
+
+      return {
+        week,
+        value: demoValue,
+        forecast: demoForecast,
+        entradas: Math.max(80, Math.round(demoValue * 0.058)),
+        salidas: Math.max(60, Math.round(demoValue * 0.043)),
+        movimientos: Math.max(12, Math.round(demoValue / 245)),
+        demo: true
+      };
+    }
+
+    // 2024/2025 siguen siendo histórico ficticio para demo y comparativa visual.
+    const yearOffset = y - 2026;
+    const base = 13200 + (yearOffset * 420);
+    const waveMain = Math.sin((week - 5) / 4.2) * 2100;
+    const waveSoft = Math.cos((week + 3) / 7.5) * 1050;
+    const springPeak = (week >= 12 && week <= 21) ? 1800 + ((week - 12) * 135) : 0;
+    const summerPeak = (week >= 25 && week <= 35) ? 4300 - Math.abs(week - 30) * 210 : 0;
+    const autumnRecovery = (week >= 40 && week <= 46) ? 1400 - Math.abs(week - 43) * 180 : 0;
+    const winterLow = (week <= 6 || week >= 49) ? -1400 : 0;
+    const operationalNoise = Math.sin((week * 1.7) + (y * 0.13)) * 480;
+
+    let demoValue = Math.round(base + waveMain + waveSoft + springPeak + summerPeak + autumnRecovery + winterLow + operationalNoise);
+
+    const minByYear = y === 2024 ? 10800 : 11500;
+    const maxByYear = y === 2024 ? 18900 : 20200;
+    demoValue = Math.max(minByYear, Math.min(maxByYear, demoValue));
+
+    let demoForecast = Math.round(demoValue + Math.sin((week + 3) / 3.7) * 620 + (week - currentWeek) * 18);
+    demoForecast = Math.max(minByYear, Math.min(CAMPA_MAX_PALETS, demoForecast));
+
+    return {
+      week,
+      value: demoValue,
+      forecast: demoForecast,
+      entradas: Math.max(80, Math.round(demoValue * 0.058)),
+      salidas: Math.max(60, Math.round(demoValue * 0.043)),
+      movimientos: Math.max(12, Math.round(demoValue / 245)),
+      demo: true
+    };
+  });
+}
+
+function ocupacionAvailableYears(){
+  return [2024, 2025, 2026];
+}
+
+function ocupacionSafeYear(year){
+  const years = ocupacionAvailableYears();
+  const y = Number(year);
+  if(years.includes(y)) return y;
+  return years.includes(new Date().getFullYear()) ? new Date().getFullYear() : years[years.length - 1];
+}
+
+function ocupacionMaxWeekForYear(year){
+  const y = ocupacionSafeYear(year);
+  const now = isoWeekTrace(new Date());
+  if(y === now.year) return Math.max(1, Math.min(52, now.week));
+  return 52;
+}
+
+function ocupacionClampWeek(week, year){
+  const max = ocupacionMaxWeekForYear(year);
+  const w = Number(week) || 1;
+  return Math.max(1, Math.min(max, w));
+}
+
+function ocupacionRows(product, year){
+  const safeYear = ocupacionSafeYear(year);
+  const rows = product === "TOTAL" ? weeklyTotalOccupation(safeYear) : weeklyOccupationForProduct(product, safeYear);
+  return rows.slice(0, ocupacionMaxWeekForYear(safeYear));
+}
+
+function ocupacionWeekOptions(selectedWeek, year){
+  const max = ocupacionMaxWeekForYear(year);
+  const selected = ocupacionClampWeek(selectedWeek, year);
+  return Array.from({length:max},(_,i)=>'<option value="'+(i+1)+'" '+((i+1)===selected?'selected':'')+'>W'+(i+1)+'</option>').join('');
+}
+
+function setOcupacionProduct(product){
+  state.occupationProduct = product;
+  state.occupationSelectedWeek = null;
+  save(); render();
+}
+
+function setOcupacionYear(year){
+  state.occupationYear = ocupacionSafeYear(year);
+  state.occupationSelectedWeek = ocupacionClampWeek(state.occupationSelectedWeek || 21, state.occupationYear);
+  save(); render();
+}
+
+function setOcupacionMode(mode){
+  state.occupationViewMode = mode || 'single';
+  if(state.occupationViewMode === 'compare2526') state.occupationViewMode = 'compareYears';
+  if(state.occupationViewMode === 'compareYears'){
+    state.occupationCompare = state.occupationCompare || {weekA:20, yearA:2025, weekB:20, yearB:2026};
+  }
+  save(); render();
+}
+
+function setOcupacionAnalysisMode(mode){
+  state.occupationAnalysisMode = mode === 'weekly' ? 'weekly' : 'annual';
+  state.occupationCompare = state.occupationCompare || {weekA:20, yearA:2025, weekB:20, yearB:2026};
+  if(state.occupationAnalysisMode === 'weekly'){
+    // En comparativa semanal la gráfica trabaja sobre un solo año: el año del punto activo A/B.
+    state.occupationViewMode = 'single';
+    const target = state.occupationComparePick || 'A';
+    const y = target === 'B' ? (state.occupationCompare.yearB || 2026) : (state.occupationCompare.yearA || 2025);
+    const w = target === 'B' ? (state.occupationCompare.weekB || 20) : (state.occupationCompare.weekA || 20);
+    state.occupationYear = ocupacionSafeYear(y);
+    state.occupationSelectedWeek = ocupacionClampWeek(w, state.occupationYear);
+  }
+  save(); render();
+}
+
+function selectOcupacionWeek(week){
+  state.occupationSelectedWeek = Number(week);
+  save(); render();
+}
+
+function setOcupacionCompare(field, value){
+  state.occupationCompare = state.occupationCompare || {weekA:20, yearA:2025, weekB:20, yearB:2026};
+  state.occupationCompare[field] = Number(value);
+
+  if(field === 'yearA') state.occupationCompare.yearA = ocupacionSafeYear(value);
+  if(field === 'yearB') state.occupationCompare.yearB = ocupacionSafeYear(value);
+
+  state.occupationCompare.weekA = ocupacionClampWeek(state.occupationCompare.weekA || 20, state.occupationCompare.yearA || 2025);
+  state.occupationCompare.weekB = ocupacionClampWeek(state.occupationCompare.weekB || 20, state.occupationCompare.yearB || 2026);
+
+  // Sincronización nueva:
+  // - En modo "Ver un año", la comparativa semanal también manda sobre el gráfico.
+  // - Si cambias Año/Semana del Punto A, el gráfico pasa a ese año y esa semana.
+  // - Si cambias Año/Semana del Punto B, el gráfico pasa a ese año y esa semana.
+  // - En modo "Comparar años", se mantiene la comparativa anual completa A vs B.
+  const isWeeklyAnalysis = (state.occupationAnalysisMode || 'annual') === 'weekly';
+  if(isWeeklyAnalysis){
+    let targetYear = state.occupationYear || new Date().getFullYear();
+    let targetWeek = state.occupationSelectedWeek || 1;
+
+    if(field === 'yearA' || field === 'weekA'){
+      targetYear = state.occupationCompare.yearA || targetYear;
+      targetWeek = state.occupationCompare.weekA || targetWeek;
+      state.occupationComparePick = 'A';
+    }
+
+    if(field === 'yearB' || field === 'weekB'){
+      targetYear = state.occupationCompare.yearB || targetYear;
+      targetWeek = state.occupationCompare.weekB || targetWeek;
+      state.occupationComparePick = 'B';
+    }
+
+    state.occupationYear = ocupacionSafeYear(targetYear);
+    state.occupationSelectedWeek = ocupacionClampWeek(targetWeek, state.occupationYear);
+  }
+
+  save(); render();
+}
+
+function setOcupacionComparePick(target){
+  state.occupationComparePick = target;
+  save(); render();
+}
+
+function selectOcupacionCompareWeek(week){
+  state.occupationCompare = state.occupationCompare || {weekA:20, yearA:2025, weekB:20, yearB:2026};
+  const target = state.occupationComparePick || 'A';
+  if(target === 'B') state.occupationCompare.weekB = Number(week);
+  else state.occupationCompare.weekA = Number(week);
+
+  const isWeeklyAnalysis = (state.occupationAnalysisMode || 'annual') === 'weekly';
+  const targetYear = target === 'B' ? (state.occupationCompare.yearB || 2026) : (state.occupationCompare.yearA || 2025);
+  if(isWeeklyAnalysis){
+    state.occupationYear = ocupacionSafeYear(targetYear);
+    state.occupationSelectedWeek = ocupacionClampWeek(Number(week), state.occupationYear);
+  }else{
+    state.occupationSelectedWeek = Number(week);
+  }
+
+  state.occupationComparePick = target === 'A' ? 'B' : 'A';
+  save(); render();
+}
+
+function comparePct(a,b){
+  if(!a) return b ? 100 : 0;
+  return Math.round(((b-a)/a)*100);
+}
+
+function xlsxSheetNameEscape(name){
+  return String(name || "Hoja").replace(/'/g,"''");
+}
+
+function ejecutivoCell(value, style){
+  return {v:value, s:style||0};
+}
+
+function ejecutivoCellXml(value, ref, style){
+  const sAttr = style ? ` s="${style}"` : "";
+  const isNumber = typeof value === "number" && Number.isFinite(value);
+  if(isNumber) return `<c r="${ref}"${sAttr}><v>${value}</v></c>`;
+  return `<c r="${ref}" t="inlineStr"${sAttr}><is><t>${xmlEscape(value)}</t></is></c>`;
+}
+
+function ejecutivoSheetXml(rows, opts){
+  opts = opts || {};
+  const sheetRows = rows.map((row, rIdx)=>{
+    const cells = (row || []).map((cell, cIdx)=>{
+      const ref = xlsxColName(cIdx) + (rIdx + 1);
+      if(cell && typeof cell === "object" && Object.prototype.hasOwnProperty.call(cell,"v")){
+        return ejecutivoCellXml(cell.v, ref, Number(cell.s)||0);
+      }
+      return ejecutivoCellXml(cell, ref, 0);
+    }).join("");
+    return `<row r="${rIdx+1}" ht="${opts.rowHeights && opts.rowHeights[rIdx+1] ? opts.rowHeights[rIdx+1] : 22}" customHeight="1">${cells}</row>`;
+  }).join("");
+  const cols = (opts.cols || [22,18,18,18,18,18,18,18]).map((w,i)=>`<col min="${i+1}" max="${i+1}" width="${w}" customWidth="1"/>`).join("");
+  const merges = (opts.merges || []).length ? `<mergeCells count="${opts.merges.length}">${opts.merges.map(r=>`<mergeCell ref="${r}"/>`).join("")}</mergeCells>` : "";
+  const drawing = opts.drawing ? `<drawing r:id="${opts.drawing}"/>` : "";
+  return `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<worksheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+  <sheetViews><sheetView showGridLines="0" workbookViewId="0"/></sheetViews>
+  <cols>${cols}</cols>
+  <sheetData>${sheetRows}</sheetData>
+  ${merges}
+  ${drawing}
+</worksheet>`;
+}
+
+
+function buildOcupacionExecutiveXlsxBlob(ctx){
+  const goodTotal = Number(ctx.totalDelta) >= 0;
+  const goodRef = Number(ctx.refDelta) >= 0;
+  const fecha = new Date().toLocaleString('es-ES');
+  const isTotal = !!ctx.isTotalProduct;
+  const mainKpiLabel = isTotal ? "PALETS TOTALES CAMPA" : "PALETS REFERENCIA";
+  const variationLabel = isTotal ? "VARIACIÓN TOTAL" : "VARIACIÓN REFERENCIA";
+  const comparativeLabel = isTotal ? "Palets totales campa" : "Palets referencia";
+  const modeLabel = isTotal ? "Total Campa" : "Referencia seleccionada";
+  const chartTitle = isTotal ? "Gráfico visible · Total Campa" : "Gráfico visible · " + ctx.productName;
+  const chartCapacity = campaCapacidadTotal();
+  const chartRows = (ctx.chartRows && ctx.chartRows.length ? ctx.chartRows : []).map(r=>{
+    const value = Number(r.value)||0;
+    const forecast = Number(r.forecast||r.value)||0;
+    const pct = r.pctOcupacion !== undefined && r.pctOcupacion !== null
+      ? Number(r.pctOcupacion)
+      : (chartCapacity > 0 ? Math.round((value / chartCapacity) * 1000) / 10 : 0);
+    return {week:Number(r.week)||0,value:value,pctOcupacion:pct,forecast:forecast};
+  });
+  const chartEndRow = Math.max(5, 4 + chartRows.length);
+
+  const s = {title:1, subtitle:2, section:3, kpiLabel:4, kpiValue:5, kpiDetail:6, tableHead:7, tableBody:8, good:9, bad:10, note:11, light:12, bold:13, dark:14};
+
+  const rows1 = [];
+  rows1[0] = [ejecutivoCell("COCA-COLA TRACE PRO", s.title),"","","","","","","","",""];
+  rows1[1] = ["","","","","","","","","",""];
+  rows1[2] = [ejecutivoCell("INFORME EJECUTIVO DE OCUPACIÓN CAMPA · Vista actual exportada", s.subtitle),"","","","","","","","",""];
+  rows1[3] = [];
+  rows1[4] = [ejecutivoCell(mainKpiLabel,s.kpiLabel),"",ejecutivoCell("VALOR REFERENCIA",s.kpiLabel),"",ejecutivoCell("OCUPACIÓN FÍSICA",s.kpiLabel),"",ejecutivoCell("ESTIBAS OCUPADAS",s.kpiLabel),"",ejecutivoCell(variationLabel,s.kpiLabel),""];
+  rows1[5] = [ejecutivoCell(ctx.selectedRef, s.kpiValue),"",ejecutivoCell(ctx.productName, s.kpiValue),"",ejecutivoCell(ctx.pctNow+"%", s.kpiValue),"",ejecutivoCell(ctx.estibasOcupadas+" / "+ctx.estibasTotales, s.kpiValue),"",ejecutivoCell((ctx.refDelta>=0?"+":"")+ctx.refDelta+"%", goodRef ? s.good : s.bad),""];
+  rows1[6] = [ejecutivoCell(isTotal ? "TOTAL CAMPA" : "Referencia", s.kpiDetail),"",ejecutivoCell("Referencia exportada",s.kpiDetail),"",ejecutivoCell(ctx.totalNow.toLocaleString('es-ES')+" / "+ctx.totalCap.toLocaleString('es-ES')+" palets",s.kpiDetail),"",ejecutivoCell(ctx.estibasOcupadas+" de "+ctx.estibasTotales+" estibas",s.kpiDetail),"",ejecutivoCell("B vs A",s.kpiDetail),""];
+  rows1[7] = [];
+  rows1[8] = [ejecutivoCell("COMPARATIVA SELECCIONADA",s.section),"","","","","","",""];
+  rows1[9] = [ejecutivoCell("Indicador",s.tableHead),ejecutivoCell("Punto A",s.tableHead),ejecutivoCell("Punto B",s.tableHead),ejecutivoCell("Variación",s.tableHead),"","","",""];
+  rows1[10] = [ejecutivoCell(comparativeLabel,s.tableBody),ejecutivoCell(ctx.refA,s.tableBody),ejecutivoCell(ctx.refB,s.tableBody),ejecutivoCell((ctx.refDelta>=0?"+":"")+ctx.refDelta+"%", goodRef ? s.good : s.bad),"","","",""];
+  rows1[11] = [ejecutivoCell("Palets totales campa",s.tableBody),ejecutivoCell(ctx.totalA,s.tableBody),ejecutivoCell(ctx.totalB,s.tableBody),ejecutivoCell((ctx.totalDelta>=0?"+":"")+ctx.totalDelta+"%", goodTotal ? s.good : s.bad),"","","",""];
+  rows1[12] = [];
+  rows1[13] = [ejecutivoCell("GRÁFICO VISIBLE EXPORTADO",s.section),"","","","","","",""];
+  for(let i=14;i<=31;i++) rows1[i] = [];
+  rows1[32] = [];
+  rows1[33] = [ejecutivoCell("VISTA EXPORTADA",s.section),"","","","","","",""];
+  rows1[34] = [ejecutivoCell("Modo visualizado",s.bold),ejecutivoCell(modeLabel,s.light),"",ejecutivoCell("Año visualizado",s.bold),ejecutivoCell(ctx.currentYear,s.light),"",ejecutivoCell("Fecha exportación",s.bold),ejecutivoCell(fecha,s.light)];
+  rows1[35] = [ejecutivoCell("Referencia",s.bold),ejecutivoCell(ctx.productName,s.light),"",ejecutivoCell("Comparativa",s.bold),ejecutivoCell("W"+ctx.weekA+" "+ctx.yearA+" vs W"+ctx.weekB+" "+ctx.yearB,s.light),"",ejecutivoCell("Tipo informe",s.bold),ejecutivoCell("Solo vista actual",s.light)];
+  rows1[36] = [];
+  rows1[37] = [ejecutivoCell("CONCLUSIONES AUTOMÁTICAS",s.section),"","","","","","",""];
+  rows1[38] = [ejecutivoCell("1",s.note),ejecutivoCell("Ocupación media analizada: "+ctx.ocupacionActual+"%. La comparativa muestra "+ctx.tendenciaTotal+" entre W"+ctx.weekA+" "+ctx.yearA+" y W"+ctx.weekB+" "+ctx.yearB+".",s.note),"","","","","",""];
+  rows1[39] = [ejecutivoCell("2",s.note),ejecutivoCell("Punto destacado: "+(isTotal ? "el total de campa" : "la referencia "+ctx.productName)+" presenta "+ctx.tendenciaRef+" en el periodo seleccionado.",s.note),"","","","","",""];
+  rows1[40] = [ejecutivoCell("3",s.note),ejecutivoCell("Interpretación operativa: "+(Number(ctx.ocupacionActual)>=85 ? "nivel de ocupación elevado, recomendable seguimiento de capacidad." : Number(ctx.ocupacionActual)>=60 ? "ocupación estable con margen operativo disponible." : "ocupación baja con amplia capacidad disponible."),s.note),"","","","","",""];
+
+  const graphRows = [
+    [ejecutivoCell(chartTitle,s.title),"","","","",""],
+    [ejecutivoCell("Datos exactos de la vista actual para dirección",s.subtitle),"","","","",""],
+    [],
+    [ejecutivoCell("Semana",s.tableHead),ejecutivoCell("Palets visibles",s.tableHead),ejecutivoCell("% Ocupación",s.tableHead),ejecutivoCell("Tendencia / forecast",s.tableHead),ejecutivoCell("Año",s.tableHead),ejecutivoCell("Referencia",s.tableHead),ejecutivoCell("Tipo dato",s.tableHead)]
+  ];
+  chartRows.forEach(r=>graphRows.push([ejecutivoCell("W"+r.week,s.tableBody),ejecutivoCell(r.value,s.tableBody),ejecutivoCell((Number(r.pctOcupacion)||0).toFixed(1).replace(".",",")+"%",s.tableBody),ejecutivoCell(r.forecast,s.tableBody),ejecutivoCell(ctx.currentYear,s.tableBody),ejecutivoCell(ctx.productName,s.tableBody),ejecutivoCell("Vista actual",s.tableBody)]));
+  graphRows.push([],[ejecutivoCell("Comparativa A/B",s.section),"","","","","",""] ,[ejecutivoCell("Punto A",s.bold),ejecutivoCell("W"+ctx.weekA+" "+ctx.yearA,s.light),ejecutivoCell(ctx.refA,s.light),"","","",""] ,[ejecutivoCell("Punto B",s.bold),ejecutivoCell("W"+ctx.weekB+" "+ctx.yearB,s.light),ejecutivoCell(ctx.refB,s.light),"","","",""] ,[ejecutivoCell("Variación",s.bold),ejecutivoCell((ctx.refDelta>=0?"+":"")+ctx.refDelta+"%", goodRef ? s.good : s.bad),"","","","",""]);
+
+  const detailRows = [[ejecutivoCell("DETALLE VISIBLE DE LA REFERENCIA",s.title),"","","","",""] ,[ejecutivoCell(ctx.productName,s.subtitle),"","","","",""] ,[] ,[ejecutivoCell("Estiba",s.tableHead),ejecutivoCell("Zona",s.tableHead),ejecutivoCell("Palets actuales",s.tableHead),ejecutivoCell("Capacidad",s.tableHead),ejecutivoCell("% ocupación",s.tableHead),ejecutivoCell("Fecha entrada",s.tableHead)]];
+  if(ctx.racks && ctx.racks.length){ctx.racks.forEach(r=>detailRows.push([ejecutivoCell(r.id,s.tableBody),ejecutivoCell(r.zone,s.tableBody),ejecutivoCell(r.pal,s.tableBody),ejecutivoCell(r.cap,s.tableBody),ejecutivoCell(r.pct+"%",s.tableBody),ejecutivoCell(r.entryDate,s.tableBody)]));}
+  else{detailRows.push([ejecutivoCell(isTotal ? "No aplica para Total Campa" : "Sin estibas reales visibles",s.tableBody),ejecutivoCell("-",s.tableBody),ejecutivoCell(0,s.tableBody),ejecutivoCell(0,s.tableBody),ejecutivoCell("0%",s.tableBody),ejecutivoCell("-",s.tableBody)]);}
+
+  const stylesXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<styleSheet xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main">
+  <fonts count="7"><font><sz val="11"/><name val="Arial"/></font><font><b/><sz val="20"/><color rgb="FFFFFFFF"/><name val="Arial"/></font><font><b/><sz val="12"/><color rgb="FFFFFFFF"/><name val="Arial"/></font><font><b/><sz val="11"/><color rgb="FFFFFFFF"/><name val="Arial"/></font><font><b/><sz val="22"/><color rgb="FFD60000"/><name val="Arial"/></font><font><b/><sz val="11"/><name val="Arial"/></font><font><sz val="10"/><color rgb="FF555555"/><name val="Arial"/></font></fonts>
+  <fills count="8"><fill><patternFill patternType="none"/></fill><fill><patternFill patternType="gray125"/></fill><fill><patternFill patternType="solid"><fgColor rgb="FFD60000"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FF111827"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFF3F4F6"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFEAF7EA"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFFE2E2"/><bgColor indexed="64"/></patternFill></fill><fill><patternFill patternType="solid"><fgColor rgb="FFFFF7ED"/><bgColor indexed="64"/></patternFill></fill></fills>
+  <borders count="2"><border><left/><right/><top/><bottom/><diagonal/></border><border><left style="thin"><color rgb="FFD1D5DB"/></left><right style="thin"><color rgb="FFD1D5DB"/></right><top style="thin"><color rgb="FFD1D5DB"/></top><bottom style="thin"><color rgb="FFD1D5DB"/></bottom><diagonal/></border></borders>
+  <cellStyleXfs count="1"><xf numFmtId="0" fontId="0" fillId="0" borderId="0"/></cellStyleXfs>
+  <cellXfs count="15"><xf numFmtId="0" fontId="0" fillId="0" borderId="0" xfId="0"/><xf numFmtId="0" fontId="1" fillId="2" borderId="0" xfId="0" applyFont="1" applyFill="1"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="2" fillId="3" borderId="0" xfId="0" applyFont="1" applyFill="1"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="left" vertical="center"/></xf><xf numFmtId="0" fontId="3" fillId="2" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="4" fillId="0" borderId="1" xfId="0" applyFont="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="6" fillId="4" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="3" fillId="3" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="0" fillId="0" borderId="1" xfId="0" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="5" fillId="5" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="5" fillId="6" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf><xf numFmtId="0" fontId="0" fillId="7" borderId="1" xfId="0" applyFill="1" applyBorder="1"><alignment horizontal="left" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="0" fillId="4" borderId="1" xfId="0" applyFill="1" applyBorder="1"><alignment horizontal="left" vertical="center" wrapText="1"/></xf><xf numFmtId="0" fontId="5" fillId="0" borderId="1" xfId="0" applyFont="1" applyBorder="1"><alignment horizontal="left" vertical="center"/></xf><xf numFmtId="0" fontId="2" fillId="3" borderId="1" xfId="0" applyFont="1" applyFill="1" applyBorder="1"><alignment horizontal="center" vertical="center"/></xf></cellXfs>
+  <cellStyles count="1"><cellStyle name="Normal" xfId="0" builtinId="0"/></cellStyles>
+</styleSheet>`;
+
+  const chartXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<c:chartSpace xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
+  <c:chart>
+    <c:title>
+      <c:tx><c:rich><a:bodyPr/><a:lstStyle/><a:p><a:r><a:rPr lang="es-ES" sz="1400" b="1"/><a:t>${xmlEscape(chartTitle)}</a:t></a:r></a:p></c:rich></c:tx>
+      <c:layout/>
+    </c:title>
+    <c:plotArea>
+      <c:layout/>
+      <c:barChart>
+        <c:barDir val="col"/>
+        <c:grouping val="clustered"/>
+        <c:varyColors val="0"/>
+        <c:ser>
+          <c:idx val="0"/>
+          <c:order val="0"/>
+          <c:tx><c:strRef><c:f>'Vista grafica'!$B$4</c:f></c:strRef></c:tx>
+          <c:spPr>
+            <a:solidFill><a:srgbClr val="D60000"/></a:solidFill>
+            <a:ln><a:solidFill><a:srgbClr val="A90000"/></a:solidFill></a:ln>
+          </c:spPr>
+          <c:cat><c:strRef><c:f>'Vista grafica'!$A$5:$A$${chartEndRow}</c:f></c:strRef></c:cat>
+          <c:val><c:numRef><c:f>'Vista grafica'!$B$5:$B$${chartEndRow}</c:f></c:numRef></c:val>
+          <c:dLbls>
+            <c:showLegendKey val="0"/><c:showVal val="1"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/>
+            <c:numFmt formatCode="#.##0" sourceLinked="0"/>
+          </c:dLbls>
+        </c:ser>
+        <c:dLbls><c:showLegendKey val="0"/><c:showVal val="0"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls>
+        <c:gapWidth val="55"/>
+        <c:axId val="10"/>
+        <c:axId val="20"/>
+      </c:barChart>
+      <c:lineChart>
+        <c:grouping val="standard"/>
+        <c:varyColors val="0"/>
+        <c:ser>
+          <c:idx val="1"/>
+          <c:order val="1"/>
+          <c:tx><c:strRef><c:f>'Vista grafica'!$C$4</c:f></c:strRef></c:tx>
+          <c:spPr>
+            <a:ln w="28575" cap="rnd"><a:solidFill><a:srgbClr val="2563EB"/></a:solidFill><a:round/></a:ln>
+          </c:spPr>
+          <c:marker>
+            <c:symbol val="circle"/>
+            <c:size val="5"/>
+            <c:spPr><a:solidFill><a:srgbClr val="2563EB"/></a:solidFill><a:ln><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill></a:ln></c:spPr>
+          </c:marker>
+          <c:cat><c:strRef><c:f>'Vista grafica'!$A$5:$A$${chartEndRow}</c:f></c:strRef></c:cat>
+          <c:val><c:numRef><c:f>'Vista grafica'!$C$5:$C$${chartEndRow}</c:f></c:numRef></c:val>
+        </c:ser>
+        <c:dLbls><c:showLegendKey val="0"/><c:showVal val="0"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls>
+        <c:axId val="10"/>
+        <c:axId val="20"/>
+      </c:lineChart>
+      <c:catAx>
+        <c:axId val="10"/>
+        <c:scaling><c:orientation val="minMax"/></c:scaling>
+        <c:axPos val="b"/>
+        <c:majorTickMark val="none"/>
+        <c:minorTickMark val="none"/>
+        <c:tickLblPos val="nextTo"/>
+        <c:crossAx val="20"/>
+        <c:crosses val="autoZero"/>
+        <c:lblAlgn val="ctr"/>
+        <c:lblOffset val="100"/>
+      </c:catAx>
+      <c:valAx>
+        <c:axId val="20"/>
+        <c:scaling><c:orientation val="minMax"/></c:scaling>
+        <c:axPos val="l"/>
+        <c:majorGridlines><c:spPr><a:ln w="9525"><a:solidFill><a:srgbClr val="D1D5DB"/></a:solidFill></a:ln></c:spPr></c:majorGridlines>
+        <c:numFmt formatCode="#.##0" sourceLinked="0"/>
+        <c:majorTickMark val="none"/>
+        <c:minorTickMark val="none"/>
+        <c:tickLblPos val="nextTo"/>
+        <c:crossAx val="10"/>
+        <c:crosses val="autoZero"/>
+      </c:valAx>
+    </c:plotArea>
+    <c:legend><c:legendPos val="b"/><c:layout/></c:legend>
+    <c:plotVisOnly val="1"/>
+    <c:dispBlanksAs val="gap"/>
+    <c:showDLblsOverMax val="0"/>
+  </c:chart>
+</c:chartSpace>`;
+
+  const drawingXml = `<?xml version="1.0" encoding="UTF-8" standalone="yes"?><xdr:wsDr xmlns:xdr="http://schemas.openxmlformats.org/drawingml/2006/spreadsheetDrawing" xmlns:a="http://schemas.openxmlformats.org/drawingml/2006/main"><xdr:twoCellAnchor><xdr:from><xdr:col>0</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>14</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:from><xdr:to><xdr:col>10</xdr:col><xdr:colOff>0</xdr:colOff><xdr:row>34</xdr:row><xdr:rowOff>0</xdr:rowOff></xdr:to><xdr:graphicFrame><xdr:nvGraphicFramePr><xdr:cNvPr id="2" name="Gráfico visible exportado"/><xdr:cNvGraphicFramePr/></xdr:nvGraphicFramePr><xdr:xfrm><a:off x="0" y="0"/><a:ext cx="0" cy="0"/></xdr:xfrm><a:graphic><a:graphicData uri="http://schemas.openxmlformats.org/drawingml/2006/chart"><c:chart xmlns:c="http://schemas.openxmlformats.org/drawingml/2006/chart" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships" r:id="rId1"/></a:graphicData></a:graphic></xdr:graphicFrame><xdr:clientData/></xdr:twoCellAnchor></xdr:wsDr>`;
+
+  const files = [
+    {name:"[Content_Types].xml", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Types xmlns="http://schemas.openxmlformats.org/package/2006/content-types"><Default Extension="rels" ContentType="application/vnd.openxmlformats-package.relationships+xml"/><Default Extension="xml" ContentType="application/xml"/><Override PartName="/xl/workbook.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet.main+xml"/><Override PartName="/xl/styles.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.styles+xml"/><Override PartName="/xl/worksheets/sheet1.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet2.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/worksheets/sheet3.xml" ContentType="application/vnd.openxmlformats-officedocument.spreadsheetml.worksheet+xml"/><Override PartName="/xl/drawings/drawing1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawing+xml"/><Override PartName="/xl/charts/chart1.xml" ContentType="application/vnd.openxmlformats-officedocument.drawingml.chart+xml"/></Types>`},
+    {name:"_rels/.rels", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/officeDocument" Target="xl/workbook.xml"/></Relationships>`},
+    {name:"xl/workbook.xml", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships"><sheets><sheet name="Resumen Ejecutivo" sheetId="1" r:id="rId1"/><sheet name="Vista grafica" sheetId="2" r:id="rId2"/><sheet name="Detalle referencia" sheetId="3" r:id="rId3"/></sheets></workbook>`},
+    {name:"xl/_rels/workbook.xml.rels", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet1.xml"/><Relationship Id="rId2" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet2.xml"/><Relationship Id="rId3" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/worksheet" Target="worksheets/sheet3.xml"/><Relationship Id="rId4" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/styles" Target="styles.xml"/></Relationships>`},
+    {name:"xl/styles.xml", content:stylesXml},
+    {name:"xl/worksheets/sheet1.xml", content:ejecutivoSheetXml(rows1,{cols:[20,18,24,18,18,18,18,18,18,18], rowHeights:{1:32,2:28,3:24,5:26,6:42,7:34,9:25,14:25,34:25,38:25,39:45,40:45,41:45}, merges:["A1:J2","A3:J3","A5:B5","C5:D5","E5:F5","G5:H5","I5:J5","A6:B6","C6:D6","E6:F6","G6:H6","I6:J6","A7:B7","C7:D7","E7:F7","G7:H7","I7:J7","A9:J9","A14:J14","A34:J34","B35:C35","E35:F35","H35:I35","B36:C36","E36:F36","H36:I36","A38:J38","B39:J39","B40:J40","B41:J41"], drawing:"rId1"})},
+    {name:"xl/worksheets/_rels/sheet1.xml.rels", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/drawing" Target="../drawings/drawing1.xml"/></Relationships>`},
+    {name:"xl/worksheets/sheet2.xml", content:ejecutivoSheetXml(graphRows,{cols:[14,18,20,12,32,18], rowHeights:{1:32,2:24,4:25}, merges:["A1:F1","A2:F2"]})},
+    {name:"xl/drawings/drawing1.xml", content:drawingXml},
+    {name:"xl/drawings/_rels/drawing1.xml.rels", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?><Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships"><Relationship Id="rId1" Type="http://schemas.openxmlformats.org/officeDocument/2006/relationships/chart" Target="../charts/chart1.xml"/></Relationships>`},
+    {name:"xl/charts/chart1.xml", content:chartXml},
+    {name:"xl/worksheets/sheet3.xml", content:ejecutivoSheetXml(detailRows,{cols:[18,22,18,18,18,20], rowHeights:{1:32,2:24,4:25}, merges:["A1:F1","A2:F2"]})}
+  ];
+  return new Blob([makeZip(files)], {type:"application/vnd.openxmlformats-officedocument.spreadsheetml.sheet"});
+}
+
+function exportOcupacionComparativaExcel(){
+  const cmp = state.occupationCompare || {weekA:20, yearA:2025, weekB:20, yearB:2026};
+  const product = state.occupationProduct || "TOTAL";
+  const isTotalProduct = product === "TOTAL";
+  const viewMode = state.occupationViewMode || 'single';
+  const isYearCompare = viewMode === 'compareYears' || viewMode === 'compare2526';
+
+  const yearA = ocupacionSafeYear(cmp.yearA || 2025);
+  const yearB = ocupacionSafeYear(cmp.yearB || 2026);
+  const currentYear = isYearCompare ? yearB : ocupacionSafeYear(state.occupationYear || new Date().getFullYear());
+
+  const selectedRowsTotal = ocupacionRows("TOTAL", currentYear);
+  const selectedRowsRef = ocupacionRows(product, currentYear);
+  const maxSelectedWeek = Math.max(1, Math.min(selectedRowsTotal.length || 1, selectedRowsRef.length || selectedRowsTotal.length || 1));
+  const selectedWeek = Math.max(1, Math.min(Number(state.occupationSelectedWeek || maxSelectedWeek), maxSelectedWeek));
+
+  const weekA = ocupacionClampWeek(cmp.weekA || 20, yearA);
+  const weekB = ocupacionClampWeek(cmp.weekB || 20, yearB);
+
+  const totalCap = campaCapacidadTotal();
+  const avgRackCap = state.racks.length ? Math.max(1, Math.round(totalCap / state.racks.length)) : 1;
+
+  const selectedTotalRow = (selectedRowsTotal[selectedWeek-1] || {value:0, forecast:0, entradas:0, salidas:0, movimientos:0});
+  const selectedRefRow = (selectedRowsRef[selectedWeek-1] || {value:0, forecast:0, entradas:0, salidas:0, movimientos:0});
+
+  const totalA = (ocupacionRows("TOTAL", yearA)[weekA-1] || {value:0}).value;
+  const totalB = (ocupacionRows("TOTAL", yearB)[weekB-1] || {value:0}).value;
+  const refA = ((isTotalProduct ? ocupacionRows("TOTAL", yearA) : ocupacionRows(product, yearA))[weekA-1] || {value:0}).value;
+  const refB = ((isTotalProduct ? ocupacionRows("TOTAL", yearB) : ocupacionRows(product, yearB))[weekB-1] || {value:0}).value;
+
+  const nowIsoExport = isoWeekTrace(new Date());
+  const isCurrentWeekExport = isTotalProduct && Number(currentYear) === Number(nowIsoExport.year) && Number(selectedWeek) === Number(nowIsoExport.week);
+  const visibleValue = isCurrentWeekExport ? campaPaletsActuales() : (isTotalProduct ? Number(selectedTotalRow.value)||0 : Number(selectedRefRow.value)||0);
+  const totalNow = isCurrentWeekExport ? campaPaletsActuales() : (Number(selectedTotalRow.value)||0);
+  const pctNow = campaOcupacionPct(visibleValue);
+  const estibasOcupadasVisible = Math.max(0, Math.min(state.racks.length, Math.round(visibleValue / avgRackCap)));
+
+  const totalDelta = comparePct(totalA,totalB);
+  const refDelta = comparePct(refA,refB);
+
+  const racks = (isTotalProduct ? [] : state.racks.filter(r=>r.product===product && (Number(r.occupied)||0)>0)
+    .sort((a,b)=>String(a.entryDate||"").localeCompare(String(b.entryDate||"")) || Number(a.id)-Number(b.id))
+    .slice(0,10))
+    .map(r=>{
+      const cap = Number(r.capacity)||0;
+      const pal = Number(r.occupied)||0;
+      return {id:r.id || "", zone:r.zone || "-", pal, cap, pct:cap>0?Math.round((pal/cap)*100):0, entryDate:r.entryDate || "-"};
+    });
+
+  const tendenciaTotal = totalDelta>=10 ? "un incremento fuerte" : (totalDelta<=-10 ? "un descenso significativo" : "una variación estable");
+  const tendenciaRef = refDelta>=10 ? "un incremento fuerte" : (refDelta<=-10 ? "un descenso significativo" : "una variación estable");
+
+  const chartRowsForExport = (isTotalProduct ? weeklyTotalOccupation(currentYear) : weeklyOccupationForProduct(product, currentYear));
+  const ctx = {
+    isTotalProduct,
+    productName: productName(product), selectedWeek, currentYear, weekA, weekB, yearA, yearB,
+    totalCap, totalNow, pctNow, estibasOcupadas:estibasOcupadasVisible, estibasTotales:state.racks.length,
+    selectedTotal:Number(selectedTotalRow.value)||0, selectedRef:Number(selectedRefRow.value)||0,
+    totalA:Number(totalA)||0, totalB:Number(totalB)||0, refA:Number(refA)||0, refB:Number(refB)||0,
+    totalDelta, refDelta,
+    pctVisible: campaOcupacionPct(visibleValue),
+    pctA: campaOcupacionPct(Number(isTotalProduct ? totalA : refA)||0),
+    pctB: campaOcupacionPct(Number(isTotalProduct ? totalB : refB)||0),
+    tendenciaTotal, tendenciaRef, racks,
+    chartCapacity: campaCapacidadTotal(),
+    chartRows: chartRowsForExport
+  };
+
+  const blob = buildOcupacionExecutiveXlsxBlob(ctx);
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = `informe_ejecutivo_ocupacion_campa_W${selectedWeek}_${currentYear}_A_W${weekA}_${yearA}_B_W${weekB}_${yearB}_${new Date().toISOString().slice(0,10)}.xlsx`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+}
+
+function ocupacionCampaView(){
+  const product = state.occupationProduct || "TOTAL";
+  const isTotalProduct = product === "TOTAL";
+  const analysisMode = state.occupationAnalysisMode || 'annual';
+  const isWeeklyAnalysis = analysisMode === 'weekly';
+  const viewMode = isWeeklyAnalysis ? 'single' : (state.occupationViewMode || 'single');
+  const isYearCompare = !isWeeklyAnalysis && (viewMode === 'compareYears' || viewMode === 'compare2526');
+  const cmpForYears = state.occupationCompare || {weekA:20, yearA:2025, weekB:20, yearB:2026};
+  const compareBaseYearA = ocupacionSafeYear(cmpForYears.yearA || 2025);
+  const compareBaseYearB = ocupacionSafeYear(cmpForYears.yearB || 2026);
+  const year = isYearCompare ? compareBaseYearB : ocupacionSafeYear(state.occupationYear || new Date().getFullYear());
+  const totalRowsYearA = ocupacionRows("TOTAL", compareBaseYearA);
+  const totalRowsYearB = ocupacionRows("TOTAL", compareBaseYearB);
+  const totalRows = isYearCompare ? totalRowsYearB : ocupacionRows("TOTAL", year);
+
+  // La gráfica principal trabaja sobre la referencia seleccionada.
+  // Años anteriores se muestran completos hasta W52 y el año actual solo hasta la semana actual.
+  const graphRowsYearA = ocupacionRows(product, compareBaseYearA);
+  const graphRowsYearB = ocupacionRows(product, compareBaseYearB);
+  const graphRows = isYearCompare ? graphRowsYearB : ocupacionRows(product, year);
+  const refRows = graphRows;
+  const maxVisibleWeek = Math.max(1, isYearCompare ? Math.max(graphRowsYearA.length, graphRowsYearB.length) : graphRows.length);
+  const selectedWeek = Math.min(Number(state.occupationSelectedWeek || 21), maxVisibleWeek);
+  const selectedTotal = totalRows.find(r=>r.week===selectedWeek) || totalRows[0];
+  const selected = graphRows.find(r=>r.week===selectedWeek) || graphRows[0];
+  const selectedRef = selected;
+  const totalNow = campaPaletsActuales();
+  const racks = isTotalProduct ? [] : state.racks.filter(r=>r.product===product && (Number(r.occupied)||0)>0)
+    .sort((a,b)=>String(a.entryDate||"").localeCompare(String(b.entryDate||"")) || Number(a.id)-Number(b.id));
+  const totalCap = campaCapacidadTotal();
+  const estibasOcupadasTotal = state.racks.filter(r=>(Number(r.occupied)||0)>0).length;
+  // Ocupación dinámica: ahora se calcula con los datos de la vista seleccionada
+  // (referencia + año + semana visible), no con el stock fijo actual del mapa.
+  // Dashboard = foto actual real.
+  // Ocupación de Campa:
+  // - Si es TOTAL y año actual, debe coincidir con Dashboard.
+  // - Si es histórico o referencia concreta, usa año + semana seleccionada.
+  const currentYearForBox = isYearCompare ? compareBaseYearB : year;
+  const nowIsoForOcupacion = isoWeekTrace(new Date());
+  const isCurrentWeekTotal = isTotalProduct && Number(currentYearForBox) === Number(nowIsoForOcupacion.year) && Number(selectedWeek) === Number(nowIsoForOcupacion.week);
+  const ocupacionBase = isCurrentWeekTotal ? totalNow : (Number(selected && selected.value) || 0);
+  const pctTotal = campaOcupacionPct(ocupacionBase);
+  const currentSelectedNow = ocupacionBase;
+  const pctCurrentSelected = pctTotal;
+  const currentLabel = isTotalProduct ? (Number(currentYearForBox) === Number(nowIsoForOcupacion.year) ? 'USO MAPA ACTUAL 2026' : 'USO MAPA TOTAL') : 'USO MAPA DE LA REFERENCIA';
+  const entradasDemo = selected.entradas || Math.max(120, Math.round(selected.value * 0.055));
+  const salidasDemo = selected.salidas || Math.max(80, Math.round(selected.value * 0.041));
+  const movDemo = selected.movimientos || Math.max(12, Math.round((entradasDemo + salidasDemo) / 50));
+
+  const chartW = 1320;
+  const chartH = 330;
+  const chartLeft = 54;
+  const chartTop = 38;
+  const chartWeeks = Math.max(1, isYearCompare ? Math.max(graphRowsYearA.length, graphRowsYearB.length) : graphRows.length);
+  const gap = chartW / chartWeeks;
+  const barW = 15;
+  const chartValueRows = isYearCompare ? [...graphRowsYearA, ...graphRowsYearB] : graphRows;
+  const maxChartVal = Math.ceil(Math.max(500, ...chartValueRows.map(r=>Math.max(r.value, r.forecast||0))) / 500) * 500;
+  const monthYearLabel = isYearCompare ? (compareBaseYearA + ' / ' + compareBaseYearB) : year;
+  const monthLabels = [
+    [1,4,'ENERO '+monthYearLabel],[5,8,'FEBRERO '+monthYearLabel],[9,13,'MARZO '+monthYearLabel],[14,17,'ABRIL '+monthYearLabel],[18,21,'MAYO '+monthYearLabel],
+    [22,26,'JUNIO '+monthYearLabel],[27,30,'JULIO '+monthYearLabel],[31,35,'AGOSTO '+monthYearLabel],[36,39,'SEPTIEMBRE '+monthYearLabel],
+    [40,44,'OCTUBRE '+monthYearLabel],[45,48,'NOVIEMBRE '+monthYearLabel],[49,52,'DICIEMBRE '+monthYearLabel]
+  ].filter(m=>m[0] <= chartWeeks).map(m=>[m[0], Math.min(m[1], chartWeeks), m[2]]);
+  const cmp = state.occupationCompare || {weekA:20, yearA:2025, weekB:20, yearB:2026};
+  const cmpYearA = ocupacionSafeYear(cmp.yearA || 2025), cmpYearB = ocupacionSafeYear(cmp.yearB || 2026);
+  const cmpWeekA = ocupacionClampWeek(cmp.weekA || 20, cmpYearA), cmpWeekB = ocupacionClampWeek(cmp.weekB || 20, cmpYearB);
+  const comparePick = state.occupationComparePick || 'A';
+  const compareRowsA = ocupacionRows(product, cmpYearA);
+  const compareRowsB = ocupacionRows(product, cmpYearB);
+  const weekOptionsAChart = ocupacionWeekOptions(cmpWeekA, cmpYearA);
+  const weekOptionsBChart = ocupacionWeekOptions(cmpWeekB, cmpYearB);
+  const yearsAvailable = ocupacionAvailableYears();
+  const yearOptionsAChart = yearsAvailable.map(y=>'<option value="'+y+'" '+(y===cmpYearA?'selected':'')+'>'+y+'</option>').join('');
+  const yearOptionsBChart = yearsAvailable.map(y=>'<option value="'+y+'" '+(y===cmpYearB?'selected':'')+'>'+y+'</option>').join('');
+  const cmpChartTotalA = (compareRowsA[ocupacionClampWeek(cmpWeekA, cmpYearA)-1] || {value:0}).value;
+  const cmpChartTotalB = (compareRowsB[ocupacionClampWeek(cmpWeekB, cmpYearB)-1] || {value:0}).value;
+  const cmpChartMax = Math.max(1, cmpChartTotalA, cmpChartTotalB);
+  const cmpChartDelta = comparePct(cmpChartTotalA, cmpChartTotalB);
+  const yearOptionsMain = yearsAvailable.map(y=>'<option value="'+y+'" '+(!isYearCompare && y===year?'selected':'')+'>'+y+'</option>').join('');
+  const modeOptionsMain = [
+    {value:'single', label:'Ver un año'},
+    {value:'compareYears', label:'Comparar años'}
+  ].map(o=>'<option value="'+o.value+'" '+((o.value===viewMode || (o.value==='compareYears' && viewMode==='compare2526'))?'selected':'')+'>'+o.label+'</option>').join('');
+
+  const analysisOptionsMain = [
+    {value:'annual', label:'Evolución anual'},
+    {value:'weekly', label:'Comparativa semanal'}
+  ].map(o=>'<option value="'+o.value+'" '+(o.value===analysisMode?'selected':'')+'>'+o.label+'</option>').join('');
+
+  let html = '<div class="ocup-wrap">';
+  html += backTitle('📊 Ocupación Total de Campa');
+  html += '<div class="ocup-head">';
+  html += '<div><h1>USO MAPA TOTAL DE CAMPA</h1><p>La gráfica principal muestra la evolución semanal de la referencia seleccionada. Cambia el producto para ver su ocupación por semanas.</p></div>';
+  html += '<div class="ocup-filter"><label>Analizar referencia</label><select onchange="setOcupacionProduct(this.value)">';
+  html += '<option value="TOTAL" '+(isTotalProduct?'selected':'')+'>TOTAL</option>';
+  html += Object.entries(PRODUCTS).map(([k,v])=>`<option value="${k}" ${k===product?'selected':''}>${escapeHtmlTrace(v.name)}</option>`).join('');
+  html += '</select>';
+  html += '<div class="ocup-current-box">';
+  html += '<div class="ocup-current-title">'+currentLabel+'</div>';
+  html += '<div class="ocup-current-ring" style="--pct:'+pctCurrentSelected+'"><b>'+String(pctCurrentSelected).replace('.',',')+'%</b></div>';
+  html += '<div class="ocup-current-sub">Año '+currentYearForBox+' · W'+selectedWeek+' · '+currentSelectedNow.toLocaleString('es-ES')+' / '+totalCap.toLocaleString('es-ES')+' palets · libres '+campaPaletsLibres(currentSelectedNow).toLocaleString('es-ES')+'</div>';
+  html += '</div></div>';
+  html += '<div class="ocup-filter"><label>Tipo de análisis</label><select onchange="setOcupacionAnalysisMode(this.value)" style="margin-bottom:10px">'+analysisOptionsMain+'</select>';
+  if(isWeeklyAnalysis){
+    html += '<div style="font-size:13px;font-weight:800;color:#374151;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px;line-height:1.35">Modo activo: compara dos semanas concretas. La gráfica se ajusta al año del punto seleccionado.</div>';
+  }else{
+    html += '<label>Vista del gráfico</label><select onchange="setOcupacionMode(this.value)" style="margin-bottom:10px">'+modeOptionsMain+'</select>';
+    if(isYearCompare){
+      html += '<label>Año A</label><select onchange="setOcupacionCompare(\'yearA\',this.value)" style="margin-bottom:10px">'+yearOptionsAChart+'</select>';
+      html += '<label>Año B</label><select onchange="setOcupacionCompare(\'yearB\',this.value)">'+yearOptionsBChart+'</select>';
+    }else{
+      html += '<label>Año a analizar</label><select onchange="setOcupacionYear(this.value)" style="margin-bottom:10px">'+yearOptionsMain+'</select>';
+    }
+    html += '<button class="cmp-export-btn" onclick="exportOcupacionComparativaExcel()">⬇️ Exportar vista actual</button>';
+  }
+  html += '</div>';
+  html += '</div>';
+
+  html += '<div class="ocup-chart-card">';
+  if(isYearCompare){
+    html += '<div class="ocup-chart-title"><b>'+ (isTotalProduct ? 'COMPARATIVA TOTAL CAMPA' : 'COMPARATIVA DE REFERENCIA SELECCIONADA') +' · '+compareBaseYearA+' VS '+compareBaseYearB+'</b><div class="ocup-legend"><span><i class="legend-bar"></i> '+(isTotalProduct?'PALETS TOTALES ':'PALETS REFERENCIA ')+compareBaseYearA+'</span><span><i style="display:inline-block;width:16px;height:14px;background:#93c5fd;border:2px solid #2563eb;border-radius:3px;margin-right:7px;vertical-align:middle"></i> '+(isTotalProduct?'PALETS TOTALES ':'PALETS REFERENCIA ')+compareBaseYearB+'</span></div></div>';
+  }else{
+    html += '<div class="ocup-chart-title"><b>'+ (isTotalProduct ? 'EVOLUCIÓN DE USO MAPA TOTAL DE CAMPA POR SEMANA' : 'EVOLUCIÓN DE LA REFERENCIA SELECCIONADA POR SEMANA') +'</b><div class="ocup-legend"><span><i class="legend-bar"></i> '+(isTotalProduct?'PALETS TOTALES ':'PALETS REFERENCIA ')+year+'</span><span><i class="legend-line"></i> TENDENCIA / FORECAST</span>'+(isWeeklyAnalysis?'<span><i style="display:inline-block;width:16px;height:14px;background:rgba(17,24,39,.10);border:2px solid rgba(17,24,39,.25);border-radius:3px;margin-right:7px;vertical-align:middle"></i> PUNTOS A / B</span>':'')+'</div></div>';
+  }
+  if(isWeeklyAnalysis){
+    html += '<div class="ocup-chart-compare-tools pro-selects">';
+    html += '<div class="cmp-title-box"><b>Comparativa semanal</b><span>Elige dos semanas/años. La gráfica se ajusta al año del punto seleccionado.</span></div>';
+    html += '<div class="cmp-pair"><strong>PUNTO A</strong><div class="cmp-field"><label>Semana</label><select onchange="setOcupacionCompare(\'weekA\',this.value)">'+weekOptionsAChart+'</select></div><div class="cmp-field"><label>Año</label><select onchange="setOcupacionCompare(\'yearA\',this.value)">'+yearOptionsAChart+'</select></div></div>';
+    html += '<div class="cmp-pair"><strong>PUNTO B</strong><div class="cmp-field"><label>Semana</label><select onchange="setOcupacionCompare(\'weekB\',this.value)">'+weekOptionsBChart+'</select></div><div class="cmp-field"><label>Año</label><select onchange="setOcupacionCompare(\'yearB\',this.value)">'+yearOptionsBChart+'</select></div></div>';
+    html += '<div class="cmp-mini-result"><small>VARIACIÓN B VS A</small><b>'+(cmpChartDelta>=0?'+':'')+cmpChartDelta+'%</b><span>'+cmpChartTotalA.toLocaleString('es-ES')+' → '+cmpChartTotalB.toLocaleString('es-ES')+' palets</span><button class="cmp-export-btn" onclick="exportOcupacionComparativaExcel()">⬇️ Exportar vista actual</button></div>';
+    html += '</div>';
+    html += '<div class="cmp-inline-bars">';
+    html += '<div class="cmp-inline-card"><div class="top"><span class="tag">A · W'+cmpWeekA+' '+cmpYearA+'</span><span class="value">'+cmpChartTotalA.toLocaleString('es-ES')+'</span></div><div class="track"><div class="fill" style="width:'+Math.round((cmpChartTotalA/cmpChartMax)*100)+'%"></div></div></div>';
+    html += '<div class="cmp-inline-card b"><div class="top"><span class="tag">B · W'+cmpWeekB+' '+cmpYearB+'</span><span class="value">'+cmpChartTotalB.toLocaleString('es-ES')+'</span></div><div class="track"><div class="fill" style="width:'+Math.round((cmpChartTotalB/cmpChartMax)*100)+'%"></div></div></div>';
+    html += '</div>';
+  }
+  html += '<div class="ocup-chart-scroll"><div class="ocup-chart" style="width:'+(chartW+110)+'px;height:455px">';
+
+  for(let y=0;y<=5;y++){
+    const top = chartTop + y*(chartH/5);
+    const val = Math.round((maxChartVal/5)*(5-y));
+    html += '<div class="ocup-grid-line" style="top:'+top+'px;left:'+chartLeft+'px;width:'+chartW+'px"></div>';
+    html += '<div class="ocup-y" style="top:'+(top-8)+'px">'+val.toLocaleString('es-ES')+'</div>';
+  }
+  html += '<div class="ocup-y-title">Nº DE PALETS</div>';
+
+  if(isWeeklyAnalysis){
+    [[cmpWeekA, cmpYearA, 'a'], [cmpWeekB, cmpYearB, 'b']].forEach(([cw,cy,cls])=>{
+      const row = ((cls==='a' ? compareRowsA : compareRowsB)[Number(cw)-1] || {value:0});
+      const h = Math.max(4, Math.round((row.value/maxChartVal)*chartH));
+      const x = chartLeft + (Number(cw)-1)*gap + (gap-barW)/2 + (cls==='a' ? -8 : 8);
+      const y = chartTop + chartH - h;
+      html += '<div class="ocup-compare-ghost '+cls+'" title="'+(cls==='a'?'A':'B')+' · W'+cw+' '+cy+' · '+row.value.toLocaleString('es-ES')+' palets" style="left:'+x.toFixed(1)+'px;top:'+y+'px;width:'+(barW-2)+'px;height:'+h+'px"></div>';
+    });
+  }
+
+  if(isYearCompare){
+    Array.from({length:chartWeeks},(_,i)=>i).forEach(i=>{
+      const rA = graphRowsYearA[i] || null;
+      const rB = graphRowsYearB[i] || null;
+      const w = i + 1;
+      const xBase = chartLeft + i*gap + (gap/2);
+      const xA = xBase - 11;
+      const xB = xBase + 4;
+      let yA = chartTop + chartH;
+      let yB = chartTop + chartH;
+      if(rA){
+        const hA = Math.max(5, Math.round((rA.value/maxChartVal)*chartH));
+        yA = chartTop + chartH - hA;
+        const selectedClsA = (w===selectedWeek && compareBaseYearA===cmpYearA) ? ' ocup-bar-selected' : '';
+        html += '<div class="ocup-bar'+selectedClsA+'" onclick="selectOcupacionWeek('+w+')" title="'+compareBaseYearA+' · Semana '+w+' · '+rA.value.toLocaleString('es-ES')+' palets" style="left:'+xA.toFixed(1)+'px;top:'+yA+'px;width:12px;height:'+hA+'px;background:linear-gradient(90deg,#ffb2a6,#d60000);border-color:#ef4444"></div>';
+        if(i%2===0 || w===selectedWeek) html += '<div class="ocup-bar-label" style="left:'+(xA-16).toFixed(1)+'px;top:'+(yA-18)+'px;color:#d60000">'+rA.value.toLocaleString('es-ES')+'</div>';
+      }
+      if(rB){
+        const hB = Math.max(5, Math.round((rB.value/maxChartVal)*chartH));
+        yB = chartTop + chartH - hB;
+        const selectedClsB = (w===selectedWeek && compareBaseYearB===cmpYearB) ? ' ocup-bar-selected' : '';
+        html += '<div class="ocup-bar'+selectedClsB+'" onclick="selectOcupacionWeek('+w+')" title="'+compareBaseYearB+' · Semana '+w+' · '+rB.value.toLocaleString('es-ES')+' palets" style="left:'+xB.toFixed(1)+'px;top:'+yB+'px;width:12px;height:'+hB+'px;background:linear-gradient(90deg,#93c5fd,#2563eb);border-color:#2563eb"></div>';
+        if(i%2===0 || w===selectedWeek) html += '<div class="ocup-bar-label" style="left:'+(xB-14).toFixed(1)+'px;top:'+(yB-18)+'px;color:#2563eb">'+rB.value.toLocaleString('es-ES')+'</div>';
+      }
+      html += '<div class="ocup-x" style="left:'+(xBase-16).toFixed(1)+'px;top:'+(chartTop+chartH+12)+'px">W'+w+'</div>';
+      if(w===selectedWeek){
+        const yTip = Math.min(yA,yB);
+        html += '<div class="ocup-tooltip" style="left:'+(xBase-38).toFixed(1)+'px;top:'+(yTip-54)+'px">SEMANA '+w+'<br>'+(rA?'<span>'+compareBaseYearA+': '+rA.value.toLocaleString('es-ES')+'</span><br>':'')+(rB?'<span>'+compareBaseYearB+': '+rB.value.toLocaleString('es-ES')+'</span>':'')+'</div>';
+      }
+    });
+  }else{
+    graphRows.forEach((r,i)=>{
+      const actual = true;
+      const h = actual ? Math.max(6, Math.round((r.value/maxChartVal)*chartH)) : 0;
+      const x = chartLeft + i*gap + (gap-barW)/2;
+      const y = chartTop + chartH - h;
+      const sel = r.week===selectedWeek ? ' ocup-bar-selected' : '';
+      if(actual){
+        html += '<div class="ocup-bar'+sel+'" onclick="selectOcupacionWeek('+r.week+')" title="Semana '+r.week+' · '+r.value.toLocaleString('es-ES')+' palets" style="left:'+x.toFixed(1)+'px;top:'+y+'px;width:'+barW+'px;height:'+h+'px"></div>';
+        html += '<div class="ocup-bar-label" style="left:'+(x-13).toFixed(1)+'px;top:'+(y-18)+'px">'+r.value.toLocaleString('es-ES')+'</div>';
+      }else{
+        html += '<div class="ocup-empty-week" onclick="selectOcupacionWeek('+r.week+')" title="Semana '+r.week+' forecast · '+(r.forecast||r.value).toLocaleString('es-ES')+' palets" style="left:'+x.toFixed(1)+'px;top:'+chartTop+'px;width:'+barW+'px;height:'+chartH+'px"></div>';
+      }
+      html += '<div class="ocup-x" style="left:'+(x-10).toFixed(1)+'px;top:'+(chartTop+chartH+12)+'px">W'+r.week+'</div>';
+      if(r.week===selectedWeek){
+        const val = actual ? r.value : (r.forecast||r.value);
+        const dotY = chartTop + chartH - ((r.forecast||r.value)/maxChartVal)*chartH;
+        html += '<div class="ocup-tooltip" style="left:'+(x-22).toFixed(1)+'px;top:'+(Math.min(y,dotY)-48)+'px">SEMANA '+r.week+'<br><span>'+val.toLocaleString('es-ES')+' palets</span></div>';
+      }
+    });
+  }
+
+  if(isWeeklyAnalysis){
+    [[cmpWeekA, cmpYearA, 'red', 'A'], [cmpWeekB, cmpYearB, 'blue', 'B']].forEach(([w,y,color,label])=>{
+      const mx = chartLeft + (Number(w)-1)*gap + gap/2;
+      html += '<div class="ocup-compare-marker '+color+'" style="left:'+mx.toFixed(1)+'px"></div>';
+      html += '<div class="ocup-compare-tag '+color+'" style="left:'+mx.toFixed(1)+'px">'+label+'</div>';
+    });
+  }
+
+  if(isYearCompare){
+    const ptsA = graphRowsYearA.map((r,i)=>{
+      const x = chartLeft + i*gap + gap/2;
+      const y = chartTop + chartH - (r.value/maxChartVal)*chartH;
+      return x.toFixed(1)+','+y.toFixed(1);
+    }).join(' ');
+    const ptsB = graphRowsYearB.map((r,i)=>{
+      const x = chartLeft + i*gap + gap/2;
+      const y = chartTop + chartH - (r.value/maxChartVal)*chartH;
+      return x.toFixed(1)+','+y.toFixed(1);
+    }).join(' ');
+    html += '<svg class="ocup-svg" style="width:'+(chartW+90)+'px;height:'+(chartH+chartTop+20)+'px"><polyline points="'+ptsA+'" fill="none" stroke="#d60000" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" opacity=".75"></polyline><polyline points="'+ptsB+'" fill="none" stroke="#2563eb" stroke-width="2.5" stroke-linejoin="round" stroke-linecap="round" opacity=".9"></polyline>';
+    graphRowsYearA.forEach((r,i)=>{
+      const x = chartLeft + i*gap + gap/2;
+      const yA = chartTop + chartH - (r.value/maxChartVal)*chartH;
+      html += '<circle cx="'+x.toFixed(1)+'" cy="'+yA.toFixed(1)+'" r="3" fill="#d60000" stroke="#fff" stroke-width="1"></circle>';
+    });
+    graphRowsYearB.forEach((r,i)=>{
+      const x = chartLeft + i*gap + gap/2;
+      const yB = chartTop + chartH - (r.value/maxChartVal)*chartH;
+      html += '<circle cx="'+x.toFixed(1)+'" cy="'+yB.toFixed(1)+'" r="3" fill="#2563eb" stroke="#fff" stroke-width="1"></circle>';
+    });
+    html += '</svg>';
+  }else{
+    const pts = graphRows.map((r,i)=>{
+      const x = chartLeft + i*gap + gap/2;
+      const y = chartTop + chartH - ((r.forecast||r.value)/maxChartVal)*chartH;
+      return x.toFixed(1)+','+y.toFixed(1);
+    }).join(' ');
+    html += '<svg class="ocup-svg" style="width:'+(chartW+90)+'px;height:'+(chartH+chartTop+20)+'px"><polyline points="'+pts+'" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></polyline>';
+    graphRows.forEach((r,i)=>{
+      const x = chartLeft + i*gap + gap/2;
+      const y = chartTop + chartH - ((r.forecast||r.value)/maxChartVal)*chartH;
+      html += '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4" fill="#2563eb" stroke="#fff" stroke-width="1.5"></circle>';
+      if(i%2===0 || r.week===selectedWeek) html += '<text x="'+x.toFixed(1)+'" y="'+(y-8).toFixed(1)+'" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="700">'+(r.forecast||r.value).toLocaleString('es-ES')+'</text>';
+    });
+    html += '</svg>';
+  }
+
+  monthLabels.forEach(([a,b,label])=>{
+    const left = chartLeft + (a-1)*gap;
+    const width = (b-a+1)*gap;
+    html += '<div class="ocup-month" style="left:'+left.toFixed(1)+'px;width:'+width.toFixed(1)+'px;top:'+(chartTop+chartH+52)+'px">'+label+'</div>';
+  });
+
+  html += '</div></div></div>';
+
+  const kpiPaletsVisibles = Number(currentSelectedNow)||0;
+  const kpiPctOcupacion = campaOcupacionPct(kpiPaletsVisibles);
+  const kpiCapacidadLibre = campaPaletsLibres(kpiPaletsVisibles);
+  const kpiPctLibre = Math.max(0, Math.round((kpiCapacidadLibre / Math.max(1,totalCap)) * 1000) / 10);
+  const kpiTotalEstibas = state.racks.length || 0;
+  const kpiAvgRackCap = kpiTotalEstibas ? Math.max(1, totalCap / kpiTotalEstibas) : 1;
+  const kpiEstibasOcupadas = isTotalProduct
+    ? Math.max(0, Math.min(kpiTotalEstibas, Math.round(kpiPaletsVisibles / kpiAvgRackCap)))
+    : Math.max(0, Math.min(kpiTotalEstibas, racks.length || Math.round(kpiPaletsVisibles / kpiAvgRackCap)));
+
+  html += '<div class="ocup-kpis">';
+  html += '<div class="ocup-kpi"><div class="kpi-icon red">▦</div><div><span>'+(isTotalProduct?'PALETS TOTALES':'PALETS REFERENCIA')+'</span><b>'+kpiPaletsVisibles.toLocaleString('es-ES')+'</b><small>'+String(kpiPctOcupacion).replace('.',',')+'% OCUPACIÓN · W'+selectedWeek+'</small></div></div>';
+  html += '<div class="ocup-kpi"><div class="kpi-icon purple">▥</div><div><span>ESTIBAS OCUPADAS</span><b>'+kpiEstibasOcupadas+'</b><small>DE '+kpiTotalEstibas+' ESTIBAS</small></div></div>';
+  html += '<div class="ocup-kpi"><div class="kpi-icon green">↓</div><div><span>ENTRADAS TOTALES</span><b>'+entradasDemo.toLocaleString('es-ES')+'</b><small>SEMANA '+selectedWeek+'</small></div></div>';
+  html += '<div class="ocup-kpi"><div class="kpi-icon orange">↑</div><div><span>SALIDAS TOTALES</span><b>'+salidasDemo.toLocaleString('es-ES')+'</b><small>SEMANA '+selectedWeek+'</small></div></div>';
+  html += '<div class="ocup-kpi"><div class="kpi-icon blue">↔</div><div><span>CAPACIDAD LIBRE</span><b>'+kpiCapacidadLibre.toLocaleString('es-ES')+'</b><small>'+String(kpiPctLibre).replace('.',',')+'% DISPONIBLE</small></div></div>';
+  html += '</div>';
+
+  // Bloque COMPARADOR ENTRE AÑOS eliminado a petición del usuario.
+  // Se mantiene intacta la comparativa semanal integrada dentro del gráfico y la exportación de vista actual.
+  // Bloque detalle de la referencia seleccionado eliminado a petición del usuario.
+  
+/* help panel removed */
+
+  return html;
+}
+
 function applyRealCampLayout(){
   state.racks.forEach((r,i)=>{ r.mapX=-9999; r.mapY=-9999; r.mapW=48; r.mapH=110; r.mapDir="v"; });
 
@@ -2462,7 +3919,350 @@ function applyRealCampLayout(){
   save(); 
 }
 
+
+
+
+function resumenOcupacionView(){
+  const rows = buildResumenOcupacionRows();
+  const total = rows.reduce((acc,r)=>{
+    acc.palets += Number(r.palets)||0;
+    acc.capacidad += Number(r.capacidad)||0;
+    return acc;
+  }, {palets:0, capacidad:0});
+  const totalSat = total.capacidad ? Math.round((total.palets / total.capacidad) * 100) : 0;
+  const fmt = n => Number(n||0).toLocaleString('es-ES');
+
+  const satColor = pct => {
+    const p = Number(pct)||0;
+    if(p >= 90) return '#d60000';     // rojo Coca-Cola
+    if(p >= 70) return '#f59e0b';     // ámbar operativo
+    return '#16a34a';                 // verde operativo
+  };
+
+  const satCell = pct => {
+    const p = Math.max(0, Math.min(100, Number(pct)||0));
+    const bg = satColor(p);
+    return `
+      <div style="display:flex;align-items:center;gap:12px;justify-content:flex-end">
+        <div style="height:14px;width:118px;background:#f1f5f9;border-radius:999px;overflow:hidden;border:1px solid #e5e7eb">
+          <div style="height:100%;width:${p}%;background:${bg};border-radius:999px"></div>
+        </div>
+        <b style="font-size:18px;color:#111827">${p}%</b>
+      </div>`;
+  };
+
+  const rowBg = i => i % 2 ? '#eef2ff' : '#fff7ed';
+
+  const rowHtml = rows.map((r,i)=>`
+    <tr style="background:${rowBg(i)}">
+      <td style="font-weight:900;color:#111827;font-size:19px">${r.nombre}</td>
+      <td style="text-align:right;font-weight:900;font-size:19px;color:#111827">${fmt(r.palets)}</td>
+      <td style="text-align:right;font-weight:900;font-size:19px;color:#111827">${fmt(r.capacidad)}</td>
+      <td style="text-align:right">${satCell(r.saturacion)}</td>
+    </tr>`).join('');
+
+  return `<div class="card">${backTitle('📊 OCUPACIÓN GLOBAL DE ALMACENES')}
+    <div style="border-radius:24px;overflow:hidden;border:1px solid #e5e7eb;box-shadow:0 14px 30px #0001;background:#fff">
+      <div style="background:linear-gradient(135deg,#d60000,#8b0000);color:white;padding:22px 26px">
+        <div style="font-size:28px;font-weight:900;letter-spacing:.3px">Resumen Ocupación</div>
+        <div style="font-size:15px;font-weight:700;opacity:.95;margin-top:4px">
+          Datos actuales calculados desde las estibas de Explanada, 107 y LGV
+        </div>
+      </div>
+
+      <div style="overflow:auto">
+        <table style="min-width:820px;border-collapse:separate;border-spacing:0;width:100%">
+          <thead>
+            <tr style="background:#d60000;color:white">
+              <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px">Almacén</th>
+              <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px;text-align:right">Palets</th>
+              <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px;text-align:right">Capacidad</th>
+              <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px;text-align:right">Saturación</th>
+            </tr>
+          </thead>
+          <tbody>
+            ${rowHtml}
+            <tr style="background:#fde68a;font-weight:900">
+              <td style="font-size:20px;color:#111827">Total</td>
+              <td style="text-align:right;font-size:20px;color:#111827">${fmt(total.palets)}</td>
+              <td style="text-align:right;font-size:20px;color:#111827">${fmt(total.capacidad)}</td>
+              <td style="text-align:right">${satCell(totalSat)}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="grid3" style="padding:22px;background:#fff">
+        <div class="metric" style="border-left:8px solid #d60000">
+          <div class="n">${fmt(total.capacidad)}</div>
+          <div class="t">Capacidad Total</div>
+        </div>
+        <div class="metric" style="border-left:8px solid #16a34a">
+          <div class="n">${fmt(total.palets)}</div>
+          <div class="t">Palets Actuales</div>
+        </div>
+        <div class="metric" style="border-left:8px solid ${satColor(totalSat)}">
+          <div class="n">${totalSat}%</div>
+          <div class="t">Ocupación Global</div>
+          <div class="small">Actualización en tiempo real</div>
+        </div>
+      </div>
+
+      <div style="padding:0 22px 22px">
+        <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;padding:14px 16px;font-weight:800;color:#7c2d12">
+          🟢 Menos del 70% · 🟠 70% a 89% · 🔴 90% o más
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function buildResumenOcupacionRows(){
+  // Capacidades máximas reales oficiales de Coca-Cola Trace Pro
+  const CAPACIDAD_MAXIMA_ALMACEN = {
+    explanada: 24800,
+    zona107: 7500,
+    lgv: 4500
+  };
+
+  const calc = (nombre, racks, capacidadMaxima)=>{
+    const palets = (racks||[]).reduce((s,r)=>s + (r.blocked ? 0 : (Number(r.occupied)||0)), 0);
+    const capacidad = Number(capacidadMaxima)||0;
+    const saturacion = capacidad ? Math.round((palets / capacidad) * 100) : 0;
+    return {nombre, palets, capacidad, saturacion};
+  };
+
+  const racks107 = ensureExtraZoneRacks('107', 34, 6);
+  const racksLGV = ensureExtraZoneRacks('lgv', 15, 5);
+
+  return [
+    calc('Explanada', state.racks || [], CAPACIDAD_MAXIMA_ALMACEN.explanada),
+    calc('107', racks107, CAPACIDAD_MAXIMA_ALMACEN.zona107),
+    calc('LGV', racksLGV, CAPACIDAD_MAXIMA_ALMACEN.lgv)
+  ];
+}
+
 function mapaView(){
+  const area = state.mapArea || "";
+  if(!area) return mapaCampaSelectorView();
+  if(area==="explanada") return explanadaMapView();
+  if(area==="107") return zona107MapView();
+  if(area==="lgv") return zonaLGVMapView();
+  state.mapArea="";
+  return mapaCampaSelectorView();
+}
+
+function mapaCampaSelectorView(){
+  return `<div class="card">${backTitle("🗺️ Mapa campa · EXPLANADA")}
+    <div class="actions" style="margin-bottom:16px">
+      <button class="btn btn-gray" onclick="selectMapaArea('')">← Elegir otra zona</button>
+      <button class="btn btn-red" onclick="selectMapaArea('explanada')">EXPLANADA</button>
+      <button class="btn btn-gray" onclick="selectMapaArea('107')">107</button>
+      <button class="btn btn-gray" onclick="selectMapaArea('lgv')">LGV</button>
+    </div>
+    <div class="alert">
+      Selecciona la zona que quieres consultar. Cada zona tiene su propio mapa visual de estibas.
+    </div>
+    <div class="grid3">
+      <button class="tile tile-mapa" onclick="selectMapaArea('explanada')"><span class="menu-img"></span>EXPLANADA</button>
+      <button class="tile tile-mapa" onclick="selectMapaArea('107')"><span class="menu-img"></span>107</button>
+      <button class="tile tile-mapa" onclick="selectMapaArea('lgv')"><span class="menu-img"></span>LGV</button>
+    </div>
+  </div>`;
+}
+
+function ensureExtraZoneRacks(zone, total, cols=6){
+  if(!state.extraMaps) state.extraMaps = {};
+  if(!state.extraMapLayouts) state.extraMapLayouts = {};
+  if(!state.extraMapSeedVersion) state.extraMapSeedVersion = {};
+
+  const zoneKey = String(zone || "").toLowerCase();
+
+  // Datos visuales iniciales para que 107 y LGV no salgan vacías.
+  // Hay mezcla de completas, parciales, vacías, reservadas y bloqueadas,
+  // igual que en el mapa principal de la explanada.
+  const sample107 = [
+    {p:"P906", o:132, c:132, st:"full"},
+    {p:"P901", o:86,  c:132, st:"ok"},
+    {p:"P903", o:75,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P904", o:54,  c:132, st:"mid"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P910", o:92,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P906", o:132, c:132, st:"full"},
+    {p:"P902", o:65,  c:132, st:"mid"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"",     o:0,   c:132, st:"blocked", note:"Mantenimiento"},
+    {p:"P905", o:78,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"",     o:0,   c:132, st:"reserved", note:"Carga 15:00 Camión C-23"},
+    {p:"P907", o:41,  c:132, st:"mid"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P909", o:89,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P911", o:103, c:132, st:"ok"},
+    {p:"P912", o:50,  c:132, st:"mid"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P913", o:132, c:132, st:"full"},
+    {p:"P914", o:61,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"blocked", note:"Inspección calidad"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P915", o:47,  c:132, st:"mid"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"",     o:0,   c:132, st:"reserved", note:"Descarga 18:00 Camión D-07"},
+    {p:"P916", o:70,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"",     o:0,   c:132, st:"empty"}
+  ];
+
+  const sampleLGV = [
+    {p:"P001", o:132, c:132, st:"full"},
+    {p:"P902", o:110, c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P904", o:40,  c:132, st:"mid"},
+    {p:"P002A",o:70,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"",     o:0,   c:132, st:"blocked", note:"Mantenimiento"},
+    {p:"P903", o:96,  c:132, st:"ok"},
+    {p:"P901", o:30,  c:132, st:"mid"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P905", o:85,  c:132, st:"ok"},
+    {p:"",     o:0,   c:132, st:"empty"},
+    {p:"P018", o:60,  c:132, st:"ok"},
+    {p:"P904", o:22,  c:132, st:"mid"},
+    {p:"",     o:0,   c:132, st:"empty"}
+  ];
+  const samples = zoneKey === "lgv" ? sampleLGV : sample107;
+
+  const applySample = (r, i, force=false)=>{
+    const data = samples[i % samples.length] || {p:"", o:0, c:132, st:"empty"};
+    if(force || !r.product){ r.product = data.p || ""; }
+    if(force || r.occupied === undefined){ r.occupied = Number(data.o)||0; }
+    if(force || !Number(r.capacity)){ r.capacity = Number(data.c)||132; }
+    r.reserved = data.st === "reserved";
+    r.blocked = data.st === "blocked";
+    r.note = data.note || "";
+    r.entryDate = r.entryDate || todayISO();
+  };
+
+  const buildRack = (i)=>{
+    const cellW = 132, cellH = 92, gap = 18;
+    const col = i % cols;
+    const row = Math.floor(i / cols);
+    const ref = `${zone.toUpperCase()}-${String(i+1).padStart(2,'0')}`;
+    const rack = {
+      id: ref,
+      ref: ref,
+      product: "",
+      occupied: 0,
+      capacity: 132,
+      reserved: false,
+      blocked: false,
+      note: "",
+      mapX: 30 + col * (cellW + gap),
+      mapY: 85 + row * (cellH + gap),
+      mapW: cellW,
+      mapH: cellH,
+      mapDir: "h"
+    };
+    applySample(rack, i, true);
+    return rack;
+  };
+
+  const seedVersion = "107-lgv-varied-v2";
+  const needsBuild = !state.extraMaps[zone] || state.extraMaps[zone].length !== total;
+  const needsReseed = state.extraMapSeedVersion[zone] !== seedVersion;
+
+  if(needsBuild){
+    state.extraMaps[zone] = Array.from({length:total}, (_,i)=>buildRack(i));
+    state.extraMapSeedVersion[zone] = seedVersion;
+    save();
+  }else{
+    const cellW = 132, cellH = 92, gap = 18;
+    state.extraMaps[zone].forEach((r,i)=>{
+      const col = i % cols;
+      const row = Math.floor(i / cols);
+      if(r.mapX === undefined) r.mapX = 30 + col * (cellW + gap);
+      if(r.mapY === undefined) r.mapY = 85 + row * (cellH + gap);
+      if(r.mapW === undefined) r.mapW = cellW;
+      if(r.mapH === undefined) r.mapH = cellH;
+      if(!r.mapDir) r.mapDir = "h";
+      if(!r.ref) r.ref = `${zone.toUpperCase()}-${String(i+1).padStart(2,'0')}`;
+      if(needsReseed) applySample(r, i, true);
+    });
+    if(needsReseed){
+      state.extraMapSeedVersion[zone] = seedVersion;
+      save();
+    }
+  }
+  return state.extraMaps[zone];
+}
+
+function extraZoneCls(r){
+  if(r.blocked) return "blocked";
+  if(r.reserved) return "reserved";
+  if(Number(r.occupied)>=Number(r.capacity)) return "full";
+  if(Number(r.occupied)>0 && Number(r.occupied)<=50) return "mid";
+  if(Number(r.occupied)>0) return "ok";
+  return "empty";
+}
+
+function extraZoneMapView(title, zone, total, cols){
+  const racks = ensureExtraZoneRacks(zone, total, cols);
+  ensureMapZoom();
+  const mapZoom = Number(state.mapZoom || 1);
+  const rows = Math.ceil(total / cols);
+  const cellW = 132, cellH = 92, gap = 18;
+  const width = Math.max(cols * cellW + (cols - 1) * gap + 60, 860);
+  const height = Math.max(rows * cellH + (rows - 1) * gap + 120, 560);
+  function extraItemStyle(id, defStyle){
+    if(!state.extraMapLayouts) state.extraMapLayouts = {};
+    if(!state.extraMapLayouts[zone]) state.extraMapLayouts[zone] = {};
+    return state.extraMapLayouts[zone][id] || defStyle;
+  }
+  return `<div class="card">${backTitle("🗺️ Mapa campa · " + title)}
+    <div class="actions" style="margin-bottom:16px">
+      <button class="btn btn-gray" onclick="selectMapaArea('')">← Elegir otra zona</button>
+      <button class="btn btn-red" onclick="selectMapaArea('explanada')">EXPLANADA</button>
+      <button class="btn btn-gray" onclick="selectMapaArea('107')">107</button>
+      <button class="btn btn-gray" onclick="selectMapaArea('lgv')">LGV</button>
+    </div>
+    <div class="alert">
+      Zona <b>${title}</b> · Capacidad visual: <b>${total} estibas</b> · Referencias visibles en cada estiba.<br/>
+      🟢 Empezada · 🟡 Parcial · 🔴 Completa · ⚪ Vacía · 🔵 Reservada · 🟣 Bloqueada
+    </div>
+    <div class="actions">
+      ${state.mapEditMode ? `<button class="btn btn-red" onclick="toggleMapMenu()">✅ Salir edición</button>` : `<button class="btn btn-red" onclick="toggleMapMenu()">✏️ Editar mapa</button>`}
+      <button class="btn btn-gray" onclick="zoomMapOut()">➖ Zoom</button>
+      <button class="btn btn-gray" onclick="zoomMapIn()">➕ Zoom</button>
+      <button class="btn btn-gray" onclick="zoomMapReset()">🔄 Reset</button>
+      <span style="font-weight:900;padding:18px 8px">Zoom: ${Math.round(mapZoom*100)}%</span>
+    </div>
+    ${state.mapEditMode ? `<div class="map-edit-banner">Modo edición activo: arrastra estibas y pasillos. Usa la esquina roja para cambiar tamaño. Los cambios se guardan al soltar.</div>` : ""}
+    <div class="map-canvas" style="min-height:${Math.max(520, height + 80)}px">
+      <div class="clean-map ${state.mapEditMode ? 'map-edit-active' : ''}" style="width:${width}px;height:${height}px;zoom:${mapZoom}">
+        <div class="clean-aisle" data-map-edit="extra-item" data-zone="${zone}" data-map-id="${zone}-aisle-h-1" style="${extraItemStyle(zone+'-aisle-h-1',`left:20px;top:20px;width:${width-40}px;height:42px`)}"></div>
+        <div class="clean-aisle" data-map-edit="extra-item" data-zone="${zone}" data-map-id="${zone}-aisle-v-1" style="${extraItemStyle(zone+'-aisle-v-1',`left:${Math.max(250, Math.round(width/2)-20)}px;top:80px;width:42px;height:${height-110}px`)}"></div>
+        ${racks.map((r)=>`<div class="map-block h ${extraZoneCls(r)}" data-map-edit="extra-rack" data-zone="${zone}" data-rack-id="${r.id}" style="left:${Number(r.mapX)||30}px;top:${Number(r.mapY)||85}px;width:${Number(r.mapW)||cellW}px;height:${Number(r.mapH)||cellH}px">
+            <b>${r.ref || r.id}</b><br/>
+            ${r.blocked ? `<b>BLOQUEADA</b><br/>${r.note || 'No disponible'}` : r.reserved ? `<b>RESERVADA</b><br/>${r.note || 'Reservada para carga/descarga'}` : r.product ? productName(r.product).replace('Caja + ','Caja +<br/>').replace('Caja vacía ','Caja vacía<br/>').slice(0,52) : 'Vacía'}<br/>
+            <b>${r.blocked ? '-' : (Number(r.occupied)||0) + '/' + (Number(r.capacity)||132)}</b>
+          </div>`).join("")}
+      </div>
+    </div>
+    <div class="extra-zone-summary">
+      <div><b>Leyenda:</b> 🟢 Parcial alta · 🟡 Parcial baja · 🔴 Completa · ⚪ Vacía · 🔵 Reservada · 🟣 Bloqueada</div>
+      <div><b>${racks.filter(r=>Number(r.occupied)>0 && !r.blocked && !r.reserved).length}</b> ocupadas · <b>${racks.filter(r=>!Number(r.occupied) && !r.blocked && !r.reserved).length}</b> vacías · <b>${racks.filter(r=>r.blocked).length}</b> bloqueadas · <b>${racks.filter(r=>r.reserved).length}</b> reservadas</div>
+    </div>
+  </div>`;
+}
+
+function zona107MapView(){ return extraZoneMapView("107", "107", 34, 6); }
+function zonaLGVMapView(){ return extraZoneMapView("LGV", "lgv", 15, 5); }
+
+function explanadaMapView(){
   const mapZoom = Number(state.mapZoom || 1);
   function mapItemStyle(id, defStyle){
     const saved = state.mapItemLayouts && state.mapItemLayouts[id];
@@ -2742,6 +4542,28 @@ function persistMapElement(el){
     r.mapY = Math.round(pxNumber(el.style.top, r.mapY || 0));
     r.mapW = Math.round(pxNumber(el.style.width, r.mapW || el.offsetWidth || 48));
     r.mapH = Math.round(pxNumber(el.style.height, r.mapH || el.offsetHeight || 110));
+  }else if(el.dataset.mapEdit === "extra-rack"){
+    const zone = el.dataset.zone;
+    const list = state.extraMaps && state.extraMaps[zone] ? state.extraMaps[zone] : [];
+    const r = list.find(x=>String(x.id) === String(el.dataset.rackId));
+    if(!r) return;
+    r.mapX = Math.round(pxNumber(el.style.left, r.mapX || 0));
+    r.mapY = Math.round(pxNumber(el.style.top, r.mapY || 0));
+    r.mapW = Math.round(pxNumber(el.style.width, r.mapW || el.offsetWidth || 132));
+    r.mapH = Math.round(pxNumber(el.style.height, r.mapH || el.offsetHeight || 92));
+  }else if(el.dataset.mapEdit === "extra-item"){
+    if(!state.extraMapLayouts) state.extraMapLayouts = {};
+    const zone = el.dataset.zone || "global";
+    if(!state.extraMapLayouts[zone]) state.extraMapLayouts[zone] = {};
+    const id = el.dataset.mapId;
+    if(!id) return;
+    const obj = {
+      left: `${Math.round(pxNumber(el.style.left, el.offsetLeft))}px`,
+      top: `${Math.round(pxNumber(el.style.top, el.offsetTop))}px`,
+      width: `${Math.round(pxNumber(el.style.width, el.offsetWidth))}px`,
+      height: `${Math.round(pxNumber(el.style.height, el.offsetHeight))}px`
+    };
+    state.extraMapLayouts[zone][id] = styleObjToText(obj);
   }else{
     if(!state.mapItemLayouts) state.mapItemLayouts = {};
     const id = el.dataset.mapId;
@@ -2881,7 +4703,7 @@ function inventoryCheck(){
 
 
 function historialView(){
- const items=state.history.filter(h=>["carga","descarga","carro"].includes(h.type));
+ const items=getOperationalHistoryItems(false);
  return `<div class="card">${backTitle("🕘 Historial")}
  <h2>Camiones y carros finalizados</h2>
  <table><tr><th>Fecha</th><th>Turno</th><th>Tipo</th><th>Usuario</th><th>Producto</th><th>Origen</th><th>Destino</th><th>Cantidad</th></tr>
@@ -2948,9 +4770,9 @@ function getRackHistory(rack){
   const key = String(rack).trim();
 
   // Coincidencia exacta de "Estiba X" dentro del detalle.
-  // Evita que Estiba 1 coja también Estiba 10, 11, 136, etc.
-  const escapeRegExp = (txt)=>String(txt).replace(/[.*+?^${}()|[\]\\]/g, "\$&");
-  const rackDetailRegex = new RegExp("\\bestiba\\s*" + escapeRegExp(key) + "\\b", "i");
+  // Antes se usaba includes("estiba 1"), por eso Estiba 1 también cogía Estiba 10, 11, 136, etc.
+  const escapeRegExp = (txt)=>String(txt).split("").map(ch => "\\^$.*+?()[]{}|".includes(ch) ? "\\" + ch : ch).join("");
+  const rackDetailRegex = new RegExp(`\\bestiba\\s*${escapeRegExp(key)}\\b`, "i");
   const inText = (value)=>rackDetailRegex.test(String(value || ""));
 
   const fromHistory = (state.history || []).filter(h=>
@@ -2977,7 +4799,8 @@ function getRackHistory(rack){
   const unique = [];
   const seen = new Set();
   all.forEach(item=>{
-    // La clave incluye todos los datos del movimiento para no ocultar líneas distintas.
+    // La clave incluye todos los datos del movimiento. Antes, si varias líneas tenían el mismo Date.now(),
+    // se podía ocultar una línea distinta y el detalle de la estiba quedaba mal calculado.
     const k = `${item.id || ""}_${item.ts || ""}_${item.type || ""}_${item.product || ""}_${item.origin || ""}_${item.dest || ""}_${item.qty ?? ""}_${item.detail || ""}`;
     if(!seen.has(k)){ seen.add(k); unique.push(item); }
   });
@@ -3212,7 +5035,7 @@ function createCampaign(){
 window.applyRealCampLayout=applyRealCampLayout;
 window.showRackEditor=showRackEditor; window.saveRackEdit=saveRackEdit; window.moveRackQuick=moveRackQuick; window.resetMapLayout=resetMapLayout;
 window.login=login; window.logout=logout; window.setView=setView;
-window.calcCarga=calcCarga; window.confirmCarga=confirmCarga; window.openAlbaranRecord=openAlbaranRecord; window.exportAlbaranesExcel=exportAlbaranesExcel;
+window.calcCarga=calcCarga; window.confirmCarga=confirmCarga; window.openAlbaranRecord=openAlbaranRecord; window.exportAlbaranesExcel=exportAlbaranesExcel; window.exportOcupacionComparativaExcel=exportOcupacionComparativaExcel; window.setOcupacionAnalysisMode=setOcupacionAnalysisMode;
 window.createUnloadPlan=createUnloadPlan; window.showUnloadPlansByDock=showUnloadPlansByDock; window.openUnloadPlan=openUnloadPlan; window.calcUnloadLine=calcUnloadLine; window.validateUnloadRack=validateUnloadRack; window.confirmUnloadLine=confirmUnloadLine;
 window.createCartRequest=createCartRequest; window.calcCarro=calcCarro; window.confirmCarro=confirmCarro; window.cancelCartRequest=cancelCartRequest;
 function resolveIncident(id){
@@ -3231,23 +5054,5 @@ initSupabaseSync();
 setTimeout(addSyncButton, 500);
 </script>
 
-<script>
-
-/* FIX INCIDENCIAS CAMION/ESTIBA - aplicado sobre archivo enviado */
-document.addEventListener("change", function(e){
-  if(e && e.target && e.target.id === "incidentLocationType" && typeof toggleIncidentLocationFields === "function"){
-    toggleIncidentLocationFields();
-  }
-});
-document.addEventListener("click", function(){
-  const typeEl=document.getElementById("incidentLocationType");
-  const truckBox=document.getElementById("incidentTruckBox");
-  const rackBox=document.getElementById("incidentRackBox");
-  if(typeEl && truckBox && rackBox && typeof toggleIncidentLocationFields === "function"){
-    toggleIncidentLocationFields();
-  }
-}, true);
-
-</script>
 </body>
 </html>
