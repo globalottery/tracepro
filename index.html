@@ -842,6 +842,81 @@ input[type="number"]{
 }
 </style>
 
+
+<style id="tracepro-export-excel-premium-style">
+  .tracepro-export-excel-btn{
+    width:100% !important;
+    min-height:58px !important;
+    display:flex !important;
+    align-items:center !important;
+    justify-content:space-between !important;
+    gap:14px !important;
+    padding:14px 18px !important;
+    border:2px solid #d60000 !important;
+    border-radius:14px !important;
+    background:#ffffff !important;
+    color:#d60000 !important;
+    font-weight:900 !important;
+    font-size:17px !important;
+    letter-spacing:.2px !important;
+    box-shadow:0 8px 18px rgba(214,0,0,.10) !important;
+    cursor:pointer !important;
+    transition:all .22s ease !important;
+    text-transform:uppercase !important;
+    line-height:1 !important;
+  }
+  .tracepro-export-excel-btn .excel-icon{
+    width:34px !important;
+    height:34px !important;
+    border-radius:9px !important;
+    display:inline-flex !important;
+    align-items:center !important;
+    justify-content:center !important;
+    background:#16a34a !important;
+    color:#fff !important;
+    font-size:20px !important;
+    flex:0 0 auto !important;
+    box-shadow:0 5px 12px rgba(22,163,74,.25) !important;
+  }
+  .tracepro-export-excel-btn .export-label{
+    flex:1 !important;
+    text-align:left !important;
+    color:#d60000 !important;
+    white-space:nowrap !important;
+  }
+  .tracepro-export-excel-btn .download-icon{
+    color:#d60000 !important;
+    font-size:28px !important;
+    font-weight:900 !important;
+    line-height:1 !important;
+    flex:0 0 auto !important;
+    transition:transform .22s ease, color .22s ease !important;
+  }
+  .tracepro-export-excel-btn:hover{
+    background:#d60000 !important;
+    color:#ffffff !important;
+    transform:translateY(-2px) !important;
+    box-shadow:0 14px 28px rgba(214,0,0,.22) !important;
+  }
+  .tracepro-export-excel-btn:hover .export-label,
+  .tracepro-export-excel-btn:hover .download-icon{
+    color:#ffffff !important;
+  }
+  .tracepro-export-excel-btn:hover .download-icon{
+    transform:translateY(2px) !important;
+  }
+  .tracepro-export-excel-btn:active{
+    transform:translateY(0) scale(.99) !important;
+  }
+</style>
+
+
+<style id="tracepro-hide-empty-mode-alert-only">
+  .alert:empty{
+    display:none !important;
+  }
+</style>
+
 </head>
 <body>
 <div id="app"></div>
@@ -874,50 +949,8 @@ function todayISO(){
   return `${y}-${m}-${day}`;
 }
 
-function rackCapacityValue(r){
-  return Number(r?.capacity)||0;
-}
-
-function isCampaignActiveForCapacity(c){
-  const st = String(c?.status || "").toLowerCase();
-  return !["finalizada", "finalizado", "cerrada", "cerrado", "cancelada", "cancelado", "liberada definitivo"].includes(st);
-}
-
-function campaignCapacityBlockedExplanada(){
-  const used = new Set();
-  (state.campaigns || []).filter(isCampaignActiveForCapacity).forEach(c=>{
-    const from = Number(c.from);
-    const to = Number(c.to);
-    if(Number.isFinite(from) && Number.isFinite(to)){
-      const a = Math.min(from,to), b = Math.max(from,to);
-      for(let i=a;i<=b;i++) used.add(String(i));
-    }
-  });
-  return (state.racks || [])
-    .filter(r => used.has(String(r.id)) || r.restrictedByCampaign || r.campaignReserved || r.campaignBlocked)
-    .reduce((s,r)=>s + rackCapacityValue(r), 0);
-}
-
-function campaignCapacityBlockedWarehouse(warehouse){
-  const w = normalizeWarehouseKey ? normalizeWarehouseKey(warehouse) : String(warehouse||"explanada").toLowerCase();
-  if(w === "explanada") return campaignCapacityBlockedExplanada();
-  return getWarehouseRacks(w)
-    .filter(r => r.restrictedByCampaign || r.campaignReserved || r.campaignBlocked)
-    .reduce((s,r)=>s + rackCapacityValue(r), 0);
-}
-
-function operationalWarehouseCapacity(warehouse, physicalCapacity){
-  const total = Number(physicalCapacity)||0;
-  const blocked = Math.min(total, campaignCapacityBlockedWarehouse(warehouse));
-  return Math.max(0, total - blocked);
-}
-
-function campaCapacidadFisicaTotal(){
-  return CAMPA_MAX_PALETS;
-}
-
 function campaCapacidadTotal(){
-  return operationalWarehouseCapacity("explanada", CAMPA_MAX_PALETS);
+  return CAMPA_MAX_PALETS;
 }
 
 function campaPaletsActuales(){
@@ -2510,7 +2543,7 @@ function albaranesView(){
       El registro se genera automáticamente cuando una carga o descarga con albarán queda completada. El listado está agrupado por albarán.
     </div>
     <div class="actions" style="margin-bottom:18px">
-      <button class="btn btn-green" onclick="exportAlbaranesExcel()">⬇️ Exportar vista actual</button>
+      <button class="btn btn-green tracepro-export-excel-btn" onclick="exportAlbaranesExcel()"><span class="excel-icon">X</span><span class="export-label">EXPORTAR EXCEL</span><span class="download-icon">↓</span></button>
     </div>
     ${records.length ? `<table>
       <tr><th>Fecha</th><th>Hora</th><th>Tipo</th><th>Muelle</th><th>Matrícula</th><th>Albarán</th><th>Operario</th><th>Palets</th><th>Productos</th></tr>
@@ -3888,6 +3921,9 @@ function ejecutivoSheetXml(rows, opts){
 
 
 function buildOcupacionExecutiveXlsxBlob(ctx){
+  ctx.ocupacionActual = Number.isFinite(Number(ctx.ocupacionActual))
+    ? Number(ctx.ocupacionActual)
+    : (Number.isFinite(Number(ctx.pctNow)) ? Number(ctx.pctNow) : (Number.isFinite(Number(ctx.pctVisible)) ? Number(ctx.pctVisible) : 0));
   const goodTotal = Number(ctx.totalDelta) >= 0;
   const goodRef = Number(ctx.refDelta) >= 0;
   const fecha = new Date().toLocaleString('es-ES');
@@ -4126,6 +4162,7 @@ function exportOcupacionComparativaExcel(){
     totalA:Number(totalA)||0, totalB:Number(totalB)||0, refA:Number(refA)||0, refB:Number(refB)||0,
     totalDelta, refDelta,
     pctVisible: campaOcupacionPct(visibleValue),
+    ocupacionActual: campaOcupacionPct(visibleValue),
     pctA: campaOcupacionPct(Number(isTotalProduct ? totalA : refA)||0),
     pctB: campaOcupacionPct(Number(isTotalProduct ? totalB : refB)||0),
     tendenciaTotal, tendenciaRef, racks,
@@ -4237,7 +4274,7 @@ function ocupacionCampaView(){
   let html = '<div class="ocup-wrap">';
   html += backTitle('📊 Ocupación Total de Campa');
   html += '<div class="ocup-head">';
-  html += '<div><h1>USO MAPA TOTAL DE CAMPA</h1><p>La gráfica principal muestra la evolución semanal de la referencia seleccionada. Cambia el producto para ver su ocupación por semanas.</p></div>';
+  html += '<div><h1>USO MAPA TOTAL DE CAMPA</h1></div>';
   html += '<div class="ocup-filter"><label>Analizar referencia</label><select onchange="setOcupacionProduct(this.value)">';
   html += '<option value="TOTAL" '+(isTotalProduct?'selected':'')+'>TOTAL</option>';
   html += Object.entries(PRODUCTS).map(([k,v])=>`<option value="${k}" ${k===product?'selected':''}>${escapeHtmlTrace(v.name)}</option>`).join('');
@@ -4249,7 +4286,7 @@ function ocupacionCampaView(){
   html += '</div></div>';
   html += '<div class="ocup-filter"><label>Tipo de análisis</label><select onchange="setOcupacionAnalysisMode(this.value)" style="margin-bottom:10px">'+analysisOptionsMain+'</select>';
   if(isWeeklyAnalysis){
-    html += '<div style="font-size:13px;font-weight:800;color:#374151;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px;line-height:1.35">Modo activo: compara dos semanas concretas. La gráfica se ajusta al año del punto seleccionado.</div>';
+    html += '<div style="font-size:13px;font-weight:800;color:#374151;background:#fff7ed;border:1px solid #fed7aa;border-radius:12px;padding:10px;line-height:1.35"></div>';
   }else{
     html += '<label>Vista del gráfico</label><select onchange="setOcupacionMode(this.value)" style="margin-bottom:10px">'+modeOptionsMain+'</select>';
     if(isYearCompare){
@@ -4258,7 +4295,7 @@ function ocupacionCampaView(){
     }else{
       html += '<label>Año a analizar</label><select onchange="setOcupacionYear(this.value)" style="margin-bottom:10px">'+yearOptionsMain+'</select>';
     }
-    html += '<button class="cmp-export-btn" onclick="exportOcupacionComparativaExcel()">⬇️ Exportar vista actual</button>';
+    html += '<button class="cmp-export-btn tracepro-export-excel-btn" onclick="exportOcupacionComparativaExcel()"><span class="excel-icon">X</span><span class="export-label">EXPORTAR EXCEL</span><span class="download-icon">↓</span></button>';
   }
   html += '</div>';
   html += '</div>';
@@ -4274,7 +4311,7 @@ function ocupacionCampaView(){
     html += '<div class="cmp-title-box"><b>Comparativa semanal</b><span>Elige dos semanas/años. La gráfica se ajusta al año del punto seleccionado.</span></div>';
     html += '<div class="cmp-pair"><strong>PUNTO A</strong><div class="cmp-field"><label>Semana</label><select onchange="setOcupacionCompare(\'weekA\',this.value)">'+weekOptionsAChart+'</select></div><div class="cmp-field"><label>Año</label><select onchange="setOcupacionCompare(\'yearA\',this.value)">'+yearOptionsAChart+'</select></div></div>';
     html += '<div class="cmp-pair"><strong>PUNTO B</strong><div class="cmp-field"><label>Semana</label><select onchange="setOcupacionCompare(\'weekB\',this.value)">'+weekOptionsBChart+'</select></div><div class="cmp-field"><label>Año</label><select onchange="setOcupacionCompare(\'yearB\',this.value)">'+yearOptionsBChart+'</select></div></div>';
-    html += '<div class="cmp-mini-result"><small>VARIACIÓN B VS A</small><b>'+(cmpChartDelta>=0?'+':'')+cmpChartDelta+'%</b><span>'+cmpChartTotalA.toLocaleString('es-ES')+' → '+cmpChartTotalB.toLocaleString('es-ES')+' palets</span><button class="cmp-export-btn" onclick="exportOcupacionComparativaExcel()">⬇️ Exportar vista actual</button></div>';
+    html += '<div class="cmp-mini-result"><small>VARIACIÓN B VS A</small><b>'+(cmpChartDelta>=0?'+':'')+cmpChartDelta+'%</b><span>'+cmpChartTotalA.toLocaleString('es-ES')+' → '+cmpChartTotalB.toLocaleString('es-ES')+' palets</span><button class="cmp-export-btn tracepro-export-excel-btn" onclick="exportOcupacionComparativaExcel()"><span class="excel-icon">X</span><span class="export-label">EXPORTAR EXCEL</span><span class="download-icon">↓</span></button></div>';
     html += '</div>';
     html += '<div class="cmp-inline-bars">';
     html += '<div class="cmp-inline-card"><div class="top"><span class="tag">A · W'+cmpWeekA+' '+cmpYearA+'</span><span class="value">'+cmpChartTotalA.toLocaleString('es-ES')+'</span></div><div class="track"><div class="fill" style="width:'+Math.round((cmpChartTotalA/cmpChartMax)*100)+'%"></div></div></div>';
@@ -4477,43 +4514,37 @@ function resumenOcupacionView(){
   const total = rows.reduce((acc,r)=>{
     acc.palets += Number(r.palets)||0;
     acc.capacidad += Number(r.capacidad)||0;
-    acc.capacidadFisica += Number(r.capacidadFisica)||0;
-    acc.bloqueada += Number(r.bloqueada)||0;
     return acc;
-  }, {palets:0, capacidad:0, capacidadFisica:0, bloqueada:0});
+  }, {palets:0, capacidad:0});
   const totalSat = total.capacidad ? Math.round((total.palets / total.capacidad) * 100) : 0;
   const fmt = n => Number(n||0).toLocaleString('es-ES');
 
   const satColor = pct => {
     const p = Number(pct)||0;
-    if(p >= 90) return '#d60000';
-    if(p >= 70) return '#f59e0b';
-    return '#16a34a';
+    if(p >= 90) return '#d60000';     // rojo Coca-Cola
+    if(p >= 70) return '#f59e0b';     // ámbar operativo
+    return '#16a34a';                 // verde operativo
   };
 
   const satCell = pct => {
-    const raw = Math.max(0, Number(pct)||0);
-    const p = Math.min(100, raw);
-    const bg = satColor(raw);
+    const p = Math.max(0, Math.min(100, Number(pct)||0));
+    const bg = satColor(p);
     return `
       <div style="display:flex;align-items:center;gap:12px;justify-content:flex-end">
         <div style="height:14px;width:118px;background:#f1f5f9;border-radius:999px;overflow:hidden;border:1px solid #e5e7eb">
           <div style="height:100%;width:${p}%;background:${bg};border-radius:999px"></div>
         </div>
-        <b style="font-size:18px;color:#111827">${Math.round(raw)}%</b>
+        <b style="font-size:18px;color:#111827">${p}%</b>
       </div>`;
   };
 
   const rowBg = i => i % 2 ? '#eef2ff' : '#fff7ed';
-  const capacityCell = r => `
-    <div style="font-weight:900;font-size:19px;color:#111827">${fmt(r.capacidad)}</div>
-    ${r.bloqueada>0 ? `<div class="small" style="font-weight:800;color:#b45309">Total ${fmt(r.capacidadFisica)} · Bloqueada ${fmt(r.bloqueada)}</div>` : `<div class="small" style="font-weight:700;color:#64748b">Total físico ${fmt(r.capacidadFisica)}</div>`}`;
 
   const rowHtml = rows.map((r,i)=>`
     <tr style="background:${rowBg(i)}">
       <td style="font-weight:900;color:#111827;font-size:19px">${r.nombre}</td>
       <td style="text-align:right;font-weight:900;font-size:19px;color:#111827">${fmt(r.palets)}</td>
-      <td style="text-align:right">${capacityCell(r)}</td>
+      <td style="text-align:right;font-weight:900;font-size:19px;color:#111827">${fmt(r.capacidad)}</td>
       <td style="text-align:right">${satCell(r.saturacion)}</td>
     </tr>`).join('');
 
@@ -4522,17 +4553,17 @@ function resumenOcupacionView(){
       <div style="background:linear-gradient(135deg,#d60000,#8b0000);color:white;padding:22px 26px">
         <div style="font-size:28px;font-weight:900;letter-spacing:.3px">Resumen Ocupación</div>
         <div style="font-size:15px;font-weight:700;opacity:.95;margin-top:4px">
-          El porcentaje trabaja con la <b>capacidad operativa actual</b>. La capacidad física total queda visible como referencia.
+          Datos actuales calculados desde las estibas de Explanada, 107 y LGV
         </div>
       </div>
 
       <div style="overflow:auto">
-        <table style="min-width:920px;border-collapse:separate;border-spacing:0;width:100%">
+        <table style="min-width:820px;border-collapse:separate;border-spacing:0;width:100%">
           <thead>
             <tr style="background:#d60000;color:white">
               <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px">Almacén</th>
               <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px;text-align:right">Palets</th>
-              <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px;text-align:right">Capacidad actual</th>
+              <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px;text-align:right">Capacidad</th>
               <th style="color:white;background:#d60000;font-size:16px;text-transform:uppercase;letter-spacing:.4px;padding:18px 14px;text-align:right">Saturación</th>
             </tr>
           </thead>
@@ -4541,10 +4572,7 @@ function resumenOcupacionView(){
             <tr style="background:#fde68a;font-weight:900">
               <td style="font-size:20px;color:#111827">Total</td>
               <td style="text-align:right;font-size:20px;color:#111827">${fmt(total.palets)}</td>
-              <td style="text-align:right;font-size:20px;color:#111827">
-                <div>${fmt(total.capacidad)}</div>
-                ${total.bloqueada>0 ? `<div class="small" style="font-weight:800;color:#92400e">Total ${fmt(total.capacidadFisica)} · Bloqueada ${fmt(total.bloqueada)}</div>` : `<div class="small" style="font-weight:700;color:#64748b">Total físico ${fmt(total.capacidadFisica)}</div>`}
-              </td>
+              <td style="text-align:right;font-size:20px;color:#111827">${fmt(total.capacidad)}</td>
               <td style="text-align:right">${satCell(totalSat)}</td>
             </tr>
           </tbody>
@@ -4554,17 +4582,15 @@ function resumenOcupacionView(){
       <div class="grid3" style="padding:22px;background:#fff">
         <div class="metric" style="border-left:8px solid #d60000">
           <div class="n">${fmt(total.capacidad)}</div>
-          <div class="t">Capacidad operativa</div>
-          <div class="small">Total físico: ${fmt(total.capacidadFisica)}</div>
+          <div class="t">Capacidad Total</div>
         </div>
         <div class="metric" style="border-left:8px solid #16a34a">
           <div class="n">${fmt(total.palets)}</div>
-          <div class="t">Palets actuales</div>
-          <div class="small">Stock real entre Explanada, 107 y LGV</div>
+          <div class="t">Palets Actuales</div>
         </div>
         <div class="metric" style="border-left:8px solid ${satColor(totalSat)}">
           <div class="n">${totalSat}%</div>
-          <div class="t">Ocupación global actual</div>
+          <div class="t">Ocupación Global</div>
           <div class="small">Actualización en tiempo real</div>
         </div>
       </div>
@@ -4572,38 +4598,36 @@ function resumenOcupacionView(){
       <div style="padding:0 22px 22px">
         <div style="background:#fff7ed;border:1px solid #fed7aa;border-radius:16px;padding:14px 16px;font-weight:800;color:#7c2d12">
           🟢 Menos del 70% · 🟠 70% a 89% · 🔴 90% o más
-          ${total.bloqueada>0 ? `<br>⚠️ Capacidad bloqueada por zonas restringidas: <b>${fmt(total.bloqueada)} palets</b>. Esa capacidad no cuenta como disponible hasta liberar la zona.` : ''}
         </div>
       </div>
     </div>
   </div>`;
 }
 function buildResumenOcupacionRows(){
-  // Capacidades máximas físicas oficiales de Coca-Cola Trace Pro
+  // Capacidades máximas reales oficiales de Coca-Cola Trace Pro
   const CAPACIDAD_MAXIMA_ALMACEN = {
     explanada: 24800,
     zona107: 7500,
     lgv: 4500
   };
 
-  const calc = (key, nombre, racks, capacidadFisica)=>{
-    // Los palets son stock real. Aunque una estiba esté bloqueada, si aún contiene producto, sigue contando como stock.
-    const palets = (racks||[]).reduce((s,r)=>s + (Number(r.occupied)||0), 0);
-    const bloqueada = campaignCapacityBlockedWarehouse(key);
-    const capacidad = operationalWarehouseCapacity(key, capacidadFisica);
+  const calc = (nombre, racks, capacidadMaxima)=>{
+    const palets = (racks||[]).reduce((s,r)=>s + (r.blocked ? 0 : (Number(r.occupied)||0)), 0);
+    const capacidad = Number(capacidadMaxima)||0;
     const saturacion = capacidad ? Math.round((palets / capacidad) * 100) : 0;
-    return {key, nombre, palets, capacidad, capacidadFisica, bloqueada, saturacion};
+    return {nombre, palets, capacidad, saturacion};
   };
 
   const racks107 = ensureExtraZoneRacks('107', 34, 6);
   const racksLGV = ensureExtraZoneRacks('lgv', 15, 5);
 
   return [
-    calc('explanada', 'Explanada', state.racks || [], CAPACIDAD_MAXIMA_ALMACEN.explanada),
-    calc('107', '107', racks107, CAPACIDAD_MAXIMA_ALMACEN.zona107),
-    calc('lgv', 'LGV', racksLGV, CAPACIDAD_MAXIMA_ALMACEN.lgv)
+    calc('Explanada', state.racks || [], CAPACIDAD_MAXIMA_ALMACEN.explanada),
+    calc('107', racks107, CAPACIDAD_MAXIMA_ALMACEN.zona107),
+    calc('LGV', racksLGV, CAPACIDAD_MAXIMA_ALMACEN.lgv)
   ];
 }
+
 function mapaView(){
   const area = state.mapArea || "";
   if(!area) return mapaCampaSelectorView();
@@ -5540,69 +5564,8 @@ function updateCampaignStatus(campaignId){
   if(campaign && !pending) campaign.status = "zona liberada";
 }
 
-function activeCampaignsHtml(){
-  const list = (state.campaigns || []).filter(isCampaignActiveForCapacity);
-  if(!list.length) return `<div class="alert">No hay zonas restringidas activas.</div>`;
-  const fmt = n => Number(n||0).toLocaleString('es-ES');
-  return list.map(c=>{
-    const blocked = Number(c.blockedCapacity)||campaignCapacityFromRange(c);
-    return `<div class="option">
-      <b>${c.name}</b><br>
-      Estibas: <b>${c.from}</b> a <b>${c.to}</b> · Capacidad bloqueada: <b>${fmt(blocked)} palets</b><br>
-      Estado: <b>${c.status}</b>
-      <div class="actions" style="margin-top:12px">
-        <button class="btn btn-green" onclick="releaseCampaign(${c.id})">LIBERAR ZONA / DEVOLVER CAPACIDAD</button>
-      </div>
-    </div>`;
-  }).join("");
-}
-
-function campaignCapacityFromRange(c){
-  const from = Number(c.from), to = Number(c.to);
-  if(!Number.isFinite(from) || !Number.isFinite(to)) return 0;
-  const a = Math.min(from,to), b = Math.max(from,to);
-  return (state.racks || [])
-    .filter(r=>Number(r.id)>=a && Number(r.id)<=b)
-    .reduce((s,r)=>s + (Number(r.capacity)||0),0);
-}
-
-function releaseCampaign(campaignId){
-  const campaign = (state.campaigns || []).find(c=>c.id===campaignId);
-  if(!campaign){ alert("Campaña no encontrada."); return; }
-  const pending = (state.campaignTasks || []).some(t=>t.campaignId===campaignId && t.status==="pendiente");
-  if(pending && !confirm("Aún hay tareas pendientes de esta zona. ¿Quieres liberar igualmente la capacidad?")) return;
-
-  const from = Number(campaign.from), to = Number(campaign.to);
-  if(Number.isFinite(from) && Number.isFinite(to)){
-    const a = Math.min(from,to), b = Math.max(from,to);
-    for(let i=a;i<=b;i++){
-      const r = (state.racks || []).find(x=>String(x.id)===String(i));
-      if(!r) continue;
-      if(r.restrictedByCampaign === campaignId || r.campaignReserved || r.campaignBlocked){
-        r.reserved = false;
-        r.blocked = false;
-        delete r.restrictedByCampaign;
-        delete r.campaignReserved;
-        delete r.campaignBlocked;
-      }
-    }
-  }
-
-  campaign.status = "finalizada";
-  campaign.releasedAt = now();
-  campaign.releasedBy = state.user?.name || "Sistema";
-  addHistory("liberar zona restringida", "", String(campaign.from), String(campaign.to), 0, `Zona ${campaign.name} liberada. La capacidad vuelve a estar disponible.`);
-  save();
-  pushToCloud();
-  alert("Zona liberada. La capacidad operativa vuelve a contar en Resumen Ocupación.");
-  render();
-}
-
 function campanasView(){
   return `<div class="card">${backTitle("⚙️ Zonas restringidas")}
-    <div class="alert">
-      Cuando reservas estibas, su capacidad deja de contar como disponible. El % de ocupación se recalcula con la capacidad operativa actual. Al liberar la zona, esa capacidad vuelve automáticamente.
-    </div>
     <div class="row">
       <div><label>Nombre</label><input id="name" value="Zona restringida"/></div>
       <div><label>Estiba desde</label><input id="from" value="140"/></div>
@@ -5611,8 +5574,6 @@ function campanasView(){
       <div><label>Estiba hasta</label><input id="to" value="155"/></div>
       <button class="btn btn-red" onclick="createCampaign()">Reservar zona</button>
     </div>
-    <h2>Zonas activas</h2>
-    ${activeCampaignsHtml()}
   </div>`;
 }
 function createCampaign(){
@@ -5621,14 +5582,13 @@ function createCampaign(){
   const to=Number(document.getElementById("to").value);
   const campaignId = Date.now();
 
+  state.campaigns.push({id:campaignId,name,from,to,status:"pendiente liberar"});
+
   let created = 0;
-  let blockedCapacity = 0;
 
   for(let i=from;i<=to;i++){
     const r=state.racks.find(x=>x.id===String(i));
     if(!r) continue;
-    blockedCapacity += Number(r.capacity)||0;
-    r.restrictedByCampaign = campaignId;
 
     // Si la estiba tiene producto, no se bloquea aún como reservada final:
     // queda pendiente de mover para zona restringida.
@@ -5645,18 +5605,14 @@ function createCampaign(){
         createdAt: now()
       });
       r.blocked = true; // bloqueada para que no se use en FIFO normal
-      r.campaignBlocked = true;
       created++;
     } else {
       // Si está vacía, se reserva directamente.
       r.reserved = true;
-      r.campaignReserved = true;
     }
   }
 
-  state.campaigns.push({id:campaignId,name,from,to,status:"pendiente liberar",blockedCapacity});
-
-  addHistory("zona restringida", "", String(from), String(to), 0, `Zona restringida ${name}. Tareas generadas: ${created}. Capacidad bloqueada: ${blockedCapacity} palets`);
+  addHistory("zona restringida", "", String(from), String(to), 0, `Zona restringida ${name}. Tareas generadas: ${created}`);
   save();
   pushToCloud();
   alert(`Zona restringida creada. Tareas de movimiento generadas: ${created}. Las estibas vacías quedan reservadas y las ocupadas quedan bloqueadas hasta mover el producto.`);
@@ -5699,6 +5655,31 @@ window.TRACEPRO_ROLE_MATRIX = {
   checker: ["dashboard", "descarga", "carro", "incidencia", "mapa", "campanas"],
   carretillero: ["descarga", "carro", "incidencia"]
 };
+</script>
+
+
+<script id="tracepro-capacidad-operativa">
+window.TRACEPRO_CAPACIDAD_OPERATIVA = {
+  explanadaTotal: 24800,
+  lgvTotal: 4500,
+  area107Total: 7500
+};
+
+function capacidadBloqueadaExplanada(){
+  try{
+    if(!window.state || !Array.isArray(state.campaigns)) return 0;
+    return state.campaigns
+      .filter(c => c.status === "activa" || c.active)
+      .reduce((a,c)=>a + (Number(c.blockedCapacity)||0),0);
+  }catch(e){ return 0; }
+}
+
+function capacidadOperativaExplanada(){
+  return Math.max(
+    0,
+    TRACEPRO_CAPACIDAD_OPERATIVA.explanadaTotal - capacidadBloqueadaExplanada()
+  );
+}
 </script>
 
 </body>
