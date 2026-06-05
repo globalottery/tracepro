@@ -2498,7 +2498,7 @@ function buildXlsxBlob(rows){
 </Relationships>`},
     {name:"xl/workbook.xml", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <workbook xmlns="http://schemas.openxmlformats.org/spreadsheetml/2006/main" xmlns:r="http://schemas.openxmlformats.org/officeDocument/2006/relationships">
-  <sheets><sheet name="Registro Albaranes" sheetId="1" r:id="rId1"/></sheets>
+  <sheets><sheet name="REGISTRO ALBARANES" sheetId="1" r:id="rId1"/></sheets>
 </workbook>`},
     {name:"xl/_rels/workbook.xml.rels", content:`<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <Relationships xmlns="http://schemas.openxmlformats.org/package/2006/relationships">
@@ -3505,7 +3505,7 @@ function dashboardView(){
   const donutColor=pct>=80?"#dc2626":pct>=50?"#f59e0b":"#16a34a";
   const dashArr=Math.round(pct*2.51);
 
-  let html='<div class="card">'+backTitle("📊 Dashboard Encargado / SGA");
+  let html='<div class="card">'+backTitle("📊 DASHBOARD ACTUAL Encargado / SGA");
   html+='<div style="text-align:right;font-size:13px;color:#888;margin-top:-10px;margin-bottom:16px">Last Updated: '+now2+'</div>';
   html+='<div style="display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-bottom:22px">';
 
@@ -3654,7 +3654,7 @@ function weeklyTotalOccupation(year){
     const week = i + 1;
     const y = Number(year);
 
-    // 2026 TOTAL sincronizado con Dashboard:
+    // 2026 TOTAL sincronizado con DASHBOARD ACTUAL:
     // si el dashboard cambia por entradas/salidas, toda la curva de 2026 se recalcula
     // alrededor del nuevo dato actual y la semana actual queda exactamente igual al dashboard.
     if(y === Number(currentYear)){
@@ -4214,9 +4214,9 @@ function ocupacionCampaView(){
   const estibasOcupadasTotal = state.racks.filter(r=>(Number(r.occupied)||0)>0).length;
   // Ocupación dinámica: ahora se calcula con los datos de la vista seleccionada
   // (referencia + año + semana visible), no con el stock fijo actual del mapa.
-  // Dashboard = foto actual real.
+  // DASHBOARD ACTUAL = foto actual real.
   // Ocupación de Campa:
-  // - Si es TOTAL y año actual, debe coincidir con Dashboard.
+  // - Si es TOTAL y año actual, debe coincidir con DASHBOARD ACTUAL.
   // - Si es histórico o referencia concreta, usa año + semana seleccionada.
   const currentYearForBox = isYearCompare ? compareBaseYearB : year;
   const nowIsoForOcupacion = isoWeekTrace(new Date());
@@ -4551,7 +4551,7 @@ function resumenOcupacionView(){
   return `<div class="card">${backTitle('📊 OCUPACIÓN GLOBAL DE ALMACENES')}
     <div style="border-radius:24px;overflow:hidden;border:1px solid #e5e7eb;box-shadow:0 14px 30px #0001;background:#fff">
       <div style="background:linear-gradient(135deg,#d60000,#8b0000);color:white;padding:22px 26px">
-        <div style="font-size:28px;font-weight:900;letter-spacing:.3px">Resumen Ocupación</div>
+        <div style="font-size:28px;font-weight:900;letter-spacing:.3px">OCUPACIÓN</div>
         <div style="font-size:15px;font-weight:700;opacity:.95;margin-top:4px">
           Datos actuales calculados desde las estibas de Explanada, 107 y LGV
         </div>
@@ -5232,7 +5232,7 @@ function initMapEditMode(){
 function inventarioView(){
   return `<div class="card">${backTitle("📋 Ajuste inventario")}
     <div class="alert">
-      Corrige una estiba y el cambio quedará guardado en Ajuste Inventario, Mapa Campa, Dashboard, FIFO e Historial.
+      Corrige una estiba y el cambio quedará guardado en Ajuste Inventario, MAPAS, DASHBOARD ACTUAL, FIFO e Historial.
     </div>
     <div class="row">
       <div><label>Estiba</label><input id="rack" value="136"/></div>
@@ -5284,7 +5284,7 @@ function inventoryCheck(){
 
   save();
   pushToCloud();
-  alert("Ajuste de inventario guardado. El cambio ya aparece en Mapa Campa y Dashboard.");
+  alert("Ajuste de inventario guardado. El cambio ya aparece en MAPAS y DASHBOARD ACTUAL.");
   render();
 }
 
