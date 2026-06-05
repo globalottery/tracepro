@@ -5595,7 +5595,7 @@ function weeklyTotalOccupation(year){
 }
 
 function ocupacionAvailableYears(){
-  return [2024, 2025, 2026];
+  return [2023, 2024, 2025, 2026];
 }
 
 function ocupacionSafeYear(year){
@@ -5836,7 +5836,7 @@ function buildOcupacionExecutiveXlsxBlob(ctx){
     [ejecutivoCell(chartTitle,s.title),"","","","",""],
     [ejecutivoCell("Datos exactos de la vista actual para dirección",s.subtitle),"","","","",""],
     [],
-    [ejecutivoCell("Semana",s.tableHead),ejecutivoCell("Palets visibles",s.tableHead),ejecutivoCell("% Ocupación",s.tableHead),ejecutivoCell("Tendencia / forecast",s.tableHead),ejecutivoCell("Año",s.tableHead),ejecutivoCell("Referencia",s.tableHead),ejecutivoCell("Tipo dato",s.tableHead)]
+    [ejecutivoCell("Semana",s.tableHead),ejecutivoCell("Palets visibles",s.tableHead),ejecutivoCell("% Ocupación",s.tableHead),ejecutivoCell("Año anterior",s.tableHead),ejecutivoCell("Año",s.tableHead),ejecutivoCell("Referencia",s.tableHead),ejecutivoCell("Tipo dato",s.tableHead)]
   ];
   chartRows.forEach(r=>graphRows.push([ejecutivoCell("W"+r.week,s.tableBody),ejecutivoCell(r.value,s.tableBody),ejecutivoCell((Number(r.pctOcupacion)||0).toFixed(1).replace(".",",")+"%",s.tableBody),ejecutivoCell(r.forecast,s.tableBody),ejecutivoCell(ctx.currentYear,s.tableBody),ejecutivoCell(ctx.productName,s.tableBody),ejecutivoCell("Vista actual",s.tableBody)]));
   graphRows.push([],[ejecutivoCell("Comparativa A/B",s.section),"","","","","",""] ,[ejecutivoCell("Punto A",s.bold),ejecutivoCell("W"+ctx.weekA+" "+ctx.yearA,s.light),ejecutivoCell(ctx.refA,s.light),"","","",""] ,[ejecutivoCell("Punto B",s.bold),ejecutivoCell("W"+ctx.weekB+" "+ctx.yearB,s.light),ejecutivoCell(ctx.refB,s.light),"","","",""] ,[ejecutivoCell("Variación",s.bold),ejecutivoCell((ctx.refDelta>=0?"+":"")+ctx.refDelta+"%", goodRef ? s.good : s.bad),"","","","",""]);
@@ -6060,9 +6060,11 @@ function ocupacionCampaView(){
   // Años anteriores se muestran completos hasta W52 y el año actual solo hasta la semana actual.
   const graphRowsYearA = ocupacionRows(product, compareBaseYearA);
   const graphRowsYearB = ocupacionRows(product, compareBaseYearB);
+  const previousYear = ocupacionSafeYear(year - 1);
+  const graphRowsPreviousYear = isYearCompare ? [] : ocupacionRows(product, previousYear);
   const graphRows = isYearCompare ? graphRowsYearB : ocupacionRows(product, year);
   const refRows = graphRows;
-  const maxVisibleWeek = Math.max(1, isYearCompare ? Math.max(graphRowsYearA.length, graphRowsYearB.length) : graphRows.length);
+  const maxVisibleWeek = Math.max(1, isYearCompare ? Math.max(graphRowsYearA.length, graphRowsYearB.length) : Math.max(graphRows.length, graphRowsPreviousYear.length));
   const selectedWeek = Math.min(Number(state.occupationSelectedWeek || 21), maxVisibleWeek);
   const selectedTotal = totalRows.find(r=>r.week===selectedWeek) || totalRows[0];
   const selected = graphRows.find(r=>r.week===selectedWeek) || graphRows[0];
@@ -6094,11 +6096,11 @@ function ocupacionCampaView(){
   const chartH = 330;
   const chartLeft = 54;
   const chartTop = 38;
-  const chartWeeks = Math.max(1, isYearCompare ? Math.max(graphRowsYearA.length, graphRowsYearB.length) : graphRows.length);
+  const chartWeeks = Math.max(1, isYearCompare ? Math.max(graphRowsYearA.length, graphRowsYearB.length) : Math.max(graphRows.length, graphRowsPreviousYear.length));
   const gap = chartW / chartWeeks;
   const barW = 15;
-  const chartValueRows = isYearCompare ? [...graphRowsYearA, ...graphRowsYearB] : graphRows;
-  const maxChartVal = Math.ceil(Math.max(500, ...chartValueRows.map(r=>Math.max(r.value, r.forecast||0))) / 500) * 500;
+  const chartValueRows = isYearCompare ? [...graphRowsYearA, ...graphRowsYearB] : [...graphRows, ...graphRowsPreviousYear];
+  const maxChartVal = Math.ceil(Math.max(500, ...chartValueRows.map(r=>Number(r.value)||0)) / 500) * 500;
   const monthYearLabel = isYearCompare ? (compareBaseYearA + ' / ' + compareBaseYearB) : year;
   const monthLabels = [
     [1,4,'ENERO '+monthYearLabel],[5,8,'FEBRERO '+monthYearLabel],[9,13,'MARZO '+monthYearLabel],[14,17,'ABRIL '+monthYearLabel],[18,21,'MAYO '+monthYearLabel],
@@ -6177,7 +6179,7 @@ function ocupacionCampaView(){
   if(isYearCompare){
     html += '<div class="ocup-chart-title"><b>'+ (isTotalProduct ? 'COMPARATIVA TOTAL CAMPA' : 'COMPARATIVA DE REFERENCIA SELECCIONADA') +' · '+compareBaseYearA+' VS '+compareBaseYearB+'</b><div class="ocup-legend"><span><i class="legend-bar"></i> '+(isTotalProduct?'PALETS TOTALES ':'PALETS REFERENCIA ')+compareBaseYearA+'</span><span><i style="display:inline-block;width:16px;height:14px;background:#93c5fd;border:2px solid #2563eb;border-radius:3px;margin-right:7px;vertical-align:middle"></i> '+(isTotalProduct?'PALETS TOTALES ':'PALETS REFERENCIA ')+compareBaseYearB+'</span></div></div>';
   }else{
-    html += '<div class="ocup-chart-title"><b>'+ (isTotalProduct ? 'EVOLUCIÓN DE USO MAPA TOTAL DE CAMPA POR SEMANA' : 'EVOLUCIÓN DE LA REFERENCIA SELECCIONADA POR SEMANA') +'</b><div class="ocup-legend"><span><i class="legend-bar"></i> '+(isTotalProduct?'PALETS TOTALES ':'PALETS REFERENCIA ')+year+'</span><span><i class="legend-line"></i> TENDENCIA / FORECAST</span>'+(isWeeklyAnalysis?'<span><i style="display:inline-block;width:16px;height:14px;background:rgba(17,24,39,.10);border:2px solid rgba(17,24,39,.25);border-radius:3px;margin-right:7px;vertical-align:middle"></i> PUNTOS A / B</span>':'')+'</div></div>';
+    html += '<div class="ocup-chart-title"><b>'+ (isTotalProduct ? 'EVOLUCIÓN DE USO MAPA TOTAL DE CAMPA POR SEMANA' : 'EVOLUCIÓN DE LA REFERENCIA SELECCIONADA POR SEMANA') +'</b><div class="ocup-legend"><span><i class="legend-bar"></i> '+(isTotalProduct?'PALETS TOTALES ':'PALETS REFERENCIA ')+year+'</span><span><i class="legend-line"></i> '+previousYear+' (AÑO ANTERIOR)</span>'+(isWeeklyAnalysis?'<span><i style="display:inline-block;width:16px;height:14px;background:rgba(17,24,39,.10);border:2px solid rgba(17,24,39,.25);border-radius:3px;margin-right:7px;vertical-align:middle"></i> PUNTOS A / B</span>':'')+'</div></div>';
   }
   if(isWeeklyAnalysis){
     /* Comparativa semanal movida a banda superior independiente */
@@ -6243,13 +6245,14 @@ html += '<div class="ocup-chart-scroll"><div class="ocup-chart" style="width:'+(
         html += '<div class="ocup-bar'+sel+'" onclick="selectOcupacionWeek('+r.week+')" title="Semana '+r.week+' · '+r.value.toLocaleString('es-ES')+' palets" style="left:'+x.toFixed(1)+'px;top:'+y+'px;width:'+barW+'px;height:'+h+'px"></div>';
         html += '<div class="ocup-bar-label" style="left:'+(x-13).toFixed(1)+'px;top:'+(y-18)+'px">'+r.value.toLocaleString('es-ES')+'</div>';
       }else{
-        html += '<div class="ocup-empty-week" onclick="selectOcupacionWeek('+r.week+')" title="Semana '+r.week+' forecast · '+(r.forecast||r.value).toLocaleString('es-ES')+' palets" style="left:'+x.toFixed(1)+'px;top:'+chartTop+'px;width:'+barW+'px;height:'+chartH+'px"></div>';
+        html += '<div class="ocup-empty-week" onclick="selectOcupacionWeek('+r.week+')" title="Semana '+r.week+' año anterior · '+(r.forecast||r.value).toLocaleString('es-ES')+' palets" style="left:'+x.toFixed(1)+'px;top:'+chartTop+'px;width:'+barW+'px;height:'+chartH+'px"></div>';
       }
       html += '<div class="ocup-x" style="left:'+(x-10).toFixed(1)+'px;top:'+(chartTop+chartH+12)+'px">W'+r.week+'</div>';
       if(r.week===selectedWeek){
-        const val = actual ? r.value : (r.forecast||r.value);
-        const dotY = chartTop + chartH - ((r.forecast||r.value)/maxChartVal)*chartH;
-        html += '<div class="ocup-tooltip" style="left:'+(x-22).toFixed(1)+'px;top:'+(Math.min(y,dotY)-48)+'px">SEMANA '+r.week+'<br><span>'+val.toLocaleString('es-ES')+' palets</span></div>';
+        const prevRow = graphRowsPreviousYear.find(pr=>Number(pr.week)===Number(r.week)) || null;
+        const prevVal = prevRow ? (Number(prevRow.value)||0) : 0;
+        const dotY = prevRow ? chartTop + chartH - (prevVal/maxChartVal)*chartH : y;
+        html += '<div class="ocup-tooltip" style="left:'+(x-22).toFixed(1)+'px;top:'+(Math.min(y,dotY)-58)+'px">SEMANA '+r.week+'<br><span>'+year+': '+r.value.toLocaleString('es-ES')+' palets</span>'+(prevRow?'<br><span>'+previousYear+': '+prevVal.toLocaleString('es-ES')+' palets</span>':'')+'</div>';
       }
     });
   }
@@ -6286,17 +6289,17 @@ html += '<div class="ocup-chart-scroll"><div class="ocup-chart" style="width:'+(
     });
     html += '</svg>';
   }else{
-    const pts = graphRows.map((r,i)=>{
+    const pts = graphRowsPreviousYear.map((r,i)=>{
       const x = chartLeft + i*gap + gap/2;
-      const y = chartTop + chartH - ((r.forecast||r.value)/maxChartVal)*chartH;
+      const y = chartTop + chartH - ((Number(r.value)||0)/maxChartVal)*chartH;
       return x.toFixed(1)+','+y.toFixed(1);
     }).join(' ');
-    html += '<svg class="ocup-svg" style="width:'+(chartW+90)+'px;height:'+(chartH+chartTop+20)+'px"><polyline points="'+pts+'" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"></polyline>';
-    graphRows.forEach((r,i)=>{
+    html += '<svg class="ocup-svg" style="width:'+(chartW+90)+'px;height:'+(chartH+chartTop+20)+'px"><polyline points="'+pts+'" fill="none" stroke="#2563eb" stroke-width="3" stroke-linejoin="round" stroke-linecap="round" stroke-dasharray="8 6"></polyline>';
+    graphRowsPreviousYear.forEach((r,i)=>{
       const x = chartLeft + i*gap + gap/2;
-      const y = chartTop + chartH - ((r.forecast||r.value)/maxChartVal)*chartH;
+      const y = chartTop + chartH - ((Number(r.value)||0)/maxChartVal)*chartH;
       html += '<circle cx="'+x.toFixed(1)+'" cy="'+y.toFixed(1)+'" r="4" fill="#2563eb" stroke="#fff" stroke-width="1.5"></circle>';
-      if(i%2===0 || r.week===selectedWeek) html += '<text x="'+x.toFixed(1)+'" y="'+(y-8).toFixed(1)+'" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="700">'+(r.forecast||r.value).toLocaleString('es-ES')+'</text>';
+      if(i%2===0 || r.week===selectedWeek) html += '<text x="'+x.toFixed(1)+'" y="'+(y-8).toFixed(1)+'" text-anchor="middle" font-size="10" fill="#2563eb" font-weight="700">'+(Number(r.value)||0).toLocaleString('es-ES')+'</text>';
     });
     html += '</svg>';
   }
