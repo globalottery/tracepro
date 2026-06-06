@@ -354,6 +354,18 @@ input[type="number"]{
   -moz-appearance:textfield !important;
 }
 
+
+.role-bell,
+.role-bell::before,
+.role-bell::after,
+.role-bell-badge,
+.notification-bell,
+.notification-badge{
+    display:none !important;
+    visibility:hidden !important;
+    opacity:0 !important;
+}
+
 </style>
 
 
@@ -3326,6 +3338,32 @@ canvas{
 }
 </style>
 
+<style id="tracepro-remove-all-notifications-final">
+/* TRACE PRO - eliminar icono de notificaciones en TODAS las vistas */
+.tracepro-bell,
+.tracepro-bell::before,
+.tracepro-bell::after,
+.role-bell,
+.role-bell::before,
+.role-bell::after,
+.role-bell-badge,
+.notification-bell,
+.notification-bell::before,
+.notification-bell::after,
+.notification-badge,
+[class*="bell"],
+[class*="notification"]{
+  display:none !important;
+  visibility:hidden !important;
+  opacity:0 !important;
+  width:0 !important;
+  height:0 !important;
+  min-width:0 !important;
+  margin:0 !important;
+  padding:0 !important;
+  overflow:hidden !important;
+}
+</style>
 </head>
 <body>
 
@@ -4076,7 +4114,7 @@ function traceproInternalShell(content){
           <p>${info[1]}</p>
         </div>
         <div class="tracepro-internal-tools">
-          <div class="tracepro-bell">♧</div>
+          
           <div class="tracepro-date">${today}<br>${time}</div>
         </div>
       </div>
