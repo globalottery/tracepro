@@ -4336,7 +4336,6 @@ function kpiOcupacionRows(){
       let palets = Number(r.palets)||0;
       let capacidad = Number(r.capacidad)||0;
 
-      // Sincronizar Explanada con el mismo dato que usa Dashboard
       if(idx === 0 || /explanada/i.test(String(r.zona||r.nombre||''))){
         palets = Number(campaPaletsActuales()) || palets;
         capacidad = Number(campaCapacidadTotal()) || capacidad;
@@ -4346,21 +4345,28 @@ function kpiOcupacionRows(){
 
       return {
         zona: r.zona || r.nombre || "Almacén",
+        nombre: r.nombre || r.zona || "Almacén",
         palets,
         capacidad,
-        pct
+        pct,
+        saturacion:pct
       };
     });
   }
 
+  const palets = Number(campaPaletsActuales()) || 0;
+  const capacidad = Number(campaCapacidadTotal()) || 0;
+  const pct = capacidad ? Math.round((palets/capacidad)*100) : 0;
+
   return [{
     zona:'Explanada',
-    palets:campaPaletsActuales(),
-    capacidad:campaCapacidadTotal(),
-    pct:campaOcupacionPct(campaPaletsActuales())
+    nombre:'Explanada',
+    palets,
+    capacidad,
+    pct,
+    saturacion:pct
   }];
 }
-
 
 function traceProGetSelectedReferenceStockReal(refName){
   const selected = String(refName || document.querySelector('#histRefSelect')?.value || document.querySelector('[data-hist-ref-select]')?.value || '').trim();
@@ -4911,11 +4917,40 @@ function updatePlanificacionRow(idx, rerender=false){
   set(`plan_carros_${idx}`, formatPlanNumber(c.carros));
   const traer = document.getElementById(`plan_traer_${idx}`);
   if(traer) traer.style.color = c.stockATraer > 0 ? '#d60000' : '#16a34a';
+
+  // Recalcular también el botón CREAR TAREA en tiempo real.
+  // Antes se quedaba deshabilitado si la fila empezó con 0 carros y luego se escribían cajas.
+  const btn = document.getElementById(`plan_create_btn_${idx}`);
+  const status = document.getElementById(`plan_status_${idx}`);
+  const canCreateNow = c.carros > 0 && !state.planificacion[idx].carrosCreados;
+
+  if(btn){
+    btn.disabled = !canCreateNow;
+    btn.classList.toggle("disabled", !canCreateNow);
+    btn.classList.toggle("created", !!state.planificacion[idx].carrosCreados);
+    btn.textContent = state.planificacion[idx].carrosCreados ? "✅ CREADO" : "🚛 CREAR TAREA";
+  }
+
+  if(status && !state.planificacion[idx].carrosCreados){
+    status.innerHTML = canCreateNow
+      ? '<span class="plan-status-badge plan-status-pending">🟡 Pendiente</span>'
+      : '<span class="plan-status-badge plan-status-pending">⚪ Sin carros</span>';
+  }
+
   recalcPlanificacionTotalsDOM();
 }
 
 function crearCarrosDesdePlanificacion(idx){
   if(!state.planificacion || !state.planificacion[idx]) return;
+
+  // Asegura que se usan los valores escritos en pantalla justo antes de crear la tarea.
+  const prodEl = document.getElementById(`plan_prod_${idx}`);
+  const needEl = document.getElementById(`plan_need_${idx}`);
+  const factorEl = document.getElementById(`plan_factor_${idx}`);
+  if(prodEl) state.planificacion[idx].product = prodEl.value || state.planificacion[idx].product || "P001";
+  if(needEl) state.planificacion[idx].necesidadCajas = Math.max(0, parsePlanNumber(needEl.value || 0));
+  if(factorEl) state.planificacion[idx].cajasPalet = Math.max(1, parsePlanNumber(factorEl.value || inferCajasPorPalet(state.planificacion[idx].product)) || inferCajasPorPalet(state.planificacion[idx].product));
+
   const row = state.planificacion[idx];
   const c = calcPlanificacionRow(row);
 
@@ -6645,9 +6680,13 @@ function ocupacionWeekOptions(selectedWeek, year){
 }
 
 function setOcupacionProduct(product){
-  state.occupationProduct = product;
+  const value = String(product || "TOTAL").trim();
+  const validProducts = ["TOTAL", ...Object.keys(PRODUCTS || {})];
+  state.occupationProduct = validProducts.includes(value) ? value : "TOTAL";
   state.occupationSelectedWeek = null;
-  save(); render();
+  state.view = "ocupacion";
+  save();
+  render();
 }
 
 function setOcupacionYear(year){
@@ -6850,7 +6889,7 @@ function buildOcupacionExecutiveXlsxBlob(ctx){
     [ejecutivoCell(chartTitle,s.title),"","","","",""],
     [ejecutivoCell("Datos exactos de la vista actual para dirección",s.subtitle),"","","","",""],
     [],
-    [ejecutivoCell("Semana",s.tableHead),ejecutivoCell("Palets visibles",s.tableHead),ejecutivoCell("% Ocupación",s.tableHead),ejecutivoCell("Año anterior",s.tableHead),ejecutivoCell("Año",s.tableHead),ejecutivoCell("Referencia",s.tableHead),ejecutivoCell("Tipo dato",s.tableHead)]
+    [ejecutivoCell("Semana",s.tableHead),ejecutivoCell("Palets visibles",s.tableHead),ejecutivoCell("Ocupación",s.tableHead),ejecutivoCell("Año anterior",s.tableHead),ejecutivoCell("Año",s.tableHead),ejecutivoCell("Referencia",s.tableHead),ejecutivoCell("Tipo dato",s.tableHead)]
   ];
   chartRows.forEach(r=>graphRows.push([ejecutivoCell("W"+r.week,s.tableBody),ejecutivoCell(r.value,s.tableBody),ejecutivoCell((Number(r.pctOcupacion)||0).toFixed(1).replace(".",",")+"%",s.tableBody),ejecutivoCell(r.forecast,s.tableBody),ejecutivoCell(ctx.currentYear,s.tableBody),ejecutivoCell(ctx.productName,s.tableBody),ejecutivoCell("Vista actual",s.tableBody)]));
   graphRows.push([],[ejecutivoCell("Comparativa A/B",s.section),"","","","","",""] ,[ejecutivoCell("Punto A",s.bold),ejecutivoCell("W"+ctx.weekA+" "+ctx.yearA,s.light),ejecutivoCell(ctx.refA,s.light),"","","",""] ,[ejecutivoCell("Punto B",s.bold),ejecutivoCell("W"+ctx.weekB+" "+ctx.yearB,s.light),ejecutivoCell(ctx.refB,s.light),"","","",""] ,[ejecutivoCell("Variación",s.bold),ejecutivoCell((ctx.refDelta>=0?"+":"")+ctx.refDelta+"%", goodRef ? s.good : s.bad),"","","","",""]);
@@ -6902,28 +6941,6 @@ function buildOcupacionExecutiveXlsxBlob(ctx){
         <c:axId val="10"/>
         <c:axId val="20"/>
       </c:barChart>
-      <c:lineChart>
-        <c:grouping val="standard"/>
-        <c:varyColors val="0"/>
-        <c:ser>
-          <c:idx val="1"/>
-          <c:order val="1"/>
-          <c:tx><c:strRef><c:f>'Vista grafica'!$C$4</c:f></c:strRef></c:tx>
-          <c:spPr>
-            <a:ln w="28575" cap="rnd"><a:solidFill><a:srgbClr val="2563EB"/></a:solidFill><a:round/></a:ln>
-          </c:spPr>
-          <c:marker>
-            <c:symbol val="circle"/>
-            <c:size val="5"/>
-            <c:spPr><a:solidFill><a:srgbClr val="2563EB"/></a:solidFill><a:ln><a:solidFill><a:srgbClr val="FFFFFF"/></a:solidFill></a:ln></c:spPr>
-          </c:marker>
-          <c:cat><c:strRef><c:f>'Vista grafica'!$A$5:$A$${chartEndRow}</c:f></c:strRef></c:cat>
-          <c:val><c:numRef><c:f>'Vista grafica'!$C$5:$C$${chartEndRow}</c:f></c:numRef></c:val>
-        </c:ser>
-        <c:dLbls><c:showLegendKey val="0"/><c:showVal val="0"/><c:showCatName val="0"/><c:showSerName val="0"/><c:showPercent val="0"/><c:showBubbleSize val="0"/></c:dLbls>
-        <c:axId val="10"/>
-        <c:axId val="20"/>
-      </c:lineChart>
       <c:catAx>
         <c:axId val="10"/>
         <c:scaling><c:orientation val="minMax"/></c:scaling>
@@ -7005,10 +7022,8 @@ function exportOcupacionComparativaExcel(){
   const refA = ((isTotalProduct ? ocupacionRows("TOTAL", yearA) : ocupacionRows(product, yearA))[weekA-1] || {value:0}).value;
   const refB = ((isTotalProduct ? ocupacionRows("TOTAL", yearB) : ocupacionRows(product, yearB))[weekB-1] || {value:0}).value;
 
-  const nowIsoExport = isoWeekTrace(new Date());
-  const isCurrentWeekExport = isTotalProduct && Number(currentYear) === Number(nowIsoExport.year) && Number(selectedWeek) === Number(nowIsoExport.week);
-  const visibleValue = isCurrentWeekExport ? campaPaletsActuales() : (isTotalProduct ? Number(selectedTotalRow.value)||0 : Number(selectedRefRow.value)||0);
-  const totalNow = isCurrentWeekExport ? campaPaletsActuales() : (Number(selectedTotalRow.value)||0);
+  const visibleValue = campaPaletsActuales();
+  const totalNow = campaPaletsActuales();
   const pctNow = campaOcupacionPct(visibleValue);
   const estibasOcupadasVisible = Math.max(0, Math.min(state.racks.length, Math.round(visibleValue / avgRackCap)));
 
@@ -7094,20 +7109,18 @@ function ocupacionCampaView(){
     .sort((a,b)=>String(a.entryDate||"").localeCompare(String(b.entryDate||"")) || Number(a.id)-Number(b.id));
   const totalCap = campaCapacidadTotal();
   const estibasOcupadasTotal = state.racks.filter(r=>(Number(r.occupied)||0)>0).length;
-  // Ocupación dinámica: ahora se calcula con los datos de la vista seleccionada
-  // (referencia + año + semana visible), no con el stock fijo actual del mapa.
-  // DASHBOARD ACTUAL = foto actual real.
-  // Ocupación de Campa:
-  // - Si es TOTAL y año actual, debe coincidir con DASHBOARD ACTUAL.
-  // - Si es histórico o referencia concreta, usa año + semana seleccionada.
+  // Donut dinámico:
+  // - TOTAL: muestra la ocupación real actual de toda la campa.
+  // - Referencia concreta: muestra los palets reales actuales de esa referencia en la campa.
   const currentYearForBox = isYearCompare ? compareBaseYearB : year;
-  const nowIsoForOcupacion = isoWeekTrace(new Date());
-  const isCurrentWeekTotal = isTotalProduct && Number(currentYearForBox) === Number(nowIsoForOcupacion.year) && Number(selectedWeek) === Number(nowIsoForOcupacion.week);
-  const ocupacionBase = isCurrentWeekTotal ? totalNow : (Number(selected && selected.value) || 0);
-  const pctTotal = campaOcupacionPct(ocupacionBase);
-  const currentSelectedNow = ocupacionBase;
+  const currentSelectedNow = isTotalProduct
+    ? campaPaletsActuales()
+    : (state.racks || [])
+        .filter(r => String(r.product || "") === String(product) && !r.blocked && !r.reserved)
+        .reduce((s,r) => s + (Number(r.occupied) || 0), 0);
+  const pctTotal = campaOcupacionPct(currentSelectedNow);
   const pctCurrentSelected = pctTotal;
-  const currentLabel = isTotalProduct ? (Number(currentYearForBox) === Number(nowIsoForOcupacion.year) ? 'USO MAPA ACTUAL 2026' : 'USO MAPA TOTAL') : 'USO MAPA DE LA REFERENCIA';
+  const currentLabel = isTotalProduct ? 'USO TOTAL REAL DE CAMPA' : 'USO MAPA DE LA REFERENCIA';
   const entradasDemo = selected.entradas || Math.max(120, Math.round(selected.value * 0.055));
   const salidasDemo = selected.salidas || Math.max(80, Math.round(selected.value * 0.041));
   const movDemo = selected.movimientos || Math.max(12, Math.round((entradasDemo + salidasDemo) / 50));
@@ -7160,10 +7173,11 @@ function ocupacionCampaView(){
   html += '<option value="TOTAL" '+(isTotalProduct?'selected':'')+'>TOTAL</option>';
   html += Object.entries(PRODUCTS).map(([k,v])=>`<option value="${k}" ${k===product?'selected':''}>${escapeHtmlTrace(v.name)}</option>`).join('');
   html += '</select>';
+  html += '<button type="button" onclick="setOcupacionProduct(\'TOTAL\')" style="width:100%;margin:0 0 6px 0;padding:8px 10px;border-radius:10px;border:1.5px solid #d60000;background:#fff;color:#d60000;font-weight:900;font-size:12px;cursor:pointer">VER TOTAL CAMPA</button>';
   html += '<div class="ocup-current-box" style="padding:8px !important;border-radius:14px !important;min-height:0 !important;">';
   html += '<div class="ocup-current-title" style="font-size:11px !important;line-height:1 !important;margin-bottom:4px !important;">'+currentLabel+'</div>';
   html += '<div class="ocup-current-ring ocup-ring-compact" style="--pct:'+pctCurrentSelected+'"><b>'+String(pctCurrentSelected).replace('.',',')+'%</b></div>';
-  html += '<div class="ocup-current-sub" style="font-size:10px !important;line-height:1.05 !important;margin-top:3px !important;">Año '+currentYearForBox+' · W'+selectedWeek+' · '+currentSelectedNow.toLocaleString('es-ES')+' / '+totalCap.toLocaleString('es-ES')+' palets · libres '+campaPaletsLibres(currentSelectedNow).toLocaleString('es-ES')+'</div>';
+  html += '<div class="ocup-current-sub" style="font-size:10px !important;line-height:1.05 !important;margin-top:3px !important;">'+(isTotalProduct ? ('Año '+currentYearForBox+' · W'+selectedWeek+' · '+currentSelectedNow.toLocaleString('es-ES')+' / '+totalCap.toLocaleString('es-ES')+' palets · libres '+campaPaletsLibres(currentSelectedNow).toLocaleString('es-ES')) : (currentSelectedNow.toLocaleString('es-ES')+' palets de la referencia · '+String(pctCurrentSelected).replace('.',',')+'% de campa'))+'</div>';
   html += '</div></div>';
   html += '<div class="ocup-filter ocup-filter-compact" style="padding:12px 14px !important;border-radius:16px !important;"><label style="font-size:11px !important;margin-bottom:5px !important;">Tipo de análisis</label><select onchange="setOcupacionAnalysisMode(this.value)" style="margin-bottom:7px !important;padding:9px 10px !important;font-size:14px !important;border-radius:10px !important;">'+analysisOptionsMain+'</select>';
   if(isWeeklyAnalysis){
@@ -7491,9 +7505,11 @@ function resumenOcupacionView(){
   </div>`;
 }
 function buildResumenOcupacionRows(){
-  // Capacidades máximas reales oficiales de Coca-Cola TRACE PRO
+  // UNA SOLA FUENTE DE DATOS:
+  // Explanada usa exactamente el mismo cálculo que Dashboard Actual:
+  // campaPaletsActuales() / campaCapacidadTotal().
   const CAPACIDAD_MAXIMA_ALMACEN = {
-    explanada: 24800,
+    explanada: campaCapacidadTotal(),
     zona107: 7500,
     lgv: 4500
   };
@@ -7502,14 +7518,25 @@ function buildResumenOcupacionRows(){
     const palets = (racks||[]).reduce((s,r)=>s + (r.blocked ? 0 : (Number(r.occupied)||0)), 0);
     const capacidad = Number(capacidadMaxima)||0;
     const saturacion = capacidad ? Math.round((palets / capacidad) * 100) : 0;
-    return {nombre, palets, capacidad, saturacion};
+    return {nombre, zona:nombre, palets, capacidad, saturacion, pct:saturacion};
   };
 
   const racks107 = ensureExtraZoneRacks('107', 34, 6);
   const racksLGV = ensureExtraZoneRacks('lgv', 15, 5);
 
+  const explanadaPalets = Number(campaPaletsActuales()) || 0;
+  const explanadaCapacidad = Number(campaCapacidadTotal()) || CAPACIDAD_MAXIMA_ALMACEN.explanada;
+  const explanadaPct = explanadaCapacidad ? Math.round((explanadaPalets / explanadaCapacidad) * 100) : 0;
+
   return [
-    calc('Explanada', state.racks || [], CAPACIDAD_MAXIMA_ALMACEN.explanada),
+    {
+      nombre:'Explanada',
+      zona:'Explanada',
+      palets:explanadaPalets,
+      capacidad:explanadaCapacidad,
+      saturacion:explanadaPct,
+      pct:explanadaPct
+    },
     calc('107', racks107, CAPACIDAD_MAXIMA_ALMACEN.zona107),
     calc('LGV', racksLGV, CAPACIDAD_MAXIMA_ALMACEN.lgv)
   ];
