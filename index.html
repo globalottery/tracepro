@@ -4033,7 +4033,7 @@ function allowedViewsForRole(role){
   if(role==="encargado") return [...base, "dashboard", "controlOperativo", "ocupacion", "resumenOcupacion", "planificacion", "mapa", "carga", "descarga", "carro", "inventario", "historial", "registroEstiba", "albaranes", "campanas", "campanaTareas", "incidencia", "roles"];
   if(role==="sga") return [...base, "dashboard", "controlOperativo", "ocupacion", "resumenOcupacion", "planificacion", "mapa", "carga", "descarga", "carro", "inventario", "historial", "registroEstiba", "albaranes", "campanas", "campanaTareas", "incidencia", "roles"];
   if(role==="checker") return [...base, "dashboard", "descarga", "carro", "incidencia", "mapa", "campanas"];
-  if(role==="carretillero") return [...base, "descarga", "carro", "incidencia"];
+  if(role==="carretillero") return [...base, "carga", "descarga", "carro", "incidencia"];
   return base;
 }
 
@@ -4047,7 +4047,7 @@ function traceproViewsForCurrentRole(){
   if(role==="ejecutivo") return ["dashboard","controlOperativo","ocupacion","resumenOcupacion","planificacion","mapa","campanas"];
   if(role==="encargado" || role==="sga") return ["dashboard","controlOperativo","ocupacion","resumenOcupacion","planificacion","mapa","carga","descarga","carro","incidencia","campanas","inventario","historial","registroEstiba","albaranes","roles"];
   if(role==="checker") return ["dashboard","descarga","carro","incidencia","mapa","campanas"];
-  return ["descarga","carro","incidencia"];
+  return ["carga","descarga","carro","incidencia"];
 }
 
 function traceproInternalTitle(view){
@@ -4303,7 +4303,7 @@ function roleMenu(){
   if(role==="encargado") return premiumRoleMenu(["dashboard","controlOperativo","ocupacion","resumenOcupacion","planificacion","mapa","carga","descarga","carro","incidencia","campanas","inventario","historial","registroEstiba","albaranes","roles"], "encargado");
   if(role==="sga") return premiumRoleMenu(["dashboard","controlOperativo","ocupacion","resumenOcupacion","planificacion","mapa","carga","descarga","carro","incidencia","campanas","inventario","historial","registroEstiba","albaranes","roles"], "sga");
   if(role==="checker") return premiumRoleMenu(["dashboard","descarga","carro","incidencia","mapa","campanas"], "checker");
-  return premiumRoleMenu(["descarga","carro","incidencia"], "carretillero");
+  return premiumRoleMenu(["carga","descarga","carro","incidencia"], "carretillero");
 }
 
 function menuFormatNumber(n){
@@ -4616,7 +4616,7 @@ function ejecutivoMenu(){ return premiumRoleMenu(["dashboard","controlOperativo"
 function encargadoMenu(){ return premiumRoleMenu(["dashboard","controlOperativo","ocupacion","resumenOcupacion","planificacion","mapa","carga","descarga","carro","incidencia","campanas","inventario","historial","registroEstiba","albaranes","roles"], "encargado"); }
 function sgaMenu(){ return premiumRoleMenu(["dashboard","controlOperativo","ocupacion","resumenOcupacion","planificacion","mapa","carga","descarga","carro","incidencia","campanas","inventario","historial","registroEstiba","albaranes","roles"], "sga"); }
 function checkerMenu(){ return premiumRoleMenu(["dashboard","descarga","carro","incidencia","mapa","campanas"], "checker"); }
-function carretilleroMenu(){ return premiumRoleMenu(["descarga","carro","incidencia"], "carretillero"); }
+function carretilleroMenu(){ return premiumRoleMenu(["carga","descarga","carro","incidencia"], "carretillero"); }
 function executiveMenu(){ return ejecutivoMenu(); }
 function officeMenu(){ return roleMenu(); }
 function forkliftMenu(){ return carretilleroMenu(); }
