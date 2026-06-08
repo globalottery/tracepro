@@ -4331,7 +4331,7 @@ function menuStats(){
   const carrosPendientes = (state.cartRequests||[])
     .filter(r=>r.status==="activa")
     .reduce((a,r)=>a+Math.max(0,(Number(r.requested)||0)-(Number(r.done)||0)),0);
-  const descargasPendientes = (state.unloadPlans||[]).filter(p=>p.status==="pendiente").length;
+  const descargasPendientes = (state.unloadPlans||[]).filter(p=>isPendingUnloadPlan(p)).length;
   const tareasZonaPendientes = (state.campaignTasks||[]).filter(t=>t.status==="pendiente").length;
   const pendientes = carrosPendientes + descargasPendientes + tareasZonaPendientes;
 
@@ -5225,11 +5225,15 @@ function moveStock(product, rackId, qty, type, detail=""){
   save(); return true;
 }
 function addHistory(type, product, origin, dest, qty, detail=""){
+  const movementTs = now();
+  const movementShift = currentShift();
   state.history.unshift({
     // ID único real: antes Date.now() podía repetirse si se guardaban varias líneas a la vez
     id: `${Date.now()}_${Math.random().toString(36).slice(2,9)}`,
-    ts: now(),
-    shift: currentShift(),
+    ts: movementTs,
+    shift: movementShift,
+    completedShift: movementShift,
+    completedAt: movementTs,
     user: state.user?.name || "Sistema",
     type, product, origin, dest, qty, detail
   });
@@ -5541,6 +5545,25 @@ function confirmCarga(){
 }
 
 
+
+function normalizeDockValue(value){
+  const v = String(value || "").toUpperCase().replace(/\s+/g, "");
+  if(v === "25" || v === "M25" || v.includes("M25")) return "M25";
+  if(v === "24" || v === "M24" || v.includes("M24")) return "M24";
+  if(v === "26" || v === "M26" || v.includes("M26")) return "M26";
+  return v || "M26";
+}
+
+function isPendingUnloadPlan(plan){
+  return plan && normalizeUnloadStatus(plan.status) === "pendiente";
+}
+
+function normalizeUnloadStatus(status){
+  const s = String(status || "").toLowerCase().trim();
+  if(s === "completada" || s === "completado" || s === "finalizada" || s === "finalizado") return "completada";
+  return "pendiente";
+}
+
 function descargaView(){
   const office = state.user && ["encargado","sga","checker"].includes(state.user.role);
 
@@ -5614,7 +5637,7 @@ function descargaView(){
 }
 
 function createUnloadPlan(){
-  const dock = document.getElementById("dock").value;
+  const dock = normalizeDockValue(document.getElementById("dock").value);
   const plate = document.getElementById("plate").value.trim().toUpperCase();
   const deliveryNote = document.getElementById("deliveryNote").value.trim().toUpperCase();
   if(!plate){ alert("Introduce la matrícula del camión."); return; }
@@ -5656,7 +5679,7 @@ function createUnloadPlan(){
 }
 
 function unloadPlansHtml(){
-  const plans = (state.unloadPlans || []).filter(p=>p.status==="pendiente");
+  const plans = (state.unloadPlans || []).filter(p=>isPendingUnloadPlan(p));
   if(!plans.length) return `<div class="alert">No hay descargas pendientes.</div>`;
 
   return plans.map(p=>`<div class="option">
@@ -5668,9 +5691,9 @@ function unloadPlansHtml(){
 }
 
 function showUnloadPlansByDock(){
-  const dock = document.getElementById("dock").value;
+  const dock = normalizeDockValue(document.getElementById("dock").value);
   const select = document.getElementById("unloadSelect");
-  const plans = (state.unloadPlans || []).filter(p=>p.status==="pendiente" && p.dock===dock);
+  const plans = (state.unloadPlans || []).filter(p=>isPendingUnloadPlan(p) && normalizeDockValue(p.dock)===dock);
 
   if(!plans.length){
     select.innerHTML = `<option value="">Sin descargas pendientes</option>`;
@@ -5683,7 +5706,7 @@ function showUnloadPlansByDock(){
 function openUnloadPlan(){
   showUnloadPlansByDock();
   const id = Number(document.getElementById("unloadSelect").value);
-  const plan = (state.unloadPlans || []).find(p=>p.id===id);
+  const plan = (state.unloadPlans || []).find(p=>Number(p.id)===id && isPendingUnloadPlan(p));
   const box = document.getElementById("unloadPlansBox");
 
   if(!plan){
@@ -5733,8 +5756,9 @@ function openUnloadPlan(){
 }
 
 function addExtraUnloadLine(planId){
-  const plan = (state.unloadPlans || []).find(p=>p.id===planId);
+  const plan = (state.unloadPlans || []).find(p=>Number(p.id)===Number(planId));
   if(!plan){ alert("Descarga no encontrada."); return; }
+  plan.dock = normalizeDockValue(plan.dock);
 
   const product = document.getElementById("extraUnloadProduct")?.value;
   const qty = Number(document.getElementById("extraUnloadQty")?.value);
@@ -5761,8 +5785,9 @@ function addExtraUnloadLine(planId){
 }
 
 function calcUnloadLine(planId, lineId){
-  const plan = (state.unloadPlans || []).find(p=>p.id===planId);
-  const line = plan?.lines.find(l=>l.id===lineId);
+  const plan = (state.unloadPlans || []).find(p=>Number(p.id)===Number(planId));
+  if(plan) plan.dock = normalizeDockValue(plan.dock);
+  const line = plan?.lines.find(l=>Number(l.id)===Number(lineId));
   if(!plan || !line){ alert("Línea no encontrada."); return; }
 
   const received = Number(document.getElementById("received_"+line.id).value);
@@ -5867,8 +5892,9 @@ function validateUnloadRack(planId, lineId){
 }
 
 function confirmUnloadLine(planId, lineId){
-  const plan = (state.unloadPlans || []).find(p=>p.id===planId);
-  const line = plan?.lines.find(l=>l.id===lineId);
+  const plan = (state.unloadPlans || []).find(p=>Number(p.id)===Number(planId));
+  if(plan) plan.dock = normalizeDockValue(plan.dock);
+  const line = plan?.lines.find(l=>Number(l.id)===Number(lineId));
   const rack = document.getElementById("selectedRack")?.value;
   const scanned = document.getElementById("scannedRack")?.value.trim();
 
@@ -5886,6 +5912,22 @@ function confirmUnloadLine(planId, lineId){
     if(plan.lines.every(l=>l.done)){
       plan.status = "completada";
       plan.completedAt = now();
+      plan.dock = normalizeDockValue(plan.dock);
+      plan.lines.forEach(l=>{ l.done = true; });
+      // FIX M25: asegurar que la tarea queda cerrada aunque el muelle venga con formato distinto
+      // o exista una copia sincronizada pendiente con la misma matrícula/albarán.
+      (state.unloadPlans || []).forEach(p=>{
+        const sameId = Number(p.id) === Number(plan.id);
+        const sameUnload = normalizeDockValue(p.dock) === normalizeDockValue(plan.dock)
+          && String(p.plate || "").trim().toUpperCase() === String(plan.plate || "").trim().toUpperCase()
+          && String(p.deliveryNote || "").trim().toUpperCase() === String(plan.deliveryNote || "").trim().toUpperCase();
+        if(sameId || sameUnload){
+          p.status = "completada";
+          p.completedAt = plan.completedAt;
+          p.dock = normalizeDockValue(p.dock);
+          if(Array.isArray(p.lines)) p.lines.forEach(l=>{ l.done = true; });
+        }
+      });
       const totalReceived = plan.lines.reduce((sum,l)=>sum + Number(l.received || l.expected || 0), 0);
       const productSummary = plan.lines.map(l=>`${productName(l.product)}: ${Number(l.received || l.expected || 0)} palets${l.extra ? " (extra)" : ""}`).join(" · ");
       addHistory(
@@ -6463,24 +6505,28 @@ function dashboardView(){
   }
 
   // Barras por turno
+  // FIX TURNOS: los carros realizados se contabilizan por el turno REAL de finalización
+  // leyendo el historial del día, no el turno en el que se creó la solicitud.
   html+='<h2 style="font-size:20px !important;margin:12px 0 8px !important;line-height:1.05 !important;">Carros internos por turno</h2>';
+  const todayCarroHistory = (typeof getOperationalHistoryItems === "function" ? getOperationalHistoryItems(true) : [])
+    .filter(h=>operationalType(h)==="carro");
+  const maxCarrosTurno = Math.max(1, ...["Mañana","Tarde","Noche"].map(s=>todayCarroHistory.filter(h=>historyShift(h)===s).length));
   ["Mañana","Tarde","Noche"].forEach(s=>{
+    const done = todayCarroHistory.filter(h=>historyShift(h)===s).length;
     const req=state.cartRequests.filter(r=>r.shift===s);
-    const done=req.reduce((a,r)=>a+r.done,0);
-    const total=req.reduce((a,r)=>a+r.requested,0);
-    const pen=req.filter(r=>r.status==="activa").reduce((a,r)=>a+(r.requested-r.done),0);
-    const pctDone=total>0?Math.round((done/total)*100):0;
-    const barColor=pctDone>=80?"#16a34a":pctDone>=40?"#f59e0b":"#e5e7eb";
+    const pen=req.filter(r=>r.status==="activa").reduce((a,r)=>a+Math.max(0,(Number(r.requested)||0)-(Number(r.done)||0)),0);
+    const pctDone=Math.round((done/maxCarrosTurno)*100);
+    const barColor=done>0 ? (pctDone>=80?"#16a34a":pctDone>=40?"#f59e0b":"#e5e7eb") : "#e5e7eb";
     html+='<div style="margin-bottom:8px !important">';
     html+='<div style="display:flex;justify-content:space-between;font-size:12px !important;font-weight:700;margin-bottom:3px !important;line-height:1.05">';
-    html+='<span>'+s+'</span><span style="color:#888">Realizados: '+done+' &nbsp; Pendientes: '+pen+'</span></div>';
+    html+='<span>'+s+'</span><span style="color:#888">Realizados hoy: '+done+' &nbsp; Pendientes: '+pen+'</span></div>';
     html+='<div style="background:#f3f4f6;border-radius:999px;height:14px !important;overflow:hidden;position:relative">';
     html+='<div style="background:'+barColor+';height:100%;width:'+pctDone+'%;border-radius:999px;display:flex;align-items:center;padding-left:8px">';
     if(pctDone>10) html+='<span style="color:white;font-size:12px;font-weight:900">'+pctDone+'%</span>';
     html+='</div>';
     if(pctDone<=10) html+='<span style="position:absolute;left:8px;top:50%;transform:translateY(-50%);font-size:12px;font-weight:700;color:#aaa">'+pctDone+'%</span>';
     html+='</div>';
-    html+='<div style="display:flex;justify-content:space-between;font-size:11px;color:#aaa;margin-top:2px"><span>0%</span><span>100%</span></div></div>';
+    html+='<div style="display:flex;justify-content:space-between;font-size:11px;color:#aaa;margin-top:2px"><span>0</span><span>Máx. turno</span></div></div>';
   });
 
   html+='</div>';
